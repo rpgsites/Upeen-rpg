@@ -4,1081 +4,578 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101827">
-<title>University of Pennsylvania — RPG</title>
+<meta name="theme-color" content="#0a1423">
+<title>University of Pennsylvania — Roleplay</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-:root {
-  --navy:#101827;
-  --navy2:#18243a;
-  --gold:#c8a96b;
-  --gold2:#ead7a6;
-  --ivory:#f5f0e6;
-  --muted:#aeb7c5;
-  --panel:rgba(255,255,255,.055);
-  --line:rgba(200,169,107,.28);
-  --green:#8fc6a0;
-  --red:#df9292;
-}
+:root{--navy:#091321;--navy2:#101e30;--gold:#c9a96e;--gold2:#ead5a1;--cream:#f2eee4;--muted:#aeb6c1;--line:rgba(201,169,110,.32);--panel:rgba(15,28,44,.91)}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{
-  margin:0;background:var(--navy);color:var(--ivory);
-  font-family:Inter,Arial,sans-serif;min-height:100vh;
-}
+body{margin:0;background:var(--navy);color:var(--cream);font-family:"DM Sans",sans-serif;min-height:100vh}
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--gold2);outline-offset:3px}
 a{color:var(--gold2)}
-#stars{
-  position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0;
-  background:
-  radial-gradient(ellipse at 15% 15%,rgba(200,169,107,.10),transparent 38%),
-  radial-gradient(ellipse at 90% 75%,rgba(63,105,157,.13),transparent 42%);
-}
-.star{
-  position:absolute;width:2px;height:2px;border-radius:50%;
-  background:#f6e8c8;opacity:.5;animation:twinkle 4s infinite ease-in-out;
-}
-@keyframes twinkle{0%,100%{opacity:.15;transform:scale(.8)}50%{opacity:.8;transform:scale(1.5)}}
-@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@keyframes glow{0%,100%{box-shadow:0 0 0 rgba(200,169,107,0)}50%{box-shadow:0 0 24px rgba(200,169,107,.13)}}
-header,.app,footer{position:relative;z-index:1}
-header{
-  display:flex;align-items:center;justify-content:space-between;gap:14px;
-  padding:14px clamp(14px,4vw,52px);border-bottom:1px solid var(--line);
-  background:rgba(13,21,34,.92);position:sticky;top:0;z-index:20;
-  backdrop-filter:blur(14px);
-}
-.brand{display:flex;align-items:center;gap:12px;min-width:0}
-.brand img{width:44px;height:44px;object-fit:contain;border-radius:50%}
-.brand-title{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:700;color:var(--gold2)}
-.brand-sub{font-size:9px;letter-spacing:2px;color:var(--muted);margin-top:3px}
-.header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-.app{max-width:1200px;margin:auto;padding:22px clamp(14px,3vw,34px) 55px}
-.screen{display:none;animation:rise .3s ease}
+img{max-width:100%}
+.topline{height:3px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent)}
+header{position:sticky;top:0;z-index:20;background:rgba(8,18,31,.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.header-inner{max-width:1400px;margin:auto;padding:14px 4%;display:flex;align-items:center;gap:22px;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:13px;min-width:190px;cursor:pointer}
+.brand img{width:55px;height:55px;object-fit:contain;border-radius:50%}
+.brand-name{font-family:"Cormorant Garamond",serif;font-size:25px;line-height:.92;color:var(--gold2)}
+.brand-sub{font-size:9px;letter-spacing:3px;color:var(--muted);margin-top:8px}
+nav{display:flex;align-items:center;gap:5px;flex-wrap:wrap;justify-content:center}
+.nav-btn,.outline-btn,.gold-btn,.text-btn{border:1px solid transparent;background:transparent;color:var(--cream);padding:11px 13px;border-radius:3px;transition:.25s}
+.nav-btn{font-size:11px;letter-spacing:1px;text-transform:uppercase}
+.nav-btn:hover,.nav-btn.active,.outline-btn:hover{border-color:var(--gold);color:var(--gold2);background:rgba(201,169,110,.06)}
+.gold-btn{background:linear-gradient(135deg,#d9bd82,#b9914f);color:#111827;border:1px solid #e6ce9a;font-weight:700;padding:14px 20px}
+.gold-btn:hover{filter:brightness(1.1);transform:translateY(-2px)}
+.outline-btn{border-color:var(--gold);padding:13px 18px}
+.text-btn{color:var(--gold2);text-decoration:underline;text-underline-offset:4px}
+.mobile-toggle{display:none;border:1px solid var(--line);background:none;color:var(--cream);padding:10px;font-size:20px}
+main{min-height:65vh}
+.screen{display:none;animation:appear .45s ease}
 .screen.active{display:block}
-h1,h2,h3,.serif{font-family:"Cormorant Garamond",Georgia,serif}
-h1{font-size:clamp(40px,7vw,78px);line-height:.98;margin:18px 0}
-h2{font-size:clamp(29px,4vw,43px);margin:0 0 14px}
-h3{font-size:25px;margin:8px 0}
-p{line-height:1.75;color:#d6dbe2}
-.eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:700}
-.gold{color:var(--gold2)}
-.muted{color:var(--muted)}
-.small{font-size:12px}
-.center{text-align:center}
-.hero{
-  min-height:460px;padding:clamp(26px,7vw,80px) 0;display:flex;align-items:center;
-}
-.hero-inner{max-width:800px}
-.hero p{max-width:650px}
-.hero-mark{width:90px;height:90px;object-fit:contain;opacity:.92;filter:drop-shadow(0 0 20px #c8a96b22)}
-.rule{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:25px 0}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
-.card{
-  border:1px solid var(--line);border-radius:15px;padding:21px;
-  background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.018));
-  transition:transform .2s,border-color .2s,background .2s;
-}
-.card:hover{transform:translateY(-3px);border-color:var(--gold);background:rgba(255,255,255,.075)}
-.card p{font-size:14px}
-.crest{width:100%;height:155px;object-fit:contain;margin:4px auto 12px;display:block}
-.btn{
-  border:1px solid var(--gold);background:var(--gold);color:#152033;
-  border-radius:8px;padding:12px 16px;font-weight:700;font-size:13px;
-  transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:8px;
-}
-.btn:hover{background:var(--gold2);transform:translateY(-1px)}
-.btn.secondary{background:transparent;color:var(--gold2)}
-.btn.secondary:hover{background:rgba(200,169,107,.1)}
-.btn.ghost{border-color:var(--line);background:rgba(255,255,255,.035);color:var(--ivory)}
-.btn.danger{border-color:#a95858;background:#a95858;color:white}
-.btn.success{border-color:#4d8765;background:#4d8765;color:white}
-.btn.smallbtn{padding:8px 11px;font-size:12px}
-.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-nav{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0 22px}
-nav button{font-size:12px}
-.section{margin:35px 0}
-.form{max-width:780px;margin:auto}
-.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.field{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
+@keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.wrap{max-width:1240px;margin:auto;padding:54px 5%}
+.eyebrow{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:700}
+h1,h2,h3,h4{font-family:"Cormorant Garamond",serif;font-weight:500;margin-top:0}
+h1{font-size:clamp(45px,7vw,86px);line-height:.92;letter-spacing:-1.8px}
+h2{font-size:clamp(34px,4vw,54px);line-height:1.03;margin-bottom:16px}
+h3{font-size:29px;margin-bottom:10px}
+p{line-height:1.8;color:#c5cbd3}
+.hero{position:relative;min-height:650px;display:flex;align-items:center;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero-image{position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,12,21,.96) 0%,rgba(5,12,21,.78) 43%,rgba(5,12,21,.15) 100%),linear-gradient(0deg,var(--navy),transparent 28%),url("https://images.unsplash.com/photo-1564981797816-1043664bf78d?auto=format&fit=crop&w=2000&q=85") center/cover}
+.hero-content{position:relative;z-index:1;width:min(760px,90%);padding:70px 0 80px;margin-left:max(5%,calc((100vw - 1240px)/2))}
+.hero h1{margin:24px 0}
+.hero h1 span{color:var(--gold2);font-style:italic}
+.hero p{max-width:610px;font-size:17px}
+.hero-actions{display:flex;gap:13px;flex-wrap:wrap;margin-top:30px}
+.hero-note{position:absolute;right:5%;bottom:32px;color:var(--gold2);font-size:10px;letter-spacing:3px;writing-mode:vertical-rl}
+.hero:after{content:"";position:absolute;inset:12px;border:1px solid rgba(201,169,110,.16);pointer-events:none}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line);background:#0b1726}
+.stat{padding:25px 15px;text-align:center;border-right:1px solid var(--line)}
+.stat:last-child{border:0}
+.stat strong{display:block;color:var(--gold2);font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:500}
+.stat span{font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase}
+.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+.intro-photo{min-height:440px;background:linear-gradient(0deg,rgba(5,12,21,.4),transparent),url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1000&q=80") center/cover;border:1px solid var(--line);position:relative}
+.photo-caption{position:absolute;left:22px;bottom:20px;font-family:"Cormorant Garamond",serif;font-size:25px;max-width:230px}
+.rule{height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:25px 0}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.card{position:relative;overflow:hidden;border:1px solid var(--line);background:var(--panel);min-height:220px;transition:.3s}
+.card:hover{transform:translateY(-5px);border-color:var(--gold)}
+.card-image{height:150px;background-size:cover;background-position:center;position:relative}
+.card-image:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,14,24,.8),transparent)}
+.card-body{padding:18px}
+.card-body h3{font-size:25px}
+.card-body p{font-size:13px;margin-bottom:0}
+.card-click{cursor:pointer}
+.feature-band{background:linear-gradient(110deg,#102138,#081321);border-block:1px solid var(--line)}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px}
+.feature{padding:15px 0}
+.feature .symbol{font-size:25px;color:var(--gold2);margin-bottom:14px}
+.feature h3{font-size:27px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:28px}
+.section-head p{max-width:500px}
+.subhero{padding:70px 5%;border-bottom:1px solid var(--line);background:radial-gradient(ellipse at 80% 20%,#20324a 0%,transparent 50%),linear-gradient(120deg,#0b1727,#091321)}
+.subhero h1{font-size:clamp(43px,6vw,70px);margin:17px 0}
+.panel{background:var(--panel);border:1px solid var(--line);padding:26px;margin:20px 0}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.field{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
 .field.full{grid-column:1/-1}
-label{font-size:12px;color:var(--gold2);font-weight:600}
-input,textarea,select{
-  width:100%;padding:12px 13px;color:var(--ivory);
-  background:#0d1522;border:1px solid #354156;border-radius:8px;outline:none;
-}
-input:focus,textarea:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 2px #c8a96b1c}
-input[type=file]{padding:9px}
-input[type=checkbox]{width:auto;accent-color:var(--gold)}
+label{font-size:11px;letter-spacing:1.3px;text-transform:uppercase;color:var(--gold2)}
+input,textarea,select{width:100%;border:1px solid rgba(201,169,110,.3);border-radius:3px;background:#081321;color:var(--cream);padding:13px 14px}
+input::placeholder,textarea::placeholder{color:#778394}
 textarea{min-height:110px;resize:vertical}
-select option{background:#101827;color:var(--ivory)}
+input[type=file]{padding:10px}
+input[type=checkbox]{width:auto;accent-color:var(--gold)}
 .form-note{font-size:12px;color:var(--muted)}
-.status{padding:12px 14px;border-radius:8px;background:#ffffff0a;border:1px solid var(--line);margin:12px 0;font-size:13px;line-height:1.6}
-.status:empty{display:none}
-.status.error{border-color:#a95858;color:#ffbaba}
-.status.ok{border-color:#4d8765;color:#b8e6c4}
-.preview{display:none;width:140px;height:170px;object-fit:cover;border:1px solid var(--gold);border-radius:10px;margin-top:10px}
-.pill{display:inline-block;padding:5px 9px;border-radius:99px;border:1px solid var(--line);font-size:10px;color:var(--gold2);text-transform:uppercase;letter-spacing:1px}
-.row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.profile-photo{width:95px;height:120px;object-fit:cover;border-radius:8px;border:1px solid var(--gold)}
-.item{border-bottom:1px solid var(--line);padding:17px 0}
-.item:last-child{border-bottom:0}
-footer{border-top:1px solid var(--line);padding:25px 14px;text-align:center;color:var(--muted);font-size:11px;letter-spacing:1px}
+.notice{padding:14px 16px;border:1px solid var(--line);background:rgba(201,169,110,.07);color:var(--gold2);margin:16px 0;line-height:1.7}
+.status{display:inline-block;border:1px solid var(--line);padding:5px 9px;color:var(--gold2);font-size:11px;text-transform:uppercase;letter-spacing:1px}
+.society-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.society-card{display:grid;grid-template-columns:120px 1fr;gap:20px;align-items:center;padding:24px;border:1px solid var(--line);background:var(--panel);cursor:pointer;transition:.25s}
+.society-card:hover{border-color:var(--gold);transform:translateY(-3px)}
+.society-card img{width:115px;height:135px;object-fit:contain;background:#fff;padding:6px}
+.society-card p{font-size:13px}
+.society-card h3{margin:0}
+.pill{display:inline-block;border:1px solid var(--line);padding:7px 10px;margin:4px;color:var(--gold2);font-size:11px}
+.list{display:grid;gap:12px}
+.list-item{padding:18px;border:1px solid var(--line);background:var(--panel)}
+.list-item h3{font-size:24px}
+.list-item p{margin:8px 0}
+footer{border-top:1px solid var(--line);background:#060d16}
+.footer-inner{max-width:1240px;margin:auto;padding:35px 5%;display:flex;justify-content:space-between;gap:25px;flex-wrap:wrap}
+.footer-title{font-family:"Cormorant Garamond",serif;color:var(--gold2);font-size:23px}
+.footer-small{font-size:10px;color:var(--muted);letter-spacing:2px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:80;background:#e8d4a1;color:#101827;padding:13px 18px;border-radius:4px;box-shadow:0 10px 40px #0008;max-width:90%;display:none;font-size:14px}
+.toast.show{display:block;animation:appear .2s ease}
 .hidden{display:none!important}
-.empty{padding:30px;text-align:center;border:1px dashed var(--line);border-radius:12px;color:var(--muted)}
-.big-number{font-family:"Cormorant Garamond",serif;font-size:44px;color:var(--gold2)}
-@media(max-width:760px){
- .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
- .grid.two{grid-template-columns:1fr}
- header{align-items:flex-start}
- .brand-sub{letter-spacing:1px}
- .brand-title{font-size:17px}
- .brand img{width:36px;height:36px}
- .header-actions .btn{padding:9px 10px;font-size:11px}
+#photoPreview{width:130px;height:160px;object-fit:cover;border:1px solid var(--gold);display:none;margin-top:10px}
+hr{border:0;border-top:1px solid var(--line);margin:25px 0}
+@media(max-width:900px){
+ .header-inner{flex-wrap:wrap;gap:12px}.brand{flex:1}.mobile-toggle{display:block}
+ nav{display:none;width:100%;align-items:stretch;flex-direction:column;padding:10px 0}
+ nav.open{display:flex}.nav-btn{text-align:left;border-bottom:1px solid rgba(201,169,110,.12)}
+ .hero{min-height:600px}.hero-content{margin-left:6%;padding-right:6%}
+ .stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
+ .intro-grid{grid-template-columns:1fr;gap:28px}.intro-photo{min-height:320px}
+ .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .society-grid{grid-template-columns:1fr}.feature-grid{grid-template-columns:1fr}
+ .section-head{display:block}
 }
-@media(max-width:500px){
- .grid,.form-grid{grid-template-columns:1fr}
- .hero{min-height:370px}
- .card{padding:16px}
- .crest{height:125px}
+@media(max-width:520px){
+ .brand img{width:45px;height:45px}.brand-name{font-size:21px}.brand-sub{font-size:8px;letter-spacing:2px}
+ .hero{min-height:610px}.hero-content{padding-top:65px}.hero p{font-size:15px}
+ .hero-actions{flex-direction:column;align-items:stretch}.hero-actions button{width:100%}
+ .wrap{padding:42px 5%}.cards{grid-template-columns:1fr 1fr;gap:10px}
+ .card-image{height:110px}.card-body{padding:12px}.card-body h3{font-size:21px}
+ .form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}
+ .society-card{grid-template-columns:85px 1fr;padding:15px;gap:13px}
+ .society-card img{width:82px;height:105px}.society-card h3{font-size:23px}
+ .panel{padding:18px}.stat strong{font-size:22px}.stat span{font-size:8px}
 }
 </style>
 </head>
-
 <body>
-<div id="stars"></div>
-
+<div class="topline"></div>
 <header>
-  <div class="brand">
-    <img src="IMG-20261028-WA0062.jpg" alt="Brasão da universidade"
-      onerror="this.style.display='none'">
-    <div>
-      <div class="brand-title">University of Pennsylvania</div>
-      <div class="brand-sub">UNIVERSITY ROLEPLAY · EST. 1740</div>
-    </div>
+ <div class="header-inner">
+  <div class="brand" onclick="go('home')" role="button" aria-label="Voltar ao início">
+   <img src="IMG-20261028-WA0062.jpg" alt="Brasão da universidade">
+   <div><div class="brand-name">University of<br>Pennsylvania</div><div class="brand-sub">UNIVERSITY ROLEPLAY · EST. 1740</div></div>
   </div>
-  <div class="header-actions">
-    <button class="btn secondary smallbtn" onclick="go('home')">Início</button>
-    <button class="btn secondary smallbtn" onclick="go('account')">Minha conta</button>
-    <button class="btn smallbtn" id="headerLogin" onclick="go('account')">Entrar</button>
-  </div>
+  <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Abrir menu">☰</button>
+  <nav id="mainNav">
+   <button class="nav-btn active" data-screen="home" onclick="go('home')">Início</button>
+   <button class="nav-btn" data-screen="university" onclick="go('university')">A universidade</button>
+   <button class="nav-btn" data-screen="societies" onclick="go('societies')">Sociedades</button>
+   <button class="nav-btn" data-screen="life" onclick="go('life')">Vida universitária</button>
+   <button class="nav-btn" data-screen="admission" onclick="go('admission')">Personagens</button>
+   <button class="nav-btn" data-screen="account" onclick="go('account')">Minha conta</button>
+  </nav>
+ </div>
 </header>
 
-<div class="app">
-  <nav aria-label="Navegação principal">
-    <button class="btn ghost smallbtn" onclick="go('university')">A universidade</button>
-    <button class="btn ghost smallbtn" onclick="go('societies')">Sociedades</button>
-    <button class="btn ghost smallbtn" onclick="go('life')">Vida universitária</button>
-    <button class="btn ghost smallbtn" onclick="go('admission')">Criar personagem</button>
-    <button class="btn ghost smallbtn" onclick="go('secret')">Área confidencial</button>
-    <button class="btn ghost smallbtn" onclick="go('dashboard')">Minhas fichas</button>
-  </nav>
+<main>
+<section id="home" class="screen active">
+ <div class="hero">
+  <div class="hero-image"></div>
+  <div class="hero-content">
+   <div class="eyebrow">Philadelphia · Pennsylvania</div>
+   <h1>Tradição que inspira.<br>Histórias que <span>perduram.</span></h1>
+   <p>Na University of Pennsylvania, cada corredor guarda segredos, cada sociedade molda destinos e cada escolha pode mudar o rumo da sua história. Entre para um universo de prestígio, rivalidades, alianças e ambição.</p>
+   <div class="hero-actions">
+    <button class="gold-btn" onclick="go('university')">Explorar a universidade ↗</button>
+    <button class="outline-btn" onclick="go('admission')">Criar personagem</button>
+   </div>
+  </div>
+  <div class="hero-note">A SUA HISTÓRIA COMEÇA AQUI</div>
+ </div>
 
-  <!-- INÍCIO -->
-  <section id="home" class="screen active">
-    <div class="hero">
-      <div class="hero-inner">
-        <div class="eyebrow">Philadelphia · Pennsylvania</div>
-        <h1>O futuro pertence<br>àqueles que <span class="gold">ousam.</span></h1>
-        <p>
-          Uma universidade de prestígio, tradição e ambição. Por trás das
-          fachadas históricas, cada estudante guarda seus próprios sonhos,
-          segredos e disputas. Aqui, toda escolha pode mudar uma história.
-        </p>
-        <div class="rule"></div>
-        <div class="row">
-          <button class="btn" onclick="go('university')">Explorar a universidade →</button>
-          <button class="btn secondary" onclick="go('admission')">Iniciar minha jornada</button>
-        </div>
-      </div>
-    </div>
+ <div class="stats">
+  <div class="stat"><strong>1740</strong><span>Tradição e legado</span></div>
+  <div class="stat"><strong>12</strong><span>Faculdades e escolas</span></div>
+  <div class="stat"><strong>Sociedades</strong><span>Alianças e influência</span></div>
+  <div class="stat"><strong>Philadelphia</strong><span>Uma cidade viva</span></div>
+ </div>
 
-    <div class="grid">
-      <article class="card">
-        <div class="eyebrow">01 · Tradição</div>
-        <h3>Uma história de prestígio</h3>
-        <p>Uma instituição marcada pela excelência acadêmica, influência e legado.</p>
-        <button class="btn secondary smallbtn" onclick="go('university')">Conhecer</button>
-      </article>
-      <article class="card">
-        <div class="eyebrow">02 · Pertencimento</div>
-        <h3>Sociedades exclusivas</h3>
-        <p>Alianças, rivalidades e círculos sociais que moldam a experiência estudantil.</p>
-        <button class="btn secondary smallbtn" onclick="go('societies')">Descobrir</button>
-      </article>
-      <article class="card">
-        <div class="eyebrow">03 · Sua história</div>
-        <h3>Seu lugar começa aqui</h3>
-        <p>Crie seu personagem, envie a ficha e acompanhe o processo de aprovação.</p>
-        <button class="btn secondary smallbtn" onclick="go('admission')">Criar ficha</button>
-      </article>
-    </div>
+ <section class="wrap">
+  <div class="intro-grid">
+   <div class="intro-photo"><div class="photo-caption">“Mais que uma universidade, um mundo de possibilidades.”</div></div>
+   <div>
+    <div class="eyebrow">Sobre a universidade</div>
+    <h2>Conhecimento.<br>Ambição. Conexões.</h2>
+    <p>Por trás das fachadas históricas, existe um universo de oportunidades, disputas e relações que podem definir o futuro de cada estudante. A vida acadêmica é apenas uma parte da experiência: reputações são construídas, segredos circulam e alianças podem mudar tudo.</p>
+    <p>Este é um universo ficcional de roleplay inspirado na atmosfera universitária da University of Pennsylvania. As tramas e organizações do jogo pertencem ao RPG.</p>
+    <div class="rule"></div>
+    <button class="outline-btn" onclick="go('university')">Conheça nossa história →</button>
+   </div>
+  </div>
+ </section>
 
-    <div class="section center">
-      <img class="hero-mark" src="IMG-20261028-WA0062.jpg" alt="Brasão"
-        onerror="this.style.display='none'">
-      <div class="eyebrow">Knowledge · Ambition · Legacy</div>
-      <h2>Mais do que uma universidade.</h2>
-      <p>Um universo de histórias esperando para ser escrito.</p>
-    </div>
-  </section>
+ <section class="feature-band">
+  <div class="wrap">
+   <div class="section-head"><div><div class="eyebrow">Explore o campus</div><h2>Cada caminho leva a uma nova história.</h2></div><p>Descubra os espaços, conheça as sociedades e encontre o seu lugar nesta comunidade.</p></div>
+   <div class="cards">
+    <article class="card card-click" onclick="go('university')"><div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1564981797816-1043664bf78d?auto=format&fit=crop&w=700&q=80')"></div><div class="card-body"><h3>A universidade</h3><p>História, valores e tradição.</p></div></article>
+    <article class="card card-click" onclick="go('societies')"><div class="card-image" style="background-image:url('IMG-20261028-WA0069.jpg')"></div><div class="card-body"><h3>Sociedades</h3><p>Alianças, rivalidades e prestígio.</p></div></article>
+    <article class="card card-click" onclick="go('life')"><div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=700&q=80')"></div><div class="card-body"><h3>Vida universitária</h3><p>Eventos, rotinas e experiências.</p></div></article>
+    <article class="card card-click" onclick="go('admission')"><div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1455390582262-044cdeel277a?auto=format&fit=crop&w=700&q=80')"></div><div class="card-body"><h3>Criar personagem</h3><p>Comece a sua jornada.</p></div></article>
+   </div>
+  </div>
+ </section>
 
-  <!-- UNIVERSIDADE -->
-  <section id="university" class="screen">
-    <div class="section">
-      <div class="eyebrow">Conheça a instituição</div>
-      <h1>Tradição que inspira.<br><span class="gold">Ambição que transforma.</span></h1>
-      <p>
-        Este é um universo ficcional de RPG inspirado no ambiente universitário
-        da University of Pennsylvania. As páginas, os acontecimentos e as
-        relações narrativas pertencem ao jogo e não representam um portal oficial
-        da universidade real.
-      </p>
-    </div>
-    <div class="grid two">
-      <article class="card">
-        <div class="eyebrow">Excelência</div>
-        <h3>Vida acadêmica</h3>
-        <p>Escolha uma área de estudo, construa relações com colegas e professores
-        e encontre oportunidades para desenvolver sua trajetória.</p>
-      </article>
-      <article class="card">
-        <div class="eyebrow">Comunidade</div>
-        <h3>Uma vida além das aulas</h3>
-        <p>Eventos, sociedades, amizades, rivalidades e decisões pessoais
-        tornam cada experiência diferente.</p>
-      </article>
-      <article class="card">
-        <div class="eyebrow">Reputação</div>
-        <h3>O peso das escolhas</h3>
-        <p>Seu personagem pode construir uma reputação admirável ou se envolver
-        em situações que mudam sua posição dentro da comunidade.</p>
-      </article>
-      <article class="card">
-        <div class="eyebrow">Narrativa</div>
-        <h3>Histórias compartilhadas</h3>
-        <p>Use sua ficha para apresentar o personagem à administração e
-        preparar sua participação nas tramas do RPG.</p>
-      </article>
-    </div>
-    <div class="section">
-      <button class="btn" onclick="go('admission')">Solicitar admissão</button>
-    </div>
-  </section>
+ <section class="wrap">
+  <div class="eyebrow">Mais do que aulas</div><h2>Um campus. Mil possibilidades.</h2>
+  <div class="feature-grid">
+   <div class="feature"><div class="symbol">✦</div><h3>Reputação</h3><p>Suas escolhas, relações e atitudes ajudam a construir a reputação do seu personagem.</p></div>
+   <div class="feature"><div class="symbol">♜</div><h3>Sociedades</h3><p>Descubra grupos seletivos, tradições internas e disputas por influência.</p></div>
+   <div class="feature"><div class="symbol">✒</div><h3>Histórias</h3><p>Crie conexões, participe de eventos e desenvolva tramas com outros jogadores.</p></div>
+  </div>
+ </section>
 
-  <!-- SOCIEDADES -->
-  <section id="societies" class="screen">
-    <div class="section">
-      <div class="eyebrow">Círculos de influência</div>
-      <h1>As <span class="gold">sociedades</span></h1>
-      <p>Escolha uma sociedade para conhecer seu brasão e sua identidade dentro do RPG.</p>
-    </div>
-    <div class="grid">
-      <article class="card center">
-        <img class="crest" src="IMG-20261028-WA0069.jpg" alt="Brasão Phi Sigma Pi"
-          onerror="this.style.display='none'">
-        <div class="eyebrow">Sociedade</div>
-        <h3>Phi Sigma Pi</h3>
-        <p>Uma comunidade de tradição, ambição e conexões.</p>
-        <button class="btn secondary" onclick="societyDetail('phi')">Ver sociedade</button>
-      </article>
-      <article class="card center">
-        <img class="crest" src="IMG-20261028-WA0071.jpg" alt="Brasão Kappa Kappa Gamma"
-          onerror="this.style.display='none'">
-        <div class="eyebrow">Fraternidade feminina</div>
-        <h3>Kappa Kappa Gamma</h3>
-        <p>Identidade, vínculos e presença social.</p>
-        <button class="btn secondary" onclick="societyDetail('kappa')">Ver sociedade</button>
-      </article>
-      <article class="card center">
-        <img class="crest" src="IMG-20261028-WA0073.jpg" alt="Brasão Alpha Kappa Psi"
-          onerror="this.style.display='none'">
-        <div class="eyebrow">Sociedade</div>
-        <h3>Alpha Kappa Psi</h3>
-        <p>Ambição, estratégia e relações profissionais.</p>
-        <button class="btn secondary" onclick="societyDetail('alpha')">Ver sociedade</button>
-      </article>
-      <article class="card center">
-        <img class="crest" src="IMG-20261028-WA0075.jpg" alt="Brasão Sigma Chi"
-          onerror="this.style.display='none'">
-        <div class="eyebrow">Fraternidade</div>
-        <h3>Sigma Chi</h3>
-        <p>Companheirismo, tradição e lealdade.</p>
-        <button class="btn secondary" onclick="societyDetail('sigma')">Ver sociedade</button>
-      </article>
-    </div>
-  </section>
+ <section class="feature-band">
+  <div class="wrap" style="text-align:center">
+   <div class="eyebrow">Seu próximo capítulo</div><h2>O campus está esperando por você.</h2>
+   <p style="max-width:650px;margin:0 auto 25px">Crie seu personagem, construa relações e descubra o que existe além das portas da universidade.</p>
+   <button class="gold-btn" onclick="go('admission')">Começar minha jornada →</button>
+  </div>
+ </section>
+</section>
 
-  <!-- DETALHES DAS SOCIEDADES -->
-  <section id="societyDetail" class="screen">
-    <button class="btn secondary smallbtn" onclick="go('societies')">← Voltar às sociedades</button>
-    <div class="section center">
-      <img id="societyCrest" class="hero-mark" src="" alt="Brasão da sociedade">
-      <div class="eyebrow">Sociedade universitária</div>
-      <h1 id="societyTitle">Sociedade</h1>
-      <p id="societyDescription"></p>
-    </div>
-    <div class="grid two">
-      <article class="card">
-        <h3>Identidade</h3>
-        <p id="societyIdentity"></p>
-      </article>
-      <article class="card">
-        <h3>Faça parte da história</h3>
-        <p>A escolha da sociedade pode ser indicada na ficha do seu personagem.
-        A participação está sujeita à aprovação e às regras do RPG.</p>
-        <button class="btn" onclick="go('admission')">Indicar na ficha</button>
-      </article>
-    </div>
-  </section>
+<section id="university" class="screen">
+ <div class="subhero"><div class="eyebrow">Conheça o campus</div><h1>Uma história construída<br>por gerações.</h1><p style="max-width:650px">Tradição acadêmica, arquitetura histórica e uma comunidade onde cada estudante escreve o próprio legado.</p></div>
+ <div class="wrap">
+  <div class="intro-grid">
+   <div><div class="eyebrow">Nossa identidade</div><h2>Excelência é apenas o começo.</h2><p>A University of Pennsylvania, neste RPG, é o cenário de uma comunidade intensa e competitiva. O campus reúne estudantes de diferentes origens, interesses e ambições, todos tentando encontrar seu espaço.</p><p>Entre bibliotecas, salões, residências e eventos, os personagens criam vínculos, enfrentam desafios e descobrem que o prestígio também tem seu preço.</p><button class="gold-btn" onclick="go('admission')">Conhecer a comunidade</button></div>
+   <div class="intro-photo" style="background-image:url('https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?auto=format&fit=crop&w=1000&q=80')"></div>
+  </div>
+  <hr>
+  <div class="section-head"><div><div class="eyebrow">Espaços do campus</div><h2>Lugares para descobrir.</h2></div></div>
+  <div class="cards">
+   <article class="card"><div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=700&q=80')"></div><div class="card-body"><h3>Biblioteca</h3><p>Silêncio, pesquisa e encontros inesperados.</p></div></article>
+   <article class="card"><div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=700&q=80')"></div><div class="card-body"><h3>Área acadêmica</h3><p>Onde objetivos e ambições se encontram.</p></div></article>
+   <article class="card"><div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=700&q=80')"></div><div class="card-body"><h3>Eventos</h3><p>Noites que podem mudar relações.</p></div></article>
+   <article class="card"><div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80')"></div><div class="card-body"><h3>Vida social</h3><p>Conversas, encontros e novos vínculos.</p></div></article>
+  </div>
+ </div>
+</section>
 
-  <!-- VIDA UNIVERSITÁRIA -->
-  <section id="life" class="screen">
-    <div class="section">
-      <div class="eyebrow">Além das salas de aula</div>
-      <h1>Vida <span class="gold">universitária</span></h1>
-      <p>Espaços narrativos para desenvolver relações, organizar encontros e construir novas tramas.</p>
-    </div>
-    <div class="grid">
-      <article class="card">
-        <div class="eyebrow">01</div><h3>Eventos</h3>
-        <p>Festas, recepções, encontros acadêmicos e celebrações podem servir de cenário para novas histórias.</p>
-      </article>
-      <article class="card">
-        <div class="eyebrow">02</div><h3>Relações</h3>
-        <p>Amizades, romances, alianças e rivalidades se desenvolvem conforme as escolhas dos jogadores.</p>
-      </article>
-      <article class="card">
-        <div class="eyebrow">03</div><h3>Oportunidades</h3>
-        <p>Clubes, projetos, atividades extracurriculares e desafios acadêmicos ajudam a definir a trajetória do personagem.</p>
-      </article>
-    </div>
-    <div class="section card">
-      <div class="eyebrow">Sua participação</div>
-      <h3>Prepare seu personagem</h3>
-      <p>Conte à administração quem ele é, quais são seus objetivos e como pretende participar da vida universitária.</p>
-      <button class="btn" onclick="go('admission')">Preencher ficha</button>
-    </div>
-  </section>
+<section id="societies" class="screen">
+ <div class="subhero"><div class="eyebrow">Prestígio · Tradição · Influência</div><h1>As sociedades.</h1><p style="max-width:700px">Mais do que um símbolo, uma sociedade representa identidade, lealdade e uma rede de relações. Escolha com cuidado onde sua história vai se entrelaçar.</p></div>
+ <div class="wrap">
+  <div class="notice">As sociedades abaixo fazem parte do universo ficcional do RPG. Consulte as regras da comunidade antes de definir a afiliação do seu personagem.</div>
+  <div class="society-grid">
+   <article class="society-card" onclick="societyDetail('Phi Sigma Pi')"><img src="IMG-20261028-WA0069.jpg" alt="Brasão Phi Sigma Pi"><div><div class="eyebrow">Conhecimento · Liderança</div><h3>Phi Sigma Pi</h3><p>Uma sociedade de tradição acadêmica, ambição e conexões. Seus membros valorizam a excelência e a influência construída ao longo do tempo.</p><span class="status">Ver detalhes →</span></div></article>
+   <article class="society-card" onclick="societyDetail('Kappa Kappa Gamma')"><img src="IMG-20261028-WA0071.jpg" alt="Brasão Kappa Kappa Gamma"><div><div class="eyebrow">Irmandade · Tradição</div><h3>Kappa Kappa Gamma</h3><p>Uma irmandade marcada por vínculos, presença social e uma identidade própria dentro da comunidade universitária.</p><span class="status">Ver detalhes →</span></div></article>
+   <article class="society-card" onclick="societyDetail('Alpha Kappa Psi')"><img src="IMG-20261028-WA0073.jpg" alt="Brasão Alpha Kappa Psi"><div><div class="eyebrow">Ambição · Estratégia</div><h3>Alpha Kappa Psi</h3><p>Uma comunidade de perfis determinados, que valoriza iniciativa, estratégia e a construção de oportunidades.</p><span class="status">Ver detalhes →</span></div></article>
+   <article class="society-card" onclick="societyDetail('Sigma Chi')"><img src="IMG-20261028-WA0075.jpg" alt="Brasão Sigma Chi"><div><div class="eyebrow">Lealdade · Fraternidade</div><h3>Sigma Chi</h3><p>Uma fraternidade cuja identidade se constrói por lealdade, companheirismo e relações que ultrapassam a sala de aula.</p><span class="status">Ver detalhes →</span></div></article>
+  </div>
+  <div id="societyDetail" class="panel hidden"></div>
+ </div>
+</section>
 
-  <!-- CONTA -->
-  <section id="account" class="screen">
-    <div class="section center">
-      <div class="eyebrow">Área do jogador</div>
-      <h1>Sua <span class="gold">conta</span></h1>
-      <p>Entre na sua conta ou crie um cadastro para enviar e acompanhar fichas.</p>
-    </div>
-    <div class="card form">
-      <div class="grid two">
-        <div>
-          <h2>Entrar</h2>
-          <form id="loginForm">
-            <div class="field">
-              <label for="loginEmail">E-mail</label>
-              <input id="loginEmail" type="email" autocomplete="email" required>
-            </div>
-            <div class="field">
-              <label for="loginPassword">Senha</label>
-              <input id="loginPassword" type="password" autocomplete="current-password" required>
-            </div>
-            <button class="btn" type="submit">Entrar na conta</button>
-          </form>
-        </div>
-        <div>
-          <h2>Criar conta</h2>
-          <form id="signupForm">
-            <div class="field">
-              <label for="signupName">Nome de jogador</label>
-              <input id="signupName" maxlength="60" required>
-            </div>
-            <div class="field">
-              <label for="signupEmail">E-mail</label>
-              <input id="signupEmail" type="email" autocomplete="email" required>
-            </div>
-            <div class="field">
-              <label for="signupPassword">Senha (mínimo de 8 caracteres)</label>
-              <input id="signupPassword" type="password" minlength="8" autocomplete="new-password" required>
-            </div>
-            <button class="btn" type="submit">Criar conta</button>
-          </form>
-        </div>
-      </div>
-      <div id="accountMessage" class="status" role="status"></div>
-      <p class="form-note">Se a confirmação de e-mail estiver ativada no Supabase, será necessário confirmar o endereço antes de entrar.</p>
-    </div>
-  </section>
+<section id="life" class="screen">
+ <div class="subhero"><div class="eyebrow">A vida além das salas</div><h1>Faça parte da história.</h1><p>Eventos, amizades, rivalidades, descobertas e oportunidades que transformam uma experiência acadêmica em algo inesquecível.</p></div>
+ <div class="wrap">
+  <div class="cards">
+   <article class="card"><div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=700&q=80')"></div><div class="card-body"><h3>Eventos sociais</h3><p>Recepções, festas e encontros que aproximam ou afastam personagens.</p></div></article>
+   <article class="card"><div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=700&q=80')"></div><div class="card-body"><h3>Vida acadêmica</h3><p>Projetos, provas, aulas e desafios pessoais.</p></div></article>
+   <article class="card"><div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=700&q=80')"></div><div class="card-body"><h3>Conexões</h3><p>Amizades, romances, conflitos e alianças.</p></div></article>
+   <article class="card"><div class="card-image" style="background-image:url('https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=700&q=80')"></div><div class="card-body"><h3>Tramas</h3><p>Histórias coletivas que fazem o universo evoluir.</p></div></article>
+  </div>
+  <div class="panel"><div class="eyebrow">Participe</div><h2>Uma nova história começa com você.</h2><p>Crie sua ficha para entrar na comunidade. Depois da análise da administração, você poderá desenvolver sua trajetória no RPG.</p><button class="gold-btn" onclick="go('admission')">Criar personagem →</button></div>
+ </div>
+</section>
 
-  <!-- FICHA DO PERSONAGEM -->
-  <section id="admission" class="screen">
-    <div class="section">
-      <div class="eyebrow">Processo de admissão · RPG</div>
-      <h1>Ficha do <span class="gold">personagem</span></h1>
-      <p>Preencha os dados com atenção. A foto será selecionada da galeria do seu aparelho. Os campos marcados com * são obrigatórios.</p>
-    </div>
-    <div id="admissionLoginNotice" class="status">Para enviar a ficha, primeiro entre ou crie sua conta.</div>
+<section id="admission" class="screen">
+ <div class="subhero"><div class="eyebrow">Registro de personagem</div><h1>Seu lugar no campus.</h1><p>Preencha os dados com atenção. Sua ficha será enviada para análise e ficará pendente até a administração avaliá-la.</p></div>
+ <div class="wrap">
+  <div class="notice">Você precisa entrar na sua conta antes de enviar a ficha. Use uma conta pessoal sua; não compartilhe sua senha com ninguém.</div>
+  <form id="characterForm" class="panel">
+   <h2>01. Informações do jogador</h2>
+   <div class="form-grid">
+    <div class="field"><label for="playerUsername">Nome do jogador</label><input id="playerUsername" required maxlength="60" placeholder="Como você quer ser chamado?"></div>
+    <div class="field"><label for="playerLast4">Quatro dígitos de identificação</label><input id="playerLast4" required minlength="4" maxlength="4" pattern="[0-9]{4}" inputmode="numeric" placeholder="0000"></div>
+    <div class="field"><label for="playerAge">Sua idade</label><input id="playerAge" type="number" min="18" max="99" required placeholder="Idade real do jogador"></div>
+    <div class="field"><label for="availability">Disponibilidade</label><select id="availability" required><option value="">Selecione</option><option>Diária</option><option>Algumas vezes por semana</option><option>Fins de semana</option><option>Variável</option></select></div>
+   </div>
+   <hr>
+   <h2>02. Informações do personagem</h2>
+   <div class="form-grid">
+    <div class="field"><label for="characterName">Nome completo</label><input id="characterName" required maxlength="100" placeholder="Nome do personagem"></div>
+    <div class="field"><label for="characterAge">Idade do personagem</label><input id="characterAge" type="number" min="18" max="99" required placeholder="Idade"></div>
+    <div class="field"><label for="faceclaim">Faceclaim / referência visual</label><input id="faceclaim" required maxlength="120" placeholder="Nome da pessoa usada como referência"></div>
+    <div class="field"><label for="course">Curso</label><input id="course" required maxlength="120" placeholder="Curso universitário"></div>
+    <div class="field full"><label for="characterPhoto">Foto do personagem</label><input id="characterPhoto" type="file" accept="image/jpeg,image/png,image/webp" required><img id="photoPreview" alt="Prévia da foto"><span class="form-note">Escolha uma imagem da galeria do celular. Formatos JPG, PNG ou WEBP; máximo de 5 MB.</span></div>
+    <div class="field full"><label for="biography">História / biografia</label><textarea id="biography" required maxlength="12000" placeholder="Conte a história do personagem, sua origem, objetivos e trajetória..."></textarea></div>
+    <div class="field full"><label for="originalScene">Cena de apresentação original</label><textarea id="originalScene" required maxlength="10000" placeholder="Escreva uma cena original para apresentar seu personagem..."></textarea></div>
+    <div class="field full"><label for="personality">Personalidade</label><textarea id="personality" required maxlength="6000" placeholder="Qualidades, defeitos, hábitos e contradições..."></textarea></div>
+    <div class="field"><label for="extraOne">Atividade extracurricular 1</label><input id="extraOne" maxlength="100" placeholder="Esporte, clube, atividade..."></div>
+    <div class="field"><label for="extraTwo">Atividade extracurricular 2</label><input id="extraTwo" maxlength="100" placeholder="Opcional"></div>
+    <div class="field"><label for="fraternityChoice">Sociedade desejada</label><select id="fraternityChoice"><option value="">Ainda não escolhi</option><option>Phi Sigma Pi</option><option>Kappa Kappa Gamma</option><option>Alpha Kappa Psi</option><option>Sigma Chi</option></select></div>
+    <div class="field"><label for="acceptDeath">Permite morte do personagem?</label><select id="acceptDeath" required><option value="">Selecione</option><option value="true">Sim, sob as regras do RPG</option><option value="false">Não</option></select></div>
+   </div>
+   <div class="notice">A ficha será enviada como pendente. Enviar a ficha não significa aprovação automática nem garante vaga em uma sociedade.</div>
+   <button class="gold-btn" type="submit">Enviar ficha para análise →</button>
+  </form>
+ </div>
+</section>
 
-    <form id="characterForm" class="card form">
-      <div class="eyebrow">01 · Identificação do jogador</div>
-      <div class="form-grid">
-        <div class="field">
-          <label for="playerUsername">Nome de jogador *</label>
-          <input id="playerUsername" maxlength="60" required>
-        </div>
-        <div class="field">
-          <label for="playerLast4">Código pessoal de 4 caracteres (opcional)</label>
-          <input id="playerLast4" maxlength="4" placeholder="Ex.: K7M2">
-        </div>
-        <div class="field">
-          <label for="playerAge">Sua idade *</label>
-          <input id="playerAge" type="number" min="18" max="120" required>
-        </div>
-        <div class="field">
-          <label for="availability">Disponibilidade para jogar *</label>
-          <select id="availability" required>
-            <option value="">Selecione</option>
-            <option>Alta</option><option>Moderada</option><option>Baixa</option>
-          </select>
-        </div>
-      </div>
+<section id="secret" class="screen">
+ <div class="subhero"><div class="eyebrow">Acesso restrito</div><h1>Área confidencial.</h1><p>Segredos, traumas e medos do personagem não devem aparecer na biografia pública.</p></div>
+ <div class="wrap">
+  <div class="notice">Esta área exige login. O conteúdo é enviado separadamente da ficha pública. A privacidade real também depende das permissões de segurança configuradas no banco de dados.</div>
+  <form id="secretForm" class="panel">
+   <div class="field"><label for="secretCharacter">Nome do personagem</label><input id="secretCharacter" required maxlength="100" placeholder="Nome exato do personagem"></div>
+   <div class="field"><label for="secretText">Segredo</label><textarea id="secretText" maxlength="8000" placeholder="O que o personagem esconde dos demais?"></textarea></div>
+   <div class="field"><label for="traumaText">Trauma / passado delicado</label><textarea id="traumaText" maxlength="8000" placeholder="Conte apenas o que for necessário para a trama."></textarea></div>
+   <div class="field"><label for="phobiaText">Medos / fobias</label><textarea id="phobiaText" maxlength="3000" placeholder="Medos que podem influenciar a interpretação."></textarea></div>
+   <button class="gold-btn" type="submit">Salvar informações confidenciais</button>
+  </form>
+ </div>
+</section>
 
-      <div class="rule"></div>
-      <div class="eyebrow">02 · Dados do personagem</div>
-      <div class="form-grid">
-        <div class="field">
-          <label for="characterName">Nome completo do personagem *</label>
-          <input id="characterName" maxlength="100" required>
-        </div>
-        <div class="field">
-          <label for="characterAge">Idade do personagem *</label>
-          <input id="characterAge" type="number" min="18" max="100" required>
-        </div>
-        <div class="field">
-          <label for="faceclaim">Faceclaim *</label>
-          <input id="faceclaim" maxlength="120" required placeholder="Nome da referência visual">
-        </div>
-        <div class="field">
-          <label for="course">Curso *</label>
-          <select id="course" required>
-            <option value="">Selecione um curso</option>
-            <option>Administração</option><option>Antropologia</option>
-            <option>Arquitetura</option><option>Artes</option>
-            <option>Biologia</option><option>Ciência da Computação</option>
-            <option>Ciência Política</option><option>Comunicação</option>
-            <option>Direito</option><option>Economia</option>
-            <option>Educação</option><option>Engenharia</option>
-            <option>Enfermagem</option><option>Filosofia</option>
-            <option>Física</option><option>História</option>
-            <option>Jornalismo</option><option>Literatura</option>
-            <option>Matemática</option><option>Medicina</option>
-            <option>Psicologia</option><option>Relações Internacionais</option>
-            <option>Outro</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="fraternityChoice">Sociedade / fraternidade</label>
-          <select id="fraternityChoice">
-            <option value="">Ainda não escolheu</option>
-            <option>Phi Sigma Pi</option>
-            <option>Kappa Kappa Gamma</option>
-            <option>Alpha Kappa Psi</option>
-            <option>Sigma Chi</option>
-            <option>Nenhuma por enquanto</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="paymentStatus">Categoria de ingresso</label>
-          <select id="paymentStatus">
-            <option value="pending">A definir</option>
-            <option value="scholarship">Bolsista</option>
-            <option value="paying">Pagante</option>
-          </select>
-        </div>
-        <div class="field full">
-          <label for="photoFile">Foto do personagem * (escolher da galeria)</label>
-          <input id="photoFile" type="file" accept="image/jpeg,image/png,image/webp" required>
-          <span class="form-note">Formatos: JPG, PNG ou WEBP. Tamanho máximo: 5 MB.</span>
-          <img id="photoPreview" class="preview" alt="Prévia da foto selecionada">
-        </div>
-        <div class="field full">
-          <label for="biography">História / biografia *</label>
-          <textarea id="biography" maxlength="12000" required placeholder="Conte a história do personagem..."></textarea>
-        </div>
-        <div class="field full">
-          <label for="personalityText">Personalidade *</label>
-          <textarea id="personalityText" maxlength="6000" required placeholder="Descreva os traços de personalidade..."></textarea>
-        </div>
-        <div class="field">
-          <label for="extracurricularOne">Atividade extracurricular 1</label>
-          <input id="extracurricularOne" maxlength="150">
-        </div>
-        <div class="field">
-          <label for="extracurricularTwo">Atividade extracurricular 2</label>
-          <input id="extracurricularTwo" maxlength="150">
-        </div>
-        <div class="field full">
-          <label for="originalScene">Cena de apresentação / interpretação inicial</label>
-          <textarea id="originalScene" maxlength="12000" placeholder="Se o RPG pedir uma cena de apresentação, escreva aqui."></textarea>
-        </div>
-      </div>
+<section id="account" class="screen">
+ <div class="subhero"><div class="eyebrow">Área do jogador</div><h1>Minha conta.</h1><p>Entre para enviar sua ficha, consultar o andamento e acessar suas informações.</p></div>
+ <div class="wrap">
+  <div id="authPanel" class="panel">
+   <div class="form-grid">
+    <div>
+     <div class="eyebrow">Bem-vindo de volta</div><h2>Entrar</h2>
+     <form id="loginForm">
+      <div class="field"><label for="loginEmail">E-mail</label><input id="loginEmail" type="email" autocomplete="email" required placeholder="seu@email.com"></div>
+      <div class="field"><label for="loginPassword">Senha</label><input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Sua senha"></div>
+      <button class="gold-btn" type="submit">Entrar na minha conta</button>
+     </form>
+    </div>
+    <div>
+     <div class="eyebrow">Novo por aqui?</div><h2>Criar conta</h2>
+     <form id="signupForm">
+      <div class="field"><label for="signupUsername">Nome de jogador</label><input id="signupUsername" required maxlength="60" placeholder="Seu nome no RPG"></div>
+      <div class="field"><label for="signupEmail">E-mail</label><input id="signupEmail" type="email" autocomplete="email" required placeholder="seu@email.com"></div>
+      <div class="field"><label for="signupPassword">Criar senha</label><input id="signupPassword" type="password" minlength="8" autocomplete="new-password" required placeholder="Mínimo de 8 caracteres"></div>
+      <button class="outline-btn" type="submit">Criar minha conta</button>
+     </form>
+    </div>
+   </div>
+   <p class="form-note">Use um e-mail válido. Dependendo das configurações do projeto, será necessário confirmar o cadastro pelo e-mail.</p>
+  </div>
+  <div id="dashboard" class="panel hidden">
+   <div class="eyebrow">Seu espaço</div><h2 id="welcomeUser">Bem-vindo.</h2><p id="accountEmail"></p>
+   <div style="display:flex;gap:10px;flex-wrap:wrap;margin:20px 0">
+    <button class="gold-btn" onclick="go('admission')">Criar / enviar personagem</button>
+    <button class="outline-btn" onclick="go('secret')">Área confidencial</button>
+    <button class="outline-btn" onclick="go('admin')">Painel administrativo</button>
+    <button class="text-btn" onclick="logout()">Sair da conta</button>
+   </div>
+   <h3>Minhas fichas</h3><div id="myCharacters" class="list"><p>Carregando suas fichas...</p></div>
+  </div>
+ </div>
+</section>
 
-      <div class="field">
-        <label>
-          <input id="acceptsCharacterDeath" type="checkbox">
-          Aceito que o personagem possa enfrentar consequências narrativas graves, inclusive morte, conforme as regras do RPG.
-        </label>
-      </div>
-
-      <div class="status">Ao enviar, a ficha ficará pendente para avaliação da administração. Enviar a ficha não significa que ela foi aprovada.</div>
-      <button class="btn" type="submit" id="submitCharacter">Enviar ficha para avaliação</button>
-      <div id="characterMessage" class="status" role="status"></div>
-    </form>
-  </section>
-
-  <!-- SEGREDOS CONFIDENCIAIS -->
-  <section id="secret" class="screen">
-    <div class="section">
-      <div class="eyebrow">Acesso restrito</div>
-      <h1>O que ninguém <span class="gold">deve saber</span></h1>
-      <p>Esta área é destinada às informações confidenciais do personagem. Não inclua aqui informações pessoais reais suas.</p>
-    </div>
-    <div class="card form">
-      <div class="status">Os segredos devem ter permissões próprias no banco de dados. O formulário abaixo envia os dados para a tabela confidencial do RPG; a proteção efetiva depende das políticas de segurança configuradas no Supabase.</div>
-      <form id="secretForm">
-        <div class="field">
-          <label for="secretCharacterName">Nome do personagem *</label>
-          <input id="secretCharacterName" maxlength="100" required>
-        </div>
-        <div class="field">
-          <label for="secretText">Segredo *</label>
-          <textarea id="secretText" maxlength="8000" required placeholder="Qual é o segredo que o personagem esconde?"></textarea>
-        </div>
-        <div class="field">
-          <label for="traumaText">Trauma ou acontecimento marcante</label>
-          <textarea id="traumaText" maxlength="8000"></textarea>
-        </div>
-        <div class="field">
-          <label for="phobiaText">Medo ou fobia</label>
-          <textarea id="phobiaText" maxlength="4000"></textarea>
-        </div>
-        <button class="btn" type="submit">Salvar informações confidenciais</button>
-      </form>
-      <div id="secretMessage" class="status" role="status"></div>
-    </div>
-  </section>
-
-  <!-- ÁREA DO JOGADOR -->
-  <section id="dashboard" class="screen">
-    <div class="section">
-      <div class="eyebrow">Painel pessoal</div>
-      <h1>Minha <span class="gold">jornada</span></h1>
-      <p>Acompanhe suas fichas e o retorno da administração.</p>
-    </div>
-    <div id="dashboardContent" class="card">
-      <div class="empty">Entre na sua conta para visualizar suas fichas.</div>
-      <button class="btn" onclick="go('account')">Entrar</button>
-    </div>
-    <div class="section">
-      <button class="btn secondary" onclick="go('admission')">Enviar outra ficha</button>
-      <button class="btn secondary" onclick="go('secret')">Área confidencial</button>
-      <button class="btn danger" onclick="signOut()">Sair da conta</button>
-    </div>
-    <div id="dashboardMessage" class="status" role="status"></div>
-  </section>
-
-  <!-- PAINEL ADMIN -->
-  <section id="admin" class="screen">
-    <div class="section">
-      <div class="eyebrow">Área restrita</div>
-      <h1>Painel da <span class="gold">administração</span></h1>
-      <p>Somente contas autorizadas como administradoras devem ter permissão para revisar fichas.</p>
-    </div>
-    <div id="adminContent" class="card">
-      <div class="empty">Faça login com uma conta autorizada para acessar este painel.</div>
-    </div>
-    <div id="adminMessage" class="status" role="status"></div>
-  </section>
-</div>
+<section id="admin" class="screen">
+ <div class="subhero"><div class="eyebrow">Gestão da comunidade</div><h1>Painel administrativo.</h1><p>Área destinada a contas autorizadas pela administração.</p></div>
+ <div class="wrap">
+  <div class="notice">O acesso visual não substitui as permissões de segurança do Supabase. Apenas usuários com perfil administrativo autorizado no banco devem poder analisar e alterar fichas.</div>
+  <div id="adminContent" class="panel"><p>Entre na sua conta para verificar o acesso.</p><button class="gold-btn" onclick="go('account')">Ir para minha conta</button></div>
+ </div>
+</section>
+</main>
 
 <footer>
-  UNIVERSITY ROLEPLAY · FICÇÃO INTERATIVA · NÃO É UM SITE OFICIAL DA UNIVERSITY OF PENNSYLVANIA
+ <div class="footer-inner">
+  <div><div class="footer-title">University of Pennsylvania</div><div class="footer-small">UNIVERSITY ROLEPLAY · EST. 1740</div></div>
+  <div><div class="footer-small">PHILADELPHIA · PENNSYLVANIA</div><p style="font-size:12px;max-width:400px">Projeto ficcional de roleplay. Não é um site oficial da University of Pennsylvania.</p></div>
+  <div><button class="text-btn" onclick="go('home')">Voltar ao início ↑</button></div>
+ </div>
 </footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script>
-/* =========================================================
-   CONFIGURAÇÃO DO SUPABASE
-   A chave abaixo é a chave pública do projeto.
-   Nunca coloque uma service_role/secret key neste arquivo.
-========================================================= */
+/* CONFIGURAÇÃO DO SUPABASE */
 const SUPABASE_URL = "https://ndbmbrwafbflxmvobqqx.supabase.co";
 const SUPABASE_KEY = "sb_publishable_evsP9H6Y-SbqVg9pBd3ysQ_vOYVzC7U";
-
+const PHOTO_BUCKET = "character-photos";
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 let currentUser = null;
 let currentProfile = null;
 let selectedPhoto = null;
-let photoDataUrl = null;
+let toastTimer = null;
 
-const societies = {
-  phi: {
-    name: "Phi Sigma Pi",
-    image: "IMG-20261028-WA0069.jpg",
-    description: "Uma sociedade que reúne estudantes em torno de ambição, convivência e tradição.",
-    identity: "O brasão roxo e dourado identifica esta sociedade no universo visual do RPG. Os detalhes de sua história e de suas regras podem ser desenvolvidos pela administração."
-  },
-  kappa: {
-    name: "Kappa Kappa Gamma",
-    image: "IMG-20261028-WA0071.jpg",
-    description: "Uma fraternidade feminina com identidade própria, vínculos e presença no ambiente universitário.",
-    identity: "O brasão rosa e dourado compõe a identidade visual da sociedade neste RPG. Sua participação narrativa depende das regras da comunidade."
-  },
-  alpha: {
-    name: "Alpha Kappa Psi",
-    image: "IMG-20261028-WA0073.jpg",
-    description: "Uma sociedade associada à ambição, estratégia e relações profissionais no universo do jogo.",
-    identity: "O brasão azul e dourado representa a identidade visual escolhida para a sociedade neste RPG."
-  },
-  sigma: {
-    name: "Sigma Chi",
-    image: "IMG-20261028-WA0075.jpg",
-    description: "Uma fraternidade marcada por companheirismo, tradição e lealdade no universo narrativo.",
-    identity: "O brasão azul-claro e prateado identifica a fraternidade na ambientação ficcional."
-  }
-};
-
-function go(id) {
-  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-  const target = document.getElementById(id);
-  if (!target) return;
-  target.classList.add("active");
-  window.scrollTo({top:0,behavior:"smooth"});
-  if (id === "dashboard") loadDashboard();
-  if (id === "admin") loadAdmin();
-  updateAccountUI();
+function toast(message){
+ const el=document.getElementById("toast");
+ el.textContent=message;
+ el.classList.add("show");
+ clearTimeout(toastTimer);
+ toastTimer=setTimeout(()=>el.classList.remove("show"),4200);
 }
-
-function societyDetail(key) {
-  const s = societies[key];
-  if (!s) return;
-  document.getElementById("societyTitle").textContent = s.name;
-  document.getElementById("societyCrest").src = s.image;
-  document.getElementById("societyDescription").textContent = s.description;
-  document.getElementById("societyIdentity").textContent = s.identity;
-  go("societyDetail");
+function toggleMenu(){document.getElementById("mainNav").classList.toggle("open")}
+function go(id){
+ const target=document.getElementById(id);
+ if(!target){toast("Esta seção não foi encontrada.");return}
+ document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+ target.classList.add("active");
+ document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.screen===id));
+ document.getElementById("mainNav").classList.remove("open");
+ window.scrollTo({top:0,behavior:"smooth"});
+ if(id==="account") refreshAccount();
+ if(id==="admin") loadAdmin();
 }
-
-function showMessage(id, message, type="") {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.textContent = message || "";
-  el.className = "status" + (type ? " " + type : "");
+function societyDetail(name){
+ const descriptions={
+  "Phi Sigma Pi":"Conhecimento, liderança e relações construídas pela dedicação acadêmica.",
+  "Kappa Kappa Gamma":"Irmandade, identidade social e vínculos que podem atravessar gerações.",
+  "Alpha Kappa Psi":"Estratégia, iniciativa, ambição e oportunidades profissionais.",
+  "Sigma Chi":"Lealdade, companheirismo e uma rede de relações duradouras."
+ };
+ const el=document.getElementById("societyDetail");
+ el.innerHTML="<div class='eyebrow'>Arquivo da sociedade</div><h2>"+escapeHTML(name)+"</h2><p>"+escapeHTML(descriptions[name]||"Sociedade do universo ficcional.")+"</p><button class='outline-btn' onclick=\"go('admission')\">Indicar na minha ficha →</button>";
+ el.classList.remove("hidden");
+ el.scrollIntoView({behavior:"smooth",block:"center"});
 }
-
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[char]));
+function escapeHTML(value){
+ return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
-
-function shortText(value, limit=240) {
-  const s = String(value || "");
-  return s.length > limit ? s.slice(0,limit) + "…" : s;
+function friendlyError(error){
+ const msg=error?.message||"Ocorreu um erro inesperado.";
+ if(msg.toLowerCase().includes("row-level security"))return "O Supabase bloqueou esta ação por segurança. As permissões da tabela precisam ser configuradas.";
+ if(msg.toLowerCase().includes("bucket"))return "O armazenamento de fotos não está configurado. Confira o bucket character-photos no Supabase.";
+ if(msg.toLowerCase().includes("duplicate"))return "Este registro já existe. Confira suas informações e tente novamente.";
+ return msg;
 }
-
-function updateAccountUI() {
-  const btn = document.getElementById("headerLogin");
-  const notice = document.getElementById("admissionLoginNotice");
-  if (currentUser) {
-    btn.textContent = "Minha conta";
-    notice.textContent = "Você está conectado. Preencha a ficha e envie para avaliação.";
-    notice.className = "status ok";
-  } else {
-    btn.textContent = "Entrar";
-    notice.textContent = "Para enviar a ficha, primeiro entre ou crie sua conta.";
-    notice.className = "status";
-  }
+async function refreshAccount(){
+ const {data:{user},error}=await db.auth.getUser();
+ currentUser=user||null;
+ document.getElementById("authPanel").classList.toggle("hidden",!!currentUser);
+ document.getElementById("dashboard").classList.toggle("hidden",!currentUser);
+ if(error||!currentUser)return;
+ document.getElementById("welcomeUser").textContent="Bem-vindo, "+(currentProfile?.username||user.email||"jogador")+"!";
+ document.getElementById("accountEmail").textContent=user.email||"";
+ const result=await db.from("characters").select("id,character_name,course,status,admin_feedback,created_at").eq("user_id",user.id).order("created_at",{ascending:false});
+ const list=document.getElementById("myCharacters");
+ if(result.error){list.innerHTML="<p>"+escapeHTML(friendlyError(result.error))+"</p>";return}
+ if(!result.data?.length){list.innerHTML="<p>Você ainda não enviou personagens.</p>";return}
+ list.innerHTML=result.data.map(c=>"<div class='list-item'><h3>"+escapeHTML(c.character_name)+"</h3><p>"+escapeHTML(c.course||"Curso não informado")+"</p><span class='status'>"+escapeHTML(c.status||"pendente")+"</span>"+(c.admin_feedback?"<p>Retorno da administração: "+escapeHTML(c.admin_feedback)+"</p>":"")+"</div>").join("");
 }
-
-async function refreshProfile() {
-  currentProfile = null;
-  if (!currentUser) return;
-  const {data, error} = await db.from("profiles")
-    .select("id, username, role")
-    .eq("id", currentUser.id)
-    .maybeSingle();
-  if (!error) currentProfile = data;
+async function loadProfile(){
+ if(!currentUser)return;
+ const {data,error}=await db.from("profiles").select("username,role").eq("id",currentUser.id).maybeSingle();
+ if(!error&&data)currentProfile=data;
 }
-
-async function signOut() {
-  const {error} = await db.auth.signOut();
-  if (error) {
-    showMessage("dashboardMessage","Não foi possível sair: " + error.message,"error");
-    return;
-  }
-  currentUser = null;
-  currentProfile = null;
-  updateAccountUI();
-  showMessage("dashboardMessage","Você saiu da conta.","ok");
-  go("home");
+async function logout(){
+ const {error}=await db.auth.signOut();
+ if(error){toast(friendlyError(error));return}
+ currentUser=null;currentProfile=null;
+ toast("Você saiu da sua conta.");
+ go("home");
 }
-
-/* Criar conta */
-document.getElementById("signupForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  const username = document.getElementById("signupName").value.trim();
-  const email = document.getElementById("signupEmail").value.trim();
-  const password = document.getElementById("signupPassword").value;
-  if (password.length < 8) {
-    showMessage("accountMessage","A senha precisa ter pelo menos 8 caracteres.","error");
-    return;
-  }
-  showMessage("accountMessage","Criando sua conta...");
-  const {data, error} = await db.auth.signUp({
-    email, password,
-    options: {data:{username}}
-  });
-  if (error) {
-    showMessage("accountMessage","Não foi possível criar a conta: " + error.message,"error");
-    return;
-  }
-
-  if (data.user && data.session) {
-    currentUser = data.user;
-    const {error: profileError} = await db.from("profiles").upsert({
-      id: data.user.id, username, role:"player"
-    }, {onConflict:"id"});
-    await refreshProfile();
-    showMessage("accountMessage",
-      profileError
-        ? "Conta criada! O perfil não pôde ser gravado automaticamente. Se aparecer erro ao enviar fichas, será necessário ajustar as permissões da tabela profiles."
-        : "Conta criada e conectada com sucesso!","ok");
-    updateAccountUI();
-  } else {
-    showMessage("accountMessage","Conta criada. Confira seu e-mail para confirmar o cadastro e depois entre.","ok");
-  }
+db.auth.onAuthStateChange((_event,session)=>{
+ currentUser=session?.user||null;
+ setTimeout(async()=>{await loadProfile();if(document.getElementById("account").classList.contains("active"))refreshAccount()},0);
 });
 
-/* Login */
-document.getElementById("loginForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  const email = document.getElementById("loginEmail").value.trim();
-  const password = document.getElementById("loginPassword").value;
-  showMessage("accountMessage","Entrando...");
-  const {data, error} = await db.auth.signInWithPassword({email,password});
-  if (error) {
-    showMessage("accountMessage","Não foi possível entrar: " + error.message,"error");
-    return;
-  }
-  currentUser = data.user;
-  await refreshProfile();
-  showMessage("accountMessage","Login realizado com sucesso!","ok");
-  updateAccountUI();
-  go("dashboard");
+document.getElementById("signupForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ const username=document.getElementById("signupUsername").value.trim();
+ const email=document.getElementById("signupEmail").value.trim();
+ const password=document.getElementById("signupPassword").value;
+ const {data,error}=await db.auth.signUp({email,password,options:{data:{username}}});
+ if(error){toast(friendlyError(error));return}
+ if(data.user && data.session){
+  const profile=await db.from("profiles").upsert({id:data.user.id,username,role:"player"},{onConflict:"id"});
+  if(profile.error)toast("Conta criada, mas o perfil não pôde ser salvo: "+friendlyError(profile.error));
+  else toast("Conta criada! Você já pode começar.");
+ }else toast("Cadastro iniciado. Confira seu e-mail para confirmar a conta, se solicitado.");
+ e.target.reset();
+ await refreshAccount();
 });
-
-/* Recuperar sessão existente */
-db.auth.getSession().then(async ({data}) => {
-  currentUser = data.session?.user || null;
-  await refreshProfile();
-  updateAccountUI();
+document.getElementById("loginForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ const email=document.getElementById("loginEmail").value.trim();
+ const password=document.getElementById("loginPassword").value;
+ const {data,error}=await db.auth.signInWithPassword({email,password});
+ if(error){toast(friendlyError(error));return}
+ currentUser=data.user;
+ await loadProfile();
+ toast("Login realizado.");
+ e.target.reset();
+ await refreshAccount();
 });
-
-db.auth.onAuthStateChange(async (_event, session) => {
-  currentUser = session?.user || null;
-  await refreshProfile();
-  updateAccountUI();
+document.getElementById("characterPhoto").addEventListener("change",e=>{
+ const file=e.target.files?.[0];
+ selectedPhoto=file||null;
+ const preview=document.getElementById("photoPreview");
+ if(!file){preview.style.display="none";return}
+ if(!["image/jpeg","image/png","image/webp"].includes(file.type)){selectedPhoto=null;e.target.value="";toast("Use uma imagem JPG, PNG ou WEBP.");return}
+ if(file.size>5*1024*1024){selectedPhoto=null;e.target.value="";toast("A imagem precisa ter no máximo 5 MB.");return}
+ preview.src=URL.createObjectURL(file);
+ preview.style.display="block";
 });
-
-/* Foto escolhida no celular */
-document.getElementById("photoFile").addEventListener("change", e => {
-  const file = e.target.files && e.target.files[0];
-  selectedPhoto = null;
-  photoDataUrl = null;
-  const preview = document.getElementById("photoPreview");
-  preview.style.display = "none";
-  if (!file) return;
-
-  const allowed = ["image/jpeg","image/png","image/webp"];
-  if (!allowed.includes(file.type)) {
-    e.target.value = "";
-    showMessage("characterMessage","Escolha uma imagem JPG, PNG ou WEBP.","error");
-    return;
-  }
-  if (file.size > 5 * 1024 * 1024) {
-    e.target.value = "";
-    showMessage("characterMessage","A imagem precisa ter no máximo 5 MB.","error");
-    return;
-  }
-  selectedPhoto = file;
-  photoDataUrl = URL.createObjectURL(file);
-  preview.src = photoDataUrl;
-  preview.style.display = "block";
-  showMessage("characterMessage","Foto selecionada. Ela será enviada ao enviar a ficha.","ok");
-});
-
-/* Enviar ficha do personagem */
-document.getElementById("characterForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  if (!currentUser) {
-    showMessage("characterMessage","Entre ou crie uma conta antes de enviar sua ficha.","error");
-    go("account");
-    return;
-  }
-  if (!selectedPhoto) {
-    showMessage("characterMessage","Escolha uma foto para o personagem.","error");
-    return;
-  }
-
-  const playerAge = Number(document.getElementById("playerAge").value);
-  const characterAge = Number(document.getElementById("characterAge").value);
-  if (playerAge < 18 || characterAge < 18) {
-    showMessage("characterMessage","Este formulário de RPG está configurado para personagens e jogadores maiores de 18 anos.","error");
-    return;
-  }
-
-  const submitButton = document.getElementById("submitCharacter");
-  submitButton.disabled = true;
-  showMessage("characterMessage","Enviando foto e ficha. Aguarde...");
-
-  try {
-    const safeName = selectedPhoto.name.replace(/[^a-zA-Z0-9._-]/g,"_");
-    const filePath = currentUser.id + "/" + Date.now() + "_" + safeName;
-
-    const {error: uploadError} = await db.storage
-      .from("character-photos")
-      .upload(filePath, selectedPhoto, {
-        cacheControl:"3600", upsert:false, contentType:selectedPhoto.type
-      });
-
-    if (uploadError) {
-      throw new Error("A foto não foi enviada. Verifique o bucket e as políticas de Storage. Detalhe: " + uploadError.message);
-    }
-
-    const {data: photoData} = db.storage
-      .from("character-photos")
-      .getPublicUrl(filePath);
-
-    const payload = {
-      user_id: currentUser.id,
-      player_username: document.getElementById("playerUsername").value.trim(),
-      player_last4: document.getElementById("playerLast4").value.trim() || null,
-      player_age: playerAge,
-      availability: document.getElementById("availability").value,
-      character_name: document.getElementById("characterName").value.trim(),
-      character_age: characterAge,
-      faceclaim: document.getElementById("faceclaim").value.trim(),
-      photo_url: photoData.publicUrl,
-      course: document.getElementById("course").value,
-      biography: document.getElementById("biography").value.trim(),
-      personality_text: document.getElementById("personalityText").value.trim(),
-      extracurricular_one: document.getElementById("extracurricularOne").value.trim() || null,
-      extracurricular_two: document.getElementById("extracurricularTwo").value.trim() || null,
-      original_scene: document.getElementById("originalScene").value.trim() || null,
-      fraternity_choice: document.getElementById("fraternityChoice").value || null,
-      payment_status: document.getElementById("paymentStatus").value,
-      accepts_character_death: document.getElementById("acceptsCharacterDeath").checked,
-      status: "pending",
-      admin_feedback: null
-    };
-
-    const {error: insertError} = await db.from("characters").insert(payload);
-    if (insertError) {
-      throw new Error("A foto foi enviada, mas a ficha não foi salva. Verifique as colunas e permissões da tabela characters. Detalhe: " + insertError.message);
-    }
-
-    showMessage("characterMessage","Ficha enviada com sucesso! Ela está pendente de avaliação da administração.","ok");
-    document.getElementById("characterForm").reset();
-    document.getElementById("photoPreview").style.display = "none";
-    selectedPhoto = null;
-    photoDataUrl = null;
-  } catch (error) {
-    showMessage("characterMessage",error.message || "Ocorreu um erro ao enviar a ficha.","error");
-  } finally {
-    submitButton.disabled = false;
-  }
-});
-
-/* Enviar informações confidenciais */
-document.getElementById("secretForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  if (!currentUser) {
-    showMessage("secretMessage","Entre na sua conta antes de salvar informações confidenciais.","error");
-    go("account");
-    return;
-  }
-
-  showMessage("secretMessage","Salvando...");
-  const payload = {
-    user_id: currentUser.id,
-    character_name: document.getElementById("secretCharacterName").value.trim(),
-    secret_text: document.getElementById("secretText").value.trim(),
-    trauma_text: document.getElementById("traumaText").value.trim() || null,
-    phobia_text: document.getElementById("phobiaText").value.trim() || null
+document.getElementById("characterForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ if(!currentUser){toast("Entre na sua conta antes de enviar a ficha.");go("account");return}
+ if(!selectedPhoto){toast("Escolha uma foto do personagem.");return}
+ const button=e.submitter;
+ button.disabled=true;button.textContent="Enviando ficha...";
+ try{
+  const file=selectedPhoto;
+  const extension=file.name.split(".").pop().toLowerCase();
+  const path=currentUser.id+"/"+crypto.randomUUID()+"."+extension;
+  const upload=await db.storage.from(PHOTO_BUCKET).upload(path,file,{contentType:file.type,upsert:false});
+  if(upload.error)throw upload.error;
+  const {data:{publicUrl}}=db.storage.from(PHOTO_BUCKET).getPublicUrl(path);
+  const payload={
+   user_id:currentUser.id,
+   player_username:document.getElementById("playerUsername").value.trim(),
+   player_last4:document.getElementById("playerLast4").value.trim(),
+   player_age:Number(document.getElementById("playerAge").value),
+   availability:document.getElementById("availability").value,
+   character_name:document.getElementById("characterName").value.trim(),
+   character_age:Number(document.getElementById("characterAge").value),
+   faceclaim:document.getElementById("faceclaim").value.trim(),
+   photo_url:publicUrl,
+   biography:document.getElementById("biography").value.trim(),
+   original_scene:document.getElementById("originalScene").value.trim(),
+   personality_text:document.getElementById("personality").value.trim(),
+   course:document.getElementById("course").value.trim(),
+   extracurricular_one:document.getElementById("extraOne").value.trim(),
+   extracurricular_two:document.getElementById("extraTwo").value.trim(),
+   fraternity_choice:document.getElementById("fraternityChoice").value||null,
+   accepts_character_death:document.getElementById("acceptDeath").value==="true",
+   status:"pending"
   };
-
-  const {error} = await db.from("character_secrets").insert(payload);
-  if (error) {
-    showMessage("secretMessage","Não foi possível salvar. Verifique as permissões da tabela character_secrets. Detalhe: " + error.message,"error");
-    return;
-  }
-
-  showMessage("secretMessage","Informações confidenciais enviadas.","ok");
-  document.getElementById("secretForm").reset();
+  const inserted=await db.from("characters").insert(payload).select("id").single();
+  if(inserted.error)throw inserted.error;
+  toast("Ficha enviada para análise! Ela ficará pendente até ser avaliada.");
+  e.target.reset();selectedPhoto=null;
+  document.getElementById("photoPreview").style.display="none";
+  go("account");await refreshAccount();
+ }catch(error){toast("Não foi possível enviar a ficha: "+friendlyError(error))}
+ finally{button.disabled=false;button.textContent="Enviar ficha para análise →"}
 });
-
-/* Minhas fichas */
-async function loadDashboard() {
-  const area = document.getElementById("dashboardContent");
-  if (!currentUser) {
-    area.innerHTML = '<div class="empty">Entre na sua conta para visualizar suas fichas.</div><p><button class="btn" onclick="go(\'account\')">Entrar</button></p>';
-    return;
-  }
-
-  area.innerHTML = '<p>Carregando suas fichas...</p>';
-  const {data, error} = await db.from("characters")
-    .select("id, character_name, faceclaim, photo_url, course, status, admin_feedback, created_at")
-    .eq("user_id",currentUser.id)
-    .order("created_at",{ascending:false});
-
-  if (error) {
-    area.innerHTML = '<div class="status error">Não foi possível carregar as fichas. Verifique as permissões da tabela characters. ' + escapeHTML(error.message) + '</div>';
-    return;
-  }
-  if (!data || data.length === 0) {
-    area.innerHTML = '<div class="empty">Você ainda não enviou nenhuma ficha.</div><p><button class="btn" onclick="go(\'admission\')">Criar primeira ficha</button></p>';
-    return;
-  }
-
-  area.innerHTML = data.map(c => {
-    const status = String(c.status || "pending").toLowerCase();
-    const statusLabel = status === "approved" ? "Aprovada" :
-      status === "rejected" ? "Recusada" : "Pendente";
-    const date = c.created_at ? new Date(c.created_at).toLocaleDateString("pt-BR") : "—";
-    return `
-      <div class="item">
-        <div class="row">
-          <div style="display:flex;gap:14px;align-items:center">
-            ${c.photo_url ? `<img class="profile-photo" src="${escapeHTML(c.photo_url)}" alt="Foto do personagem">` : ""}
-            <div>
-              <h3>${escapeHTML(c.character_name)}</h3>
-              <p>${escapeHTML(c.faceclaim || "")} · ${escapeHTML(c.course || "")}</p>
-              <span class="pill">${statusLabel}</span>
-              <p class="small muted">Enviada em ${date}</p>
-            </div>
-          </div>
-        </div>
-        ${c.admin_feedback ? `<div class="status"><strong>Retorno da administração:</strong><br>${escapeHTML(c.admin_feedback)}</div>` : ""}
-      </div>`;
-  }).join("");
+document.getElementById("secretForm").addEventListener("submit",async e=>{
+ e.preventDefault();
+ if(!currentUser){toast("Entre na sua conta antes de salvar informações confidenciais.");go("account");return}
+ const payload={
+  user_id:currentUser.id,
+  character_name:document.getElementById("secretCharacter").value.trim(),
+  secret_text:document.getElementById("secretText").value.trim(),
+  trauma_text:document.getElementById("traumaText").value.trim(),
+  phobia_text:document.getElementById("phobiaText").value.trim()
+ };
+ const {error}=await db.from("character_secrets").insert(payload);
+ if(error){toast("Não foi possível salvar: "+friendlyError(error));return}
+ toast("Informações confidenciais salvas.");
+ e.target.reset();
+});
+async function loadAdmin(){
+ const box=document.getElementById("adminContent");
+ if(!currentUser){box.innerHTML="<p>Entre com sua conta para verificar o acesso.</p><button class='gold-btn' onclick=\"go('account')\">Ir para minha conta</button>";return}
+ await loadProfile();
+ if(currentProfile?.role!=="admin"){box.innerHTML="<h2>Acesso restrito</h2><p>Esta conta não possui perfil administrativo autorizado.</p>";return}
+ box.innerHTML="<h2>Fichas recebidas</h2><p>Carregando...</p>";
+ const {data,error}=await db.from("characters").select("*").order("created_at",{ascending:false}).limit(100);
+ if(error){box.innerHTML="<p>"+escapeHTML(friendlyError(error))+"</p>";return}
+ if(!data?.length){box.innerHTML="<h2>Fichas recebidas</h2><p>Nenhuma ficha encontrada.</p>";return}
+ box.innerHTML="<h2>Fichas recebidas</h2><div class='list'>"+data.map(c=>"<div class='list-item'><h3>"+escapeHTML(c.character_name)+"</h3><p>Jogador: "+escapeHTML(c.player_username||"Não informado")+" · Curso: "+escapeHTML(c.course||"Não informado")+"</p><p>Status: <span class='status'>"+escapeHTML(c.status||"pendente")+"</span></p><p>"+escapeHTML(c.biography||"")+"</p>"+(c.photo_url?"<p><a href='"+escapeHTML(c.photo_url)+"' target='_blank' rel='noopener'>Abrir foto</a></p>":"")+"<div class='field'><label>Retorno da administração</label><textarea id='feedback-"+c.id+"' maxlength='3000' placeholder='Escreva uma observação...'>"+escapeHTML(c.admin_feedback||"")+"</textarea></div><div style='display:flex;gap:8px;flex-wrap:wrap'><button class='gold-btn' onclick=\"reviewCharacter('"+c.id+"','approved')\">Aprovar</button><button class='outline-btn' onclick=\"reviewCharacter('"+c.id+"','rejected')\">Recusar</button><button class='outline-btn' onclick=\"reviewCharacter('"+c.id+"','pending')\">Manter pendente</button></div></div>").join("")+"</div>";
 }
-
-/* Painel administrativo */
-async function loadAdmin() {
-  const area = document.getElementById("adminContent");
-  if (!currentUser) {
-    area.innerHTML = '<div class="empty">Entre com uma conta autorizada para acessar a administração.</div><button class="btn" onclick="go(\'account\')">Entrar</button>';
-    return;
-  }
-
-  await refreshProfile();
-  if (!currentProfile || currentProfile.role !== "admin") {
-    area.innerHTML = '<div class="status error">Acesso restrito. Esta conta não está marcada como administradora na tabela profiles.</div>';
-    return;
-  }
-
-  area.innerHTML = '<p>Carregando fichas...</p>';
-  const {data, error} = await db.from("characters")
-    .select("id, user_id, player_username, player_age, character_name, character_age, faceclaim, photo_url, biography, course, personality_text, extracurricular_one, extracurricular_two, fraternity_choice, payment_status, accepts_character_death, original_scene, status, admin_feedback, created_at")
-    .order("created_at",{ascending:false});
-
-  if (error) {
-    area.innerHTML = '<div class="status error">Erro ao carregar fichas: ' + escapeHTML(error.message) + '</div>';
-    return;
-  }
-  if (!data || data.length === 0) {
-    area.innerHTML = '<div class="empty">Ainda não há fichas cadastradas.</div>';
-    return;
-  }
-
-  area.innerHTML = data.map(c => {
-    const date = c.created_at ? new Date(c.created_at).toLocaleDateString("pt-BR") : "—";
-    return `
-      <article class="item">
-        <div class="row">
-          <div style="display:flex;gap:12px;align-items:center">
-            ${c.photo_url ? `<img class="profile-photo" src="${escapeHTML(c.photo_url)}" alt="Foto do personagem">` : ""}
-            <div>
-              <h3>${escapeHTML(c.character_name)}</h3>
-              <p>${escapeHTML(c.player_username || "Jogador")} · ${escapeHTML(c.course || "")}</p>
-              <span class="pill">${escapeHTML(c.status || "pending")}</span>
-              <p class="small muted">Enviada em ${date}</p>
-            </div>
-          </div>
-        </div>
-        <p><strong>Faceclaim:</strong> ${escapeHTML(c.faceclaim || "—")}</p>
-        <p><strong>Idade:</strong> ${escapeHTML(c.character_age || "—")}</p>
-        <p><strong>Personalidade:</strong><br>${escapeHTML(shortText(c.personality_text,500))}</p>
-        <p><strong>História:</strong><br>${escapeHTML(shortText(c.biography,900))}</p>
-        <p><strong>Atividades:</strong> ${escapeHTML(c.extracurricular_one || "—")} · ${escapeHTML(c.extracurricular_two || "—")}</p>
-        <p><strong>Sociedade:</strong> ${escapeHTML(c.fraternity_choice || "—")}</p>
-        <p><strong>Categoria:</strong> ${escapeHTML(c.payment_status || "—")}</p>
-        <p><strong>Aceita morte narrativa:</strong> ${c.accepts_character_death ? "Sim" : "Não"}</p>
-        ${c.original_scene ? `<p><strong>Cena inicial:</strong><br>${escapeHTML(shortText(c.original_scene,600))}</p>` : ""}
-        <div class="field">
-          <label for="feedback-${escapeHTML(c.id)}">Feedback para o jogador</label>
-          <textarea id="feedback-${escapeHTML(c.id)}" maxlength="4000" placeholder="Escreva o retorno da administração...">${escapeHTML(c.admin_feedback || "")}</textarea>
-        </div>
-        <div class="row">
-          <button class="btn success smallbtn" onclick="reviewCharacter('${escapeHTML(c.id)}','approved')">Aprovar ficha</button>
-          <button class="btn danger smallbtn" onclick="reviewCharacter('${escapeHTML(c.id)}','rejected')">Recusar ficha</button>
-          <button class="btn secondary smallbtn" onclick="reviewCharacter('${escapeHTML(c.id)}','pending')">Deixar pendente</button>
-        </div>
-      </article>`;
-  }).join("");
+async function reviewCharacter(id,status){
+ if(!currentUser||currentProfile?.role!=="admin"){toast("Acesso administrativo não autorizado.");return}
+ const feedback=document.getElementById("feedback-"+id)?.value.trim()||null;
+ const {error}=await db.from("characters").update({status,admin_feedback:feedback,reviewed_at:new Date().toISOString(),reviewed_by:currentUser.id}).eq("id",id);
+ if(error){toast("Não foi possível atualizar a ficha: "+friendlyError(error));return}
+ toast("Ficha atualizada.");
+ await loadAdmin();
 }
-
-async function reviewCharacter(id,status) {
-  if (!currentUser) return;
-  await refreshProfile();
-  if (!currentProfile || currentProfile.role !== "admin") {
-    showMessage("adminMessage","Você não tem permissão administrativa.","error");
-    return;
-  }
-
-  const feedbackField = document.getElementById("feedback-" + id);
-  const feedback = feedbackField ? feedbackField.value.trim() : "";
-  const {error} = await db.from("characters").update({
-    status,
-    admin_feedback: feedback,
-    reviewed_at: new Date().toISOString(),
-    reviewed_by: currentUser.id,
-    updated_at: new Date().toISOString()
-  }).eq("id",id);
-
-  if (error) {
-    showMessage("adminMessage","Não foi possível atualizar a ficha. Verifique as políticas administrativas do banco. Detalhe: " + error.message,"error");
-    return;
-  }
-  showMessage("adminMessage","Ficha atualizada.","ok");
-  await loadAdmin();
-}
-
-/* Fundo estrelado animado */
-(function createStars(){
-  const container = document.getElementById("stars");
-  for (let i=0;i<65;i++) {
-    const star = document.createElement("span");
-    star.className = "star";
-    star.style.left = Math.random()*100 + "%";
-    star.style.top = Math.random()*100 + "%";
-    star.style.animationDelay = (Math.random()*4) + "s";
-    star.style.animationDuration = (3+Math.random()*4) + "s";
-    container.appendChild(star);
-  }
+(async()=>{
+ const {data:{user}}=await db.auth.getUser();
+ currentUser=user||null;
+ await loadProfile();
 })();
 </script>
 </body>
