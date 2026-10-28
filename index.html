@@ -3,180 +3,78 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0a1020">
-<title>Vendetta — University of Pennsylvania</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080d19">
+<title>Vendetta — Blood on Ivy Hall</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-:root{
-  --navy:#080d19;
-  --navy2:#101a2c;
-  --navy3:#17243a;
-  --gold:#d9bc7b;
-  --gold2:#f5e2ad;
-  --cream:#f5f0e5;
-  --muted:#b9c0cc;
-  --line:rgba(217,188,123,.30);
-  --red:#a82032;
-}
+:root{--navy:#080d19;--navy2:#101a2c;--navy3:#17243a;--gold:#d9bc7b;--gold2:#f5e2ad;--cream:#f5f0e5;--muted:#b9c0cc;--line:rgba(217,188,123,.3);--red:#a82032}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{
-  margin:0;background:var(--navy);color:var(--cream);
-  font-family:Montserrat,Arial,sans-serif;min-height:100vh;
-  overflow-x:hidden;
-}
-body:before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:-2;
-  background:
-  radial-gradient(ellipse at 15% 10%,rgba(48,74,112,.28),transparent 42%),
-  radial-gradient(ellipse at 85% 70%,rgba(124,91,43,.13),transparent 45%),
-  linear-gradient(145deg,#080d19,#101a2c 52%,#080d19);
-}
-#stars{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden}
-.star{
-  position:absolute;background:#fff0c5;border-radius:50%;
-  box-shadow:0 0 7px #e8cc8d;animation:twinkle 3s infinite ease-in-out;
-}
-@keyframes twinkle{0%,100%{opacity:.15;transform:scale(.7)}50%{opacity:.95;transform:scale(1.25)}}
-@keyframes appear{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
-@keyframes glow{0%,100%{text-shadow:0 0 8px #d9bc7b44}50%{text-shadow:0 0 22px #e6ca87aa,0 0 40px #d9bc7b33}}
-@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
-header{
-  position:sticky;top:0;z-index:20;background:rgba(8,13,25,.94);
-  backdrop-filter:blur(18px);border-bottom:1px solid var(--line);
-}
-.header-inner{
-  max-width:1200px;margin:auto;padding:15px 22px;display:flex;
-  align-items:center;justify-content:space-between;gap:18px;
-}
-.brand{display:flex;align-items:center;gap:13px;cursor:pointer;min-width:0}
-.brand img{
-  width:64px;height:64px;object-fit:contain;border-radius:50%;
-  filter:drop-shadow(0 0 9px #d9bc7b77);
-}
-.brand-title{font-family:"Playfair Display",serif;color:var(--gold2);font-size:clamp(17px,2.5vw,25px);line-height:1.2}
-.brand-sub{font-size:9px;letter-spacing:3px;color:var(--muted);margin-top:7px}
-nav{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:wrap}
-button,.nav-btn{
-  font:600 12px Montserrat,sans-serif;cursor:pointer;color:var(--cream);
-  background:transparent;border:1px solid var(--line);border-radius:5px;
-  padding:11px 13px;transition:.25s;text-decoration:none;
-}
-button:hover,.nav-btn:hover{border-color:var(--gold);color:var(--gold2);box-shadow:0 0 18px #d9bc7b1c}
-button.primary{background:linear-gradient(110deg,#b99651,#f0d69a,#b99651);background-size:200% auto;color:#111827;border:0}
-button.primary:hover{animation:shimmer 1.5s linear}
+body{margin:0;background:var(--navy);color:var(--cream);font-family:Montserrat,Arial,sans-serif;min-height:100vh}
+body:before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse at 15% 10%,#304a7044,transparent 42%),radial-gradient(ellipse at 85% 70%,#7c5b2b22,transparent 45%),linear-gradient(145deg,#080d19,#101a2c 52%,#080d19)}
+header{position:sticky;top:0;z-index:20;background:#080d19f5;border-bottom:1px solid var(--line);backdrop-filter:blur(16px)}
+.header-inner{max-width:1200px;margin:auto;padding:15px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.brand{cursor:pointer;font-family:"Playfair Display",serif;font-size:22px;color:var(--gold2)}
+.brand small{display:block;font:10px Montserrat,sans-serif;letter-spacing:3px;color:var(--muted);margin-top:7px}
+nav{display:flex;gap:7px;flex-wrap:wrap}
+button{font:600 12px Montserrat,sans-serif;cursor:pointer;color:var(--cream);background:transparent;border:1px solid var(--line);border-radius:5px;padding:11px 13px;transition:.2s}
+button:hover{border-color:var(--gold);color:var(--gold2)}
+button.primary{background:linear-gradient(110deg,#b99651,#f0d69a);color:#111827;border:0}
 button.danger{border-color:#9c3e4a;color:#ffb4bd}
-button:disabled{opacity:.55;cursor:not-allowed}
+button:disabled{opacity:.5;cursor:wait}
 main{max-width:1120px;margin:auto;padding:30px 22px 80px}
-.page{display:none;animation:appear .5s ease}
+.page{display:none;animation:appear .35s ease}
 .page.active{display:block}
+@keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .eyebrow{color:var(--gold);font-size:10px;letter-spacing:4px;text-transform:uppercase;margin-bottom:15px}
 h1,h2,h3,h4{font-family:"Playfair Display",Georgia,serif;font-weight:500}
 h1{font-size:clamp(38px,7vw,76px);line-height:1.08;margin:15px 0 22px}
 h2{font-size:clamp(27px,4vw,42px);color:var(--gold2);margin:0 0 18px}
 h3{color:var(--gold2);font-size:23px;margin:0 0 12px}
-h4{font-size:18px;color:var(--gold)}
 p{line-height:1.85;color:#d5d9e1;font-size:14px}
-.muted{color:var(--muted)}
-.gold{color:var(--gold2)}
-.rule{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:30px 0}
-.hero{
-  min-height:570px;display:flex;align-items:center;position:relative;
-  padding:55px 0 50px;
-}
-.hero-copy{max-width:790px}
-.hero h1{animation:glow 4s infinite}
-.hero h1 span{color:var(--gold2)}
-.hero p{font-size:clamp(15px,2vw,19px);max-width:720px}
-.hero-logo{width:110px;height:110px;object-fit:contain;filter:drop-shadow(0 0 22px #d9bc7b77);margin-bottom:25px}
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
-.actions button{padding:15px 20px;font-size:12px}
-.panel{
-  border:1px solid var(--line);background:linear-gradient(140deg,#121d30eF,#0c1423f2);
-  padding:24px;border-radius:9px;box-shadow:0 12px 40px #0002;
-}
-.panel:hover{border-color:#d9bc7b77}
+.gold{color:var(--gold2)}.muted{color:var(--muted)}
+.hero{min-height:440px;display:flex;align-items:center;padding:40px 0}
+.hero-copy{max-width:800px}
+.hero h1{color:var(--gold2)}
+.hero p{font-size:clamp(15px,2vw,19px);max-width:730px}
+.actions,.admin-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+.panel{border:1px solid var(--line);background:linear-gradient(140deg,#121d30ef,#0c1423f2);padding:23px;border-radius:8px;margin:14px 0}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
 .grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
 .section-head{margin:35px 0 20px}
-.section-head p{max-width:760px}
 .label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);display:block;margin:16px 0 8px}
-input,textarea,select{
-  display:block;width:100%;background:#080f1d;color:var(--cream);
-  border:1px solid #44516a;border-radius:5px;padding:13px;
-  font:14px Montserrat,sans-serif;outline:none;
-}
-input:focus,textarea:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 2px #d9bc7b1b}
+input,textarea,select{display:block;width:100%;background:#080f1d;color:var(--cream);border:1px solid #44516a;border-radius:5px;padding:13px;font:14px Montserrat,sans-serif;outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--gold)}
 textarea{min-height:105px;resize:vertical;line-height:1.6}
 select option{background:#101a2c}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:13px}
 .small{font-size:11px;line-height:1.7;color:var(--muted)}
-.crest{
-  width:100px;height:120px;object-fit:contain;display:block;margin:0 auto 18px;
-  filter:drop-shadow(0 0 10px #d9bc7b22);transition:.3s;
-}
-.society-card{text-align:center;position:relative;overflow:hidden}
-.society-card:before{
-  content:"";position:absolute;top:0;left:20%;right:20%;height:1px;
-  background:linear-gradient(90deg,transparent,var(--gold),transparent)
-}
-.society-card p{text-align:left}
-.society-card .actions{justify-content:center}
-.tag{display:inline-block;border:1px solid var(--line);padding:6px 9px;font-size:9px;letter-spacing:1px;color:var(--gold);margin:3px}
-.list-item{padding:14px 0;border-bottom:1px solid #ffffff13}
-.list-item:last-child{border:0}
-.list-item strong{color:var(--gold2)}
-.quote{
-  border-left:2px solid var(--gold);padding:12px 20px;margin:25px 0;
-  font-family:"Playfair Display",serif;font-size:23px;color:var(--gold2);line-height:1.5
-}
-.notice{border:1px solid #a8203266;background:#a8203210;padding:16px;border-radius:5px}
-footer{border-top:1px solid var(--line);padding:30px 20px;text-align:center;color:var(--muted);font-size:10px;letter-spacing:2px;line-height:2.1}
-footer span{color:var(--gold)}
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:30px 0}
+.quote{border-left:2px solid var(--gold);padding:12px 20px;margin:25px 0;font-family:"Playfair Display",serif;font-size:23px;color:var(--gold2);line-height:1.5}
+.tag{display:inline-block;border:1px solid var(--line);padding:6px 9px;font-size:10px;color:var(--gold);margin:3px}
 .hidden{display:none!important}
-.status{padding:12px;margin:14px 0;border-radius:4px;font-size:12px;line-height:1.6}
+.status{padding:12px;margin:14px 0;border-radius:4px;font-size:12px;line-height:1.6;overflow-wrap:anywhere}
 .status.error{border:1px solid #b34b58;color:#ffb7c0}
 .status.success{border:1px solid #508d72;color:#a8e6c1}
 .status.info{border:1px solid var(--line);color:var(--gold2)}
-.admin-toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0}
-.admin-item{padding:20px;border:1px solid var(--line);margin:12px 0;border-radius:6px;background:#0b1322}
-.admin-item h3{font-size:18px}
-.admin-item .label{margin-top:12px}
-.rule-list li{color:#d5d9e1;line-height:1.8;margin-bottom:9px;font-size:13px}
-@media(max-width:760px){
- .header-inner{align-items:flex-start;padding:12px;flex-direction:column}
- .brand img{width:50px;height:50px}
- nav{justify-content:flex-start;width:100%}
- nav button{padding:9px;font-size:10px}
- main{padding:24px 15px 60px}
- .hero{min-height:auto;padding:35px 0 45px}
- .grid,.grid.three,.form-row{grid-template-columns:1fr}
- .panel{padding:19px}
- .hero-logo{width:85px;height:85px}
-}
+.admin-item{padding:18px;border:1px solid var(--line);margin:14px 0;border-radius:7px;background:#0b1322}
+footer{border-top:1px solid var(--line);padding:30px 20px;text-align:center;color:var(--muted);font-size:10px;letter-spacing:2px;line-height:2}
+footer span{color:var(--gold)}
+@media(max-width:760px){.header-inner{align-items:flex-start;flex-direction:column;padding:12px}.brand{font-size:19px}nav{width:100%}nav button{padding:9px;font-size:10px}main{padding:24px 15px 60px}.grid,.grid.three,.form-row{grid-template-columns:1fr}.panel{padding:18px}.hero{min-height:auto;padding:30px 0}}
 </style>
 </head>
-
 <body>
-<div id="stars"></div>
-
 <header>
  <div class="header-inner">
-  <div class="brand" onclick="go('home')">
-   <img src="IMG-20261028-WA0062.jpg" alt="Brasão da universidade">
-   <div>
-    <div class="brand-title">University of Pennsylvania</div>
-    <div class="brand-sub">UNIVERSITY ROLEPLAY · EST. 1740</div>
-   </div>
+  <div class="brand" onclick="go('home')">VENDETTA
+   <small>BLOOD ON IVY HALL · UNIVERSITY ROLEPLAY</small>
   </div>
   <nav>
    <button onclick="go('home')">Início</button>
-   <button onclick="go('university')">A universidade</button>
+   <button onclick="go('university')">Universidade</button>
+   <button onclick="go('vendetta')">A Vendetta</button>
    <button onclick="go('societies')">Fraternidades</button>
    <button onclick="go('life')">Vida universitária</button>
    <button onclick="go('admission')">Admissões</button>
@@ -187,609 +85,211 @@ footer span{color:var(--gold)}
 </header>
 
 <main>
-<!-- INÍCIO -->
 <section id="home" class="page active">
- <div class="hero">
-  <div class="hero-copy">
-   <img class="hero-logo" src="IMG-20261028-WA0062.jpg" alt="Brasão da universidade">
-   <div class="eyebrow">Philadelphia · Pennsylvania · Fall 2026</div>
-   <h1>O futuro pertence àqueles que <span>ousam.</span></h1>
-   <p>Uma universidade de prestígio, tradição e ambição. Por trás das fachadas históricas, cada estudante guarda seus próprios sonhos, segredos e disputas. Aqui, toda escolha pode mudar uma história — e nem toda verdade deveria vir à tona.</p>
-   <div class="quote">“Revenge doesn't end. It matures.”</div>
-   <div class="actions">
-    <button class="primary" onclick="go('university')">Explorar a universidade ↗</button>
-    <button onclick="go('admission')">Iniciar minha jornada</button>
-    <button onclick="go('societies')">Conhecer as fraternidades</button>
-   </div>
-  </div>
- </div>
+ <div class="hero"><div class="hero-copy">
+  <div class="eyebrow">Philadelphia · Pennsylvania · Fall 2026</div>
+  <h1>O passado nunca fica enterrado.</h1>
+  <p>Por trás das fachadas históricas de Ivy Hall, cada estudante guarda seus próprios sonhos, segredos e disputas. Aqui, o poder abre portas, os sobrenomes protegem reputações e cada escolha pode mudar uma história.</p>
+  <div class="quote">“Revenge doesn't end. It matures.”</div>
+  <div class="actions"><button class="primary" onclick="go('vendetta')">Descobrir a Vendetta</button><button onclick="go('admission')">Iniciar minha jornada</button><button onclick="go('societies')">Conhecer as fraternidades</button></div>
+ </div></div>
  <div class="rule"></div>
  <div class="grid three">
-  <article class="panel"><div class="eyebrow">01 · Tradição</div><h3>Uma herança secular</h3><p>Desde 1740, a universidade atravessa gerações, ambições e disputas por influência.</p><button onclick="go('university')">Conhecer a história</button></article>
-  <article class="panel"><div class="eyebrow">02 · Sociedade</div><h3>Seu lugar no campus</h3><p>Fraternidades, alianças e círculos sociais podem abrir portas — ou criar inimigos.</p><button onclick="go('societies')">Explorar sociedades</button></article>
-  <article class="panel"><div class="eyebrow">03 · Vendetta</div><h3>O passado não morreu</h3><p>Um símbolo reapareceu. Um nome voltou a circular. E alguém está observando.</p><button onclick="go('vendetta')">Descobrir a Vendetta</button></article>
+  <article class="panel"><div class="eyebrow">01 · Tradição</div><h3>Uma herança secular</h3><p>Uma instituição de prestígio moldada por ambição, tradição e gerações de estudantes.</p></article>
+  <article class="panel"><div class="eyebrow">02 · Sociedade</div><h3>Seu lugar no campus</h3><p>Fraternidades, alianças e círculos sociais podem abrir portas — ou criar inimigos.</p></article>
+  <article class="panel"><div class="eyebrow">03 · Vendetta</div><h3>O passado retorna</h3><p>Um símbolo reapareceu. Documentos antigos ressurgiram. Alguém está observando.</p></article>
  </div>
- <div class="section-head"><div class="eyebrow">Uma nova era</div><h2>Bem-vindos de volta a Ivy Hall.</h2><p>Em 2026, os portões da universidade voltam a se abrir. A promessa é de renovação. Os corredores, porém, ainda guardam ecos de uma noite que ninguém conseguiu esquecer.</p></div>
 </section>
 
-<!-- UNIVERSIDADE -->
 <section id="university" class="page">
- <div class="eyebrow">The institution · Since 1740</div>
- <h1>Uma história escrita por <span class="gold">ambição.</span></h1>
- <p>Mais do que salas de aula e diplomas, a universidade é o reflexo das pessoas que passaram por seus corredores. Seu passado foi construído por ideias inovadoras, disputas de poder e gerações que desejaram deixar sua marca.</p>
- <div class="rule"></div>
- <article class="panel">
-  <div class="eyebrow">1740 · As origens</div><h2>O primeiro projeto</h2>
-  <p>A Universidade da Pensilvânia data sua fundação em 1740, quando surgiu na Filadélfia o plano de construir uma escola beneficente que também serviria como local de culto. Após o início da construção, descobriu-se que os custos ultrapassavam os recursos disponíveis. O projeto permaneceu inacabado durante uma década, como uma promessa suspensa entre a ambição e a realidade.</p>
- </article>
- <div class="section-head"><div class="eyebrow">1749 · Uma nova visão</div><h2>Benjamin Franklin e o futuro da educação</h2></div>
- <article class="panel">
-  <p>Em 1749, Benjamin Franklin — impressor, inventor e futuro pai fundador dos Estados Unidos — publicou seu ensaio <em>Proposals Relating to the Education of Youth in Pensilvania</em>. Distribuiu suas ideias entre cidadãos influentes da Filadélfia e organizou 24 curadores para formar uma instituição de ensino superior baseada em suas propostas.</p>
-  <p>O grupo adquiriu o edifício inacabado e, em 1751, abriu as portas da Academia e Escola Beneficente da Província da Pensilvânia. A instituição recebia jovens de diferentes origens sociais. Franklin presidiu a instituição até 1755 e continuou como curador até sua morte, em 1790.</p>
-  <p>A visão de Franklin era inovadora para a época. Em vez de concentrar a educação exclusivamente na formação religiosa, defendia um currículo capaz de preparar jovens para a liderança nos negócios, no governo e no serviço público. Suas propostas encontraram resistência: o primeiro reitor, William Smith, retomou um currículo mais tradicional.</p>
-  <div class="quote">“Leis sem moral são inúteis.”</div>
- </article>
- <div class="section-head"><div class="eyebrow">1755–1873 · Expansão</div><h2>Uma instituição em transformação</h2></div>
- <article class="panel">
-  <div class="list-item"><strong>1755 — Carta régia.</strong><p>A instituição recebeu sua carta régia, consolidando sua posição educacional.</p></div>
-  <div class="list-item"><strong>1757 — Primeira turma.</strong><p>Os primeiros estudantes concluíram sua formação.</p></div>
-  <div class="list-item"><strong>1765 — Escola de Medicina.</strong><p>Foi estabelecida a primeira escola de medicina das colônias americanas.</p></div>
-  <div class="list-item"><strong>1779 — Universidade.</strong><p>Tornou-se a primeira instituição americana de ensino superior a usar oficialmente a denominação universidade.</p></div>
-  <div class="list-item"><strong>1872–1873 — Novo campus.</strong><p>A expansão levou à construção de um novo campus na região oeste da Filadélfia. Concluído em 1873, o College Hall foi o primeiro edifício erguido no atual campus.</p></div>
- </article>
- <div class="section-head"><div class="eyebrow">A universidade moderna</div><h2>Conhecimento que atravessa gerações</h2></div>
- <article class="panel">
-  <p>O campus da Penn, na Filadélfia Ocidental, preserva uma herança ligada ao nascimento dos Estados Unidos. Seus edifícios e espaços acadêmicos convivem com centros de pesquisa, iniciativas cívicas e projetos de inovação.</p>
-  <p>Entre os marcos associados à sua história estão a Wharton School, fundada em 1881, e o desenvolvimento do ENIAC, computador eletrônico de grande escala apresentado em 1946. Em 1994, Judith Rodin tornou-se a primeira mulher a presidir uma instituição da Ivy League. Posteriormente, Amy Gutmann assumiu em 2004, seguida por M. Elizabeth “Liz” Magill em 2022.</p>
-  <p>Da educação proposta por Franklin às pesquisas contemporâneas, a instituição continua associada à inovação, à liderança e ao impacto público.</p>
- </article>
- <div class="section-head"><div class="eyebrow">2026 · Roleplay</div><h2>O retorno a Ivy Hall</h2></div>
- <article class="panel">
-  <p>No universo do RPG, a universidade anuncia sua reabertura completa em 2026. Novos projetos, novos alunos e uma nova administração prometem devolver vida ao campus. Mas a história oficial não conta tudo. Entre os prédios restaurados e os nomes celebrados, existem silêncios que continuam protegendo pessoas poderosas.</p>
-  <button class="primary" onclick="go('vendetta')">Ler a história da Vendetta</button>
- </article>
+ <div class="eyebrow">The institution · Since 1740</div><h1>Uma história escrita por <span class="gold">ambição.</span></h1>
+ <article class="panel"><h2>University of Pennsylvania</h2>
+ <p>A Universidade da Pensilvânia, na Filadélfia, possui uma história ligada à educação, à pesquisa e à formação de lideranças. Para o universo de Vendetta, o campus serve como cenário de rivalidades, amizades, disputas de poder e segredos que atravessam gerações.</p>
+ <p>Em Ivy Hall, a imagem pública é tão importante quanto o que acontece longe dos olhos dos professores. Uma boa reputação pode ser construída durante anos e destruída em uma única noite.</p></article>
+ <div class="grid"><article class="panel"><h3>Excelência acadêmica</h3><p>Salas de aula, laboratórios e oportunidades de pesquisa convivem com a pressão por desempenho e prestígio.</p></article><article class="panel"><h3>Vida social</h3><p>Eventos, clubes, equipes e fraternidades definem parte das relações que movimentam o campus.</p></article></div>
 </section>
 
-<!-- VENDETTA -->
 <section id="vendetta" class="page">
- <div class="eyebrow">Vendetta · Sangue em Ivy Hall</div>
- <h1>Revenge doesn't end.<br><span class="gold">It matures.</span></h1>
- <p>Uma história de poder, vingança e segredos enterrados sob a elegância de uma universidade.</p>
- <div class="rule"></div>
+ <div class="eyebrow">Vendetta · Sangue em Ivy Hall</div><h1>Revenge doesn't end.<br><span class="gold">It matures.</span></h1>
  <article class="panel">
   <h2>O Knickerbocker Club</h2>
-  <p>O Knickerbocker Club sempre foi mais do que uma fraternidade: era um segredo bem vestido de tradição. Um lugar onde filhos da elite aprendiam a sorrir em público e conspirar em silêncio. Seus membros mantinham laços antigos com a Universidade da Pensilvânia e ajudaram a construir não apenas edifícios, mas também as estruturas de influência que moldaram a instituição.</p>
-  <p>Dinheiro antigo, influência e um sobrenome capaz de abrir portas — ou fechá-las para sempre. Para alguns, o clube representava a própria realeza social. Para outros, era uma fortaleza impossível de alcançar.</p>
+  <p>O Knickerbocker Club sempre foi mais do que uma fraternidade: era um segredo bem vestido de tradição. Um lugar onde filhos da elite aprendiam a sorrir em público e conspirar em silêncio. Dinheiro antigo, influência e sobrenomes capazes de abrir portas sustentavam sua reputação.</p>
   <h2>Aqueles que foram apagados</h2>
-  <p>Décadas antes, um grupo de maçons havia sido expulso do círculo interno do clube. Foram humilhados, esquecidos e removidos da história oficial. Mas certas feridas não desaparecem. Apenas aguardam.</p>
+  <p>Décadas antes, um grupo de maçons havia sido expulso do círculo interno do clube. Humilhados e removidos da história oficial, eles nunca esqueceram o que perderam.</p>
   <h2>2012 · A Guerra da Sede</h2>
-  <p>Enquanto o mundo brincava com a ideia do fim, eles decidiram criar o próprio apocalipse. A sede do Knickerbocker Club tornou-se um cenário de guerra: vidros quebrados, portas arrombadas e símbolos riscados nas paredes. Não era apenas destruição física. Era uma mensagem.</p>
-  <p>Naquela noite, conhecida em sussurros como “A Guerra da Sede”, dois dos filhos de Mark Knickerbocker foram assassinados. Não houve defesa nem negociação. A única sobrevivente da família imediata foi Grace Knickerbocker, que estava viajando com a família e, por isso, não se encontrava na sede durante o ataque.</p>
-  <p>Quando voltou, encontrou silêncio onde antes existia poder. A universidade, profundamente ligada à família, não conseguiu sustentar o peso do escândalo. Portas foram fechadas, programas cancelados e alunos transferidos para instituições vizinhas. Durante anos, o lugar permaneceu como um fantasma elegante: de pé, mas vazio por dentro.</p>
+  <p>A sede do Knickerbocker Club tornou-se cenário de destruição. Naquela noite, dois dos filhos de Mark Knickerbocker foram assassinados. Grace Knickerbocker sobreviveu porque estava viajando com a família. O escândalo atingiu a universidade e deixou um vazio que levou anos para ser enfrentado.</p>
   <h2>2026 · O retorno</h2>
-  <p>A universidade anuncia sua reabertura completa. O campus volta a receber estudantes, os projetos são retomados e a promessa de uma nova era ganha força. Porém, junto com o anúncio, um site anônimo começa a circular entre os alunos.</p>
-  <p>Publicações enigmáticas, documentos antigos e imagens que nunca deveriam ter sido divulgadas ressurgem. Em seguida, um símbolo aparece em portas, espelhos e corredores vazios: um círculo vermelho com a letra V.</p>
+  <p>A universidade volta a receber estudantes, mas um site anônimo começa a circular pelo campus. Documentos antigos e imagens comprometedoras reaparecem. Um círculo vermelho com a letra V surge em portas, espelhos e corredores vazios.</p>
   <div class="quote">“A vingança não termina. Ela amadurece.”</div>
   <p>Quem assina as mensagens usa apenas um nome: <strong class="gold">Vendetta.</strong> Talvez não estejam contando uma história. Talvez estejam continuando uma que nunca terminou.</p>
  </article>
- <div class="section-head"><div class="eyebrow">Atenção, jogadores</div><h2>O que está em jogo?</h2></div>
- <div class="grid">
-  <article class="panel"><h3>Segredos</h3><p>O passado de Ivy Hall pode atingir estudantes, famílias e membros da elite. Nem todos os documentos revelam a verdade completa.</p></article>
-  <article class="panel"><h3>Consequências</h3><p>Suas decisões podem aproximar seu personagem de aliados, rivais e descobertas perigosas.</p></article>
- </div>
 </section>
 
-<!-- FRATERNIDADES -->
 <section id="societies" class="page">
- <div class="eyebrow">The Greek life · Four societies</div>
- <h1>Uma sociedade. <span class="gold">Mil segredos.</span></h1>
- <p>As fraternidades são círculos de influência, identidade e rivalidade. Cada uma tem seus próprios costumes, reputação e espaço na vida universitária.</p>
- <div class="rule"></div>
+ <div class="eyebrow">The Greek life</div><h1>Uma sociedade. <span class="gold">Mil segredos.</span></h1>
+ <p>Fraternidades são círculos de influência, identidade e rivalidade. Conheça suas descrições e estrutura social.</p>
  <div id="societyCards" class="grid"></div>
- <div class="section-head"><div class="eyebrow">Estrutura social</div><h2>Escolha com cuidado</h2><p>As alianças podem oferecer prestígio, oportunidades e proteção. Também podem cobrar lealdade, silêncio e favores que não são tão simples de devolver.</p></div>
 </section>
 
 <section id="societyDetail" class="page">
- <button onclick="go('societies')">← Voltar às fraternidades</button>
- <div id="societyDetailContent" class="section-head"></div>
+ <button onclick="go('societies')">← Voltar às fraternidades</button><div id="societyDetailContent"></div>
 </section>
 
-<!-- VIDA UNIVERSITÁRIA -->
 <section id="life" class="page">
- <div class="eyebrow">Campus life · First semester</div>
- <h1>A vida além das <span class="gold">salas de aula.</span></h1>
- <p>Clubes, equipes, publicações estudantis e atividades extracurriculares definem reputações e criam oportunidades para novas histórias.</p>
- <div class="rule"></div>
- <div class="section-head"><h2>Atividades extracurriculares</h2><p>Os responsáveis abaixo podem ser alterados pela administração do site.</p></div>
- <div id="activitiesList" class="grid"></div>
- <div class="section-head"><h2>Professores e equipe</h2></div>
- <div id="staffList" class="grid"></div>
+ <div class="eyebrow">Campus life</div><h1>Vida <span class="gold">universitária.</span></h1>
+ <div class="section-head"><h2>Atividades extracurriculares</h2></div><div id="activitiesList" class="grid"></div>
+ <div class="section-head"><h2>Professores e equipe</h2></div><div id="staffList" class="grid"></div>
 </section>
 
-<!-- ADMISSÕES -->
 <section id="admission" class="page">
- <div class="eyebrow">Admissions · Your story begins here</div>
- <h1>Seu próximo capítulo começa <span class="gold">agora.</span></h1>
- <article class="panel">
-  <h2>Admissões & auxílio</h2>
-  <p>A Universidade da Pensilvânia busca tornar a educação inclusiva, inovadora e impactante, digna de uma instituição da Ivy League. No universo do RPG, a admissão é também o primeiro passo para construir relações, escolher uma trajetória acadêmica e descobrir o que existe por trás da reputação de Ivy Hall.</p>
-  <p>A candidatura é uma oportunidade para apresentar os interesses, a história e as ambições de cada personagem. Os estudantes devem escolher uma área de formação compatível com seu percurso acadêmico.</p>
-  <h3>Como funciona no RPG</h3>
-  <ul class="rule-list">
-   <li>Crie uma conta no site para acessar sua área de jogador.</li>
-   <li>Envie a ficha do personagem para análise da administração.</li>
-   <li>Aguarde a aprovação antes de considerar a ficha oficialmente aceita.</li>
-   <li>Consulte os cursos, as atividades e as regras antes de definir as relações do personagem.</li>
-  </ul>
-  <button class="primary" onclick="go('account')">Entrar ou criar conta</button>
- </article>
- <div class="section-head"><h2>Áreas acadêmicas</h2><p>Confira as opções de cursos utilizadas no RPG.</p></div>
+ <div class="eyebrow">Admissions</div><h1>Encontre seu <span class="gold">caminho.</span></h1>
+ <p>Escolha uma área de estudo e prepare a ficha do seu personagem para análise administrativa.</p>
  <div id="coursesList" class="grid"></div>
+ <div class="actions"><button class="primary" onclick="go('characterForm')">Enviar ficha de personagem</button></div>
 </section>
 
-<!-- REGRAS -->
 <section id="rules" class="page">
- <div class="eyebrow">Community guidelines</div>
- <h1>Regras de <span class="gold">Ivy Hall.</span></h1>
- <p>As regras existem para manter a organização do RPG, proteger os participantes e permitir que todos desenvolvam suas histórias com respeito.</p>
- <div class="rule"></div>
- <article class="panel">
-  <h3>Personagens e atividade</h3>
-  <ul class="rule-list">
-   <li>O limite é de três personagens por pessoa.</li>
-   <li>Personagens inativos podem ser removidos pela administração quando necessário.</li>
-   <li>O personagem é seu personagem; você é você. Não leve o on para o off nem o off para o on.</li>
-   <li>O mínimo de atividade estabelecido para o RPG é de 15 cenas mensais por personagem, com pelo menos duas cenas por semana.</li>
-   <li>A troca de faceclaim só é permitida após 15 dias da criação do personagem ou um mês desde a última troca, devendo ser informada à administração.</li>
-   <li>Personagens inativos podem entrar na lista Ghost e, conforme as regras do RPG, ser retirados ou ter seu faceclaim liberado.</li>
-  </ul>
-  <h3>Cenas e consequências</h3>
-  <ul class="rule-list">
-   <li>Ao entrar no RPG, você aceita que seu personagem possa ser ferido, perseguido, exposto ou morto dentro das regras e dos acordos aplicáveis.</li>
-   <li>Lutas, mortes e consequências graves precisam de acordo entre as partes envolvidas e comunicação à administração no off.</li>
-   <li>Cenas em redes sociais devem incluir a conta de trama indicada pela administração: @vforvendetta.</li>
-   <li>Conteúdos adultos devem seguir as regras específicas e os horários definidos pela administração. Nunca envolva menores de idade em conteúdo sexual.</li>
-  </ul>
-  <h3>Cursos, sociedades e clubes</h3>
-  <ul class="rule-list">
-   <li>Confira a relação entre cursos, escolas e atividades antes de criar a ficha.</li>
-   <li>Algumas sociedades possuem características próprias e podem ter restrições de participação em determinados clubes.</li>
-   <li>Respeite as posições de liderança estabelecidas para cada atividade.</li>
-  </ul>
-  <h3>Convivência e limites</h3>
-  <ul class="rule-list">
-   <li>É proibida a divulgação de outros RPGs nos espaços do grupo, conforme as regras da comunidade.</li>
-   <li>São proibidas tramas que envolvam estupro, zoofilia ou necrofilia.</li>
-   <li>Tramas pesadas devem respeitar as regras da comunidade e os limites de todos os participantes.</li>
-  </ul>
-  <p class="small">As regras completas e atualizações oficiais podem ser complementadas pela administração do RPG. Em caso de dúvida, consulte a equipe.</p>
+ <div class="eyebrow">Community guidelines</div><h1>Regras de <span class="gold">Ivy Hall.</span></h1>
+ <article class="panel"><h2>Convivência</h2>
+  <p>Respeite todos os participantes. Separar personagem e jogador é obrigatório; conflitos fictícios não justificam ataques pessoais.</p>
+  <p>Não controle personagens alheios sem autorização. Dê espaço para os outros responderem às cenas e decidirem as ações de seus próprios personagens.</p>
+  <p>Segredos, informações privadas e acontecimentos ainda não revelados devem ser tratados conforme as regras da administração. Não use informações fora do jogo para obter vantagem narrativa.</p>
+  <h2>Conteúdo e consentimento</h2>
+  <p>Combine cenas sensíveis com os participantes envolvidos. Respeite limites previamente comunicados e as decisões da administração.</p>
+  <h2>Fichas e administração</h2>
+  <p>Envie informações verdadeiras sobre a proposta do personagem. Fichas ficam pendentes até serem revisadas. A aprovação administrativa não autoriza controlar outros personagens.</p>
  </article>
 </section>
 
-<!-- CONTA -->
 <section id="account" class="page">
- <div class="eyebrow">Player access · Secure entrance</div>
- <h1>Entre em <span class="gold">Ivy Hall.</span></h1>
- <div class="grid">
-  <div class="panel">
-   <h2>Entrar</h2>
-   <form id="loginForm">
-    <label class="label">E-mail</label><input id="loginEmail" type="email" autocomplete="email" required>
-    <label class="label">Senha</label><input id="loginPassword" type="password" autocomplete="current-password" required>
-    <div class="actions"><button class="primary" type="submit">Entrar na conta</button></div>
-   </form>
-  </div>
-  <div class="panel">
-   <h2>Criar conta</h2>
-   <form id="signupForm">
-    <label class="label">Nome de jogador</label><input id="signupName" maxlength="40" required>
-    <label class="label">E-mail</label><input id="signupEmail" type="email" autocomplete="email" required>
-    <label class="label">Senha (mínimo de 8 caracteres)</label><input id="signupPassword" type="password" minlength="8" autocomplete="new-password" required>
-    <div class="actions"><button class="primary" type="submit">Criar conta</button></div>
-   </form>
-   <p class="small">Se a confirmação de e-mail estiver ativada no Supabase, confira sua caixa de entrada após o cadastro.</p>
-  </div>
- </div>
+ <div class="eyebrow">Player access</div><h1>Minha <span class="gold">conta.</span></h1>
  <div id="accountMessage" aria-live="polite"></div>
- <div id="playerPanel" class="panel hidden">
-  <div class="eyebrow">Player dashboard</div><h2>Minha área</h2>
-  <p id="playerWelcome"></p>
-  <div class="actions">
-   <button class="primary" onclick="go('characterForm')">Criar ficha de personagem</button>
-   <button onclick="loadMyCharacters()">Atualizar minhas fichas</button>
-   <button class="danger" onclick="logout()">Sair da conta</button>
-  </div>
-  <div id="myCharacters"></div>
-  <div id="adminShortcut" class="hidden actions"><button class="primary" onclick="go('admin')">Abrir painel administrativo</button></div>
- </div>
-</section>
-
-<!-- CRIAR FICHA -->
-<section id="characterForm" class="page">
- <button onclick="go('account')">← Voltar à minha conta</button>
- <div class="section-head"><div class="eyebrow">Character application</div><h1>Construa sua <span class="gold">história.</span></h1><p>Preencha os dados do personagem. A ficha será enviada para análise.</p></div>
- <div class="panel">
-  <form id="characterFormElement">
-   <label class="label">Nome completo do personagem</label><input id="charName" required maxlength="100">
-   <div class="form-row">
-    <div><label class="label">Faceclaim</label><input id="charFaceclaim" required maxlength="100"></div>
-    <div><label class="label">Idade do personagem</label><input id="charAge" type="number" min="18" max="100" required></div>
-   </div>
-   <label class="label">Foto do personagem</label><input id="charPhoto" type="file" accept="image/jpeg,image/png,image/webp">
-   <p class="small">Escolha uma imagem da galeria do seu celular. Máximo de 5 MB. A foto será armazenada no serviço de imagens configurado para o site.</p>
-   <label class="label">Curso</label><select id="charCourse" required></select>
-   <label class="label">Personalidade</label><textarea id="charPersonality" required maxlength="5000"></textarea>
-   <label class="label">Biografia</label><textarea id="charBio" required maxlength="10000"></textarea>
-   <label class="label">Atividade extracurricular principal</label><select id="charActivityOne"></select>
-   <label class="label">Segunda atividade extracurricular (opcional)</label><select id="charActivityTwo"></select>
-   <label class="label">Fraternidade (opcional)</label><select id="charSociety"></select>
-   <label class="label">Cena de apresentação (opcional)</label><textarea id="charScene" maxlength="5000"></textarea>
-   <label class="label"><input id="charDeath" type="checkbox" style="display:inline;width:auto"> Aceito a possibilidade de morte do personagem dentro das regras do RPG.</label>
-   <div class="actions"><button class="primary" type="submit">Enviar ficha para análise</button></div>
+ <div class="grid">
+  <form class="panel" id="loginForm"><h2>Entrar</h2>
+   <label class="label" for="loginEmail">E-mail</label><input id="loginEmail" type="email" autocomplete="email" required>
+   <label class="label" for="loginPassword">Senha</label><input id="loginPassword" type="password" autocomplete="current-password" required>
+   <div class="actions"><button class="primary" type="submit">Entrar</button></div>
   </form>
-  <div id="characterMessage" aria-live="polite"></div>
+  <form class="panel" id="signupForm"><h2>Criar conta</h2>
+   <label class="label" for="signupName">Nome de jogador</label><input id="signupName" required maxlength="60">
+   <label class="label" for="signupEmail">E-mail</label><input id="signupEmail" type="email" autocomplete="email" required>
+   <label class="label" for="signupPassword">Senha (mínimo 8 caracteres)</label><input id="signupPassword" type="password" minlength="8" autocomplete="new-password" required>
+   <div class="actions"><button class="primary" type="submit">Cadastrar</button></div>
+  </form>
+ </div>
+ <div id="playerPanel" class="panel hidden"><h2>Área do jogador</h2><p id="playerWelcome"></p>
+  <div class="actions"><button class="primary" onclick="go('characterForm')">Enviar ficha</button><button onclick="loadMyCharacters()">Minhas fichas</button><button onclick="logout()">Sair</button><button id="adminShortcut" class="hidden" onclick="go('admin')">Painel administrativo</button></div>
+  <div id="myCharacters"></div>
  </div>
 </section>
 
-<!-- ÁREA CONFIDENCIAL -->
-<section id="secret" class="page">
- <div class="eyebrow">Private character information</div><h1>Área <span class="gold">confidencial.</span></h1>
- <div class="panel">
-  <p>Informações sensíveis da trama devem ser enviadas apenas por canais autorizados. O conteúdo desta área não deve ser compartilhado publicamente.</p>
-  <p class="small">O envio de segredos e traumas só ficará disponível depois que a tabela de dados confidenciais e suas permissões de acesso estiverem configuradas no Supabase. Não coloque informações privadas em campos públicos da ficha.</p>
-  <button onclick="go('account')">Voltar à minha conta</button>
- </div>
+<section id="characterForm" class="page">
+ <div class="eyebrow">Character application</div><h1>Ficha de <span class="gold">personagem.</span></h1>
+ <p>Preencha os dados públicos da ficha. Não coloque segredos confidenciais nos campos de biografia ou personalidade.</p>
+ <div id="characterMessage" aria-live="polite"></div>
+ <form id="characterFormElement" class="panel">
+  <label class="label" for="charName">Nome completo do personagem</label><input id="charName" required maxlength="120">
+  <div class="form-row"><div><label class="label" for="charFaceclaim">Faceclaim</label><input id="charFaceclaim" maxlength="150"></div><div><label class="label" for="charAge">Idade do personagem</label><input id="charAge" type="number" min="16" max="100" required></div></div>
+  <label class="label" for="charCourse">Curso</label><select id="charCourse" required><option value="">Selecione um curso</option></select>
+  <label class="label" for="charSociety">Fraternidade</label><select id="charSociety"><option value="">Nenhuma selecionada</option></select>
+  <div class="form-row"><div><label class="label" for="charActivityOne">Atividade extracurricular 1</label><select id="charActivityOne"><option value="">Nenhuma</option></select></div><div><label class="label" for="charActivityTwo">Atividade extracurricular 2</label><select id="charActivityTwo"><option value="">Nenhuma</option></select></div></div>
+  <label class="label" for="charPersonality">Personalidade</label><textarea id="charPersonality" required maxlength="5000"></textarea>
+  <label class="label" for="charBio">Biografia pública</label><textarea id="charBio" required maxlength="10000"></textarea>
+  <label class="label" for="charScene">Cena de apresentação</label><textarea id="charScene" maxlength="5000"></textarea>
+  <label class="label" for="charPhoto">Foto do personagem (opcional, até 5 MB)</label><input id="charPhoto" type="file" accept="image/png,image/jpeg,image/webp">
+  <label class="small"><input id="charDeath" type="checkbox" style="display:inline;width:auto;margin-right:8px">Li as regras referentes ao risco narrativo de morte do personagem.</label>
+  <div class="actions"><button class="primary" type="submit">Enviar ficha para análise</button><button type="button" onclick="go('account')">Cancelar</button></div>
+ </form>
 </section>
 
-<!-- ADMIN -->
 <section id="admin" class="page">
- <div class="eyebrow">Restricted access · Administration</div>
- <h1>Painel da <span class="gold">administração.</span></h1>
- <p>Edite líderes, vice-líderes, capitães, treinadores, professores, descrições e informações públicas. As mudanças salvas serão exibidas no site.</p>
+ <div class="eyebrow">Restricted access · Administration</div><h1>Painel da <span class="gold">administração.</span></h1>
  <div id="adminMessage" aria-live="polite"></div>
  <div id="adminEditor" class="hidden">
-  <div class="admin-toolbar">
-   <button class="primary" onclick="saveSiteContent()">Salvar todas as alterações</button>
-   <button onclick="renderAdminEditor()">Descartar mudanças não salvas</button>
-   <button onclick="go('societies')">Ver fraternidades</button>
-  </div>
-  <div class="section-head"><h2>Fraternidades</h2></div>
-  <div id="adminSocieties"></div>
-  <div class="section-head"><h2>Atividades extracurriculares</h2></div>
-  <div id="adminActivities"></div>
-  <div class="section-head"><h2>Professores e equipe</h2></div>
-  <div id="adminStaff"></div>
-  <div class="section-head"><h2>Descrições e história</h2></div>
-  <div class="admin-item">
-   <label class="label">Texto de apresentação da página inicial</label><textarea id="editHomeIntro"></textarea>
-   <label class="label">Texto complementar da Vendetta</label><textarea id="editVendettaExtra"></textarea>
-   <label class="label">Aviso geral do RPG</label><textarea id="editNotice"></textarea>
-  </div>
-  <div class="admin-toolbar"><button class="primary" onclick="saveSiteContent()">Salvar todas as alterações</button></div>
+  <article class="panel"><h2>Gerador de tramas com IA</h2>
+   <p>Gere sugestões com informações públicas de personagens aprovados. Revise cada sugestão antes de aprová-la. Os segredos privados não devem ser enviados ao modelo de IA.</p>
+   <div class="admin-toolbar"><button class="primary" id="generatePlotsButton" onclick="generatePlotSuggestions()">Gerar novas tramas</button><button onclick="loadPlotSuggestions()">Atualizar sugestões</button></div>
+   <div id="plotMessage" aria-live="polite"></div><div id="plotSuggestions"></div>
+  </article>
+  <article class="panel"><h2>Revisão de fichas</h2><button onclick="loadPendingCharacters()">Atualizar fichas</button><div id="pendingCharacters"></div></article>
+  <article class="panel"><h2>Conteúdo do site</h2>
+   <label class="label" for="editHomeIntro">Apresentação da página inicial</label><textarea id="editHomeIntro"></textarea>
+   <label class="label" for="editVendettaExtra">Texto complementar da Vendetta</label><textarea id="editVendettaExtra"></textarea>
+   <label class="label" for="editNotice">Aviso geral</label><textarea id="editNotice"></textarea>
+   <div class="actions"><button class="primary" onclick="saveSiteContent()">Salvar conteúdo</button></div>
+  </article>
+  <article class="panel"><h2>Fraternidades e atividades</h2><p>Os dados públicos atuais das fraternidades e atividades são carregados neste arquivo. A edição avançada precisa estar ligada às permissões e tabelas correspondentes do Supabase antes de ser habilitada.</p></article>
  </div>
 </section>
 </main>
 
-<footer>
- <div>UNIVERSITY OF PENNSYLVANIA · ROLEPLAY</div>
- <div><span>VENDETTA — SANGUE EM IVY HALL</span></div>
- <div>FICÇÃO INTERATIVA INDEPENDENTE · NÃO É UM SITE OFICIAL DA UNIVERSIDADE</div>
-</footer>
+<footer><div>UNIVERSITY OF PENNSYLVANIA · ROLEPLAY</div><div><span>VENDETTA — BLOOD ON IVY HALL</span></div><div>Ficção interativa · 2026</div></footer>
 
 <script>
-const SUPABASE_URL = "https://ndbmbrwafbflxmvobqqx.supabase.co";
-const SUPABASE_KEY = "sb_publishable_evsP9H6Y-SbqVg9pBd3ysQ_vOYVzC7U";
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+/* CONFIGURAÇÃO PÚBLICA DO SUPABASE.
+   A chave publishable/anon pode estar no frontend, desde que as políticas RLS
+   estejam configuradas corretamente. Nunca coloque a chave secreta da OpenAI aqui. */
+const SUPABASE_URL="https://ndbmbrwafbflxmvobqqx.supabase.co";
+const SUPABASE_KEY="sb_publishable_evsP9H6Y-SbqVg9pBd3ysQ_vOYVzC7U";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-const defaultContent = {
- homeIntro: "Uma universidade de prestígio, tradição e ambição. Por trás das fachadas históricas, cada estudante guarda seus próprios sonhos, segredos e disputas. Aqui, toda escolha pode mudar uma história — e nem toda verdade deveria vir à tona.",
- vendettaExtra: "",
- notice: "Bem-vindos a Ivy Hall. Respeite as regras e os limites dos participantes.",
- societies: [
-  {id:"akpsi",name:"Alpha Kappa Psi",short:"ΑΚΨ",image:"IMG-20261028-WA0073.jpg",motto:"Liderança, festas, poder e luxo",description:"Networking pesado, ternos sob medida e confiança de protagonista. De dia, seus membros circulam entre negócios e oportunidades; à noite, organizam algumas das festas mais comentadas do campus. Aqui, sobrenomes influentes podem abrir portas.",leader:"",vice:"",members:""},
-  {id:"kkg",name:"Kappa Kappa Gamma",short:"ΚΚΓ",image:"IMG-20261028-WA0071.jpg",motto:"Beleza, irmandade e luxo cinematográfico",description:"Saltos ecoando por corredores, brunches elegantes e amizades que parecem saídas de um retrato dourado. A tradição é forte, a imagem é impecável e cada integrante sabe o peso de seu nome. Apenas as jovens mais influentes parecem encontrar seu lugar neste círculo.",leader:"Donatella Sharma Fawkes",vice:"",members:""},
-  {id:"phisp",name:"Phi Sigma Pi",short:"ΦΣΠ",image:"IMG-20261028-WA0069.jpg",motto:"Excelência acadêmica e liderança",description:"Uma sociedade acadêmica co-ed para quem prefere bibliotecas, cafés e conversas que atravessam a madrugada. Entre sessões de estudo e debates, seus integrantes constroem laços com base na curiosidade, na dedicação e na inteligência.",leader:"",vice:"Mia Monroe",members:""},
-  {id:"sigchi",name:"Sigma Chi",short:"ΣΧ",image:"IMG-20261028-WA0075.jpg",motto:"Sociabilidade, energia e liberdade",description:"Extrovertidos, sociais e conhecidos por seus eventos intensos. A vida aqui é cheia de encontros, festas, networking e uma relação bastante flexível com as regras. Se o campus tem uma festa inesquecível, há boas chances de alguém da Sigma Chi estar por trás dela.",leader:"",vice:"",members:""}
+const defaultContent={
+ homeIntro:"Por trás das fachadas históricas de Ivy Hall, cada estudante guarda seus próprios sonhos, segredos e disputas. Aqui, cada escolha pode mudar uma história.",
+ vendettaExtra:"",
+ notice:"Bem-vindos a Ivy Hall. Respeite as regras e os limites dos participantes.",
+ societies:[
+ {id:"akpsi",name:"Alpha Kappa Psi",short:"ΑΚΨ",motto:"Liderança, festas, poder e luxo",description:"Networking, oportunidades e festas disputadas. Aqui, sobrenomes influentes podem abrir portas.",leader:"",vice:"",members:""},
+ {id:"kkg",name:"Kappa Kappa Gamma",short:"ΚΚΓ",motto:"Beleza, irmandade e luxo",description:"Tradição, imagem impecável e amizades que parecem saídas de um retrato dourado.",leader:"Donatella Sharma Fawkes",vice:"",members:""},
+ {id:"phisp",name:"Phi Sigma Pi",short:"ΦΣΠ",motto:"Excelência acadêmica e liderança",description:"Uma sociedade acadêmica para quem valoriza curiosidade, dedicação e inteligência.",leader:"",vice:"Mia Monroe",members:""},
+ {id:"sigchi",name:"Sigma Chi",short:"ΣΧ",motto:"Sociabilidade, energia e liberdade",description:"Eventos, networking e uma vida social intensa movimentam esta fraternidade.",leader:"",vice:"",members:""}
  ],
- activities: [
-  {name:"Basquetebol",leader:"Jaden Knickerbocker — capitão"},
-  {name:"Lacrosse",leader:""},
-  {name:"Hóquei",leader:"Asher St Dorian — capitão"},
-  {name:"Futebol americano",leader:""},
-  {name:"Dança",leader:"Lydia Deaton — capitã"},
-  {name:"Teatro",leader:""},
-  {name:"Jornal escolar",leader:"Gabriel Dutra de Sá — auxiliar"},
-  {name:"Grêmio estudantil",leader:""},
-  {name:"Artes cênicas",leader:""},
-  {name:"Pintura",leader:""},
-  {name:"Balé",leader:""},
-  {name:"Patinação",leader:"Amélie Carmilla — capitã"},
-  {name:"Cheerleaders",leader:""},
-  {name:"Natação",leader:"Erizek Blackwood — treinador"},
-  {name:"Ginástica",leader:"Harley Cherise — capitã"},
-  {name:"Tênis",leader:""},
-  {name:"Vôlei",leader:""},
-  {name:"Hipismo",leader:"Mia Velvet — capitã"},
-  {name:"Esgrima",leader:""},
-  {name:"Boxe",leader:"Kaizer Von Ritcher — treinador"},
-  {name:"Track & Field",leader:""}
+ activities:[
+ {name:"Basquetebol",leader:"Jaden Knickerbocker — capitão"},{name:"Lacrosse",leader:""},{name:"Hóquei",leader:"Asher St Dorian — capitão"},{name:"Futebol americano",leader:""},{name:"Dança",leader:"Lydia Deaton — capitã"},{name:"Teatro",leader:""},{name:"Jornal escolar",leader:"Gabriel Dutra de Sá — auxiliar"},{name:"Grêmio estudantil",leader:""},{name:"Artes cênicas",leader:""},{name:"Pintura",leader:""},{name:"Balé",leader:""},{name:"Patinação",leader:"Amélie Carmilla — capitã"},{name:"Cheerleaders",leader:""},{name:"Natação",leader:"Erizek Blackwood — treinador"},{name:"Ginástica",leader:"Harley Cherise — capitã"},{name:"Tênis",leader:""},{name:"Vôlei",leader:""},{name:"Hipismo",leader:"Mia Velvet — capitã"},{name:"Esgrima",leader:""},{name:"Boxe",leader:"Kaizer Von Ritcher — treinador"},{name:"Track & Field",leader:""}
  ],
- staff:[
-  {name:"Gabriel Dutra de Sá",role:"Estagiário"},
-  {name:"Killian Mavros",role:"Professor — Wharton, Finanças e Economia"},
-  {name:"Damien Bouchard McLean",role:"Professor — Wharton, Gestão e Estratégia"}
- ],
+ staff:[{name:"Gabriel Dutra de Sá",role:"Estagiário"},{name:"Killian Mavros",role:"Professor — Finanças e Economia"},{name:"Damien Bouchard McLean",role:"Professor — Gestão e Estratégia"}],
  courses:[
-  {group:"Medicina e saúde",items:["Bioquímica","Biofísica","Neurociência","Dermatologia","Neurologia","Neurocirurgia","Obstetrícia","Ginecologia","Pediatria","Ortopedia","Psiquiatria","Cirurgia geral","Enfermagem","Medicina veterinária"]},
-  {group:"Engenharia",items:["Bioengenharia","Engenharia química","Engenharia da computação","Engenharia elétrica","Engenharia mecânica","Engenharia civil"]},
-  {group:"Artes e ciências",items:["Artes visuais","Música","Teatro","Artes cênicas","Design gráfico","Moda","Física","Química","Ciências biológicas","Matemática","Filosofia"]},
-  {group:"Política e sociedade",items:["Ciências sociais","Administração pública"]},
-  {group:"Comunicação",items:["Jornalismo","Publicidade e propaganda","Relações públicas","Cinema e audiovisual","Produção multimídia","Pedagogia"]},
-  {group:"Direito",items:["Direito penal","Direitos humanos","Perícia"]},
-  {group:"Wharton",items:["Finanças e economia","Gestão e estratégia","Mercado e sociedade"]}
- ]
-};
-
-let siteContent = JSON.parse(JSON.stringify(defaultContent));
-let currentUser = null;
-let currentIsAdmin = false;
-
-function clone(obj){return JSON.parse(JSON.stringify(obj))}
-function esc(s){
- return String(s ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-function message(id,text,type="info"){
- const el=document.getElementById(id);
- if(!el)return;
- el.innerHTML=text?'<div class="status '+type+'">'+esc(text)+'</div>':"";
-}
-function go(id){
- document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- const page=document.getElementById(id);
- if(!page){return}
- page.classList.add("active");
- window.scrollTo({top:0,behavior:"smooth"});
- if(id==="societies")renderSocieties();
- if(id==="life")renderLife();
- if(id==="admission")renderCourses();
- if(id==="admin")openAdmin();
- if(id==="account")refreshAccount();
- if(id==="characterForm")fillCharacterOptions();
-}
-function makeStars(){
- const root=document.getElementById("stars");
- for(let i=0;i<75;i++){
-  const s=document.createElement("i");s.className="star";
-  s.style.left=Math.random()*100+"%";s.style.top=Math.random()*100+"%";
-  const z=1+Math.random()*2.4;s.style.width=z+"px";s.style.height=z+"px";
-  s.style.animationDelay=(Math.random()*4)+"s";
-  s.style.animationDuration=(2+Math.random()*4)+"s";root.appendChild(s);
- }
-}
+ {group:"Medicina e saúde",items:["Bioquímica","Biofísica","Neurociência","Dermatologia","Neurologia","Neurocirurgia","Obstetrícia","Ginecologia","Pediatria","Ortopedia","Psiquiatria","Cirurgia geral","Enfermagem","Medicina veterinária"]},
+ {group:"Engenharia",items:["Bioengenharia","Engenharia química","Engenharia da computação","Engenharia elétrica","Engenharia mecânica","Engenharia civil"]},
+ {group:"Artes e ciências",items:["Artes visuais","Música","Teatro","Artes cênicas","Design gráfico","Moda","Física","Química","Ciências biológicas","Matemática","Filosofia"]},
+ {group:"Política e sociedade",items:["Ciências sociais","Administração pública"]},
+ {group:"Comunicação",items:["Jornalismo","Publicidade e propaganda","Relações públicas","Cinema e audiovisual","Produção multimídia","Pedagogia"]},
+ {group:"Direito",items:["Direito penal","Direitos humanos","Perícia"]},
+ {group:"Wharton",items:["Finanças e economia","Gestão e estratégia","Mercado e sociedade"]}
+ ]};
+let siteContent=JSON.parse(JSON.stringify(defaultContent));
+let currentUser=null,currentIsAdmin=false;
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function message(id,text,type="info"){const el=document.getElementById(id);if(el)el.innerHTML=text?'<div class="status '+type+'">'+esc(text)+'</div>':""}
+function go(id){document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));const page=document.getElementById(id);if(!page)return;page.classList.add("active");window.scrollTo({top:0,behavior:"smooth"});if(id==="societies")renderSocieties();if(id==="life")renderLife();if(id==="admission")renderCourses();if(id==="account")refreshAccount();if(id==="characterForm")fillCharacterOptions();if(id==="admin")openAdmin()}
 async function loadSiteContent(){
- try{
-  const {data,error}=await db.from("site_content").select("data").eq("id","main").maybeSingle();
-  if(error)throw error;
-  if(data&&data.data){
-   siteContent={...clone(defaultContent),...data.data};
-   ["societies","activities","staff","courses"].forEach(k=>{
-    if(!Array.isArray(siteContent[k]))siteContent[k]=clone(defaultContent[k]);
-   });
-  }
- }catch(e){console.warn("Conteúdo padrão carregado:",e.message)}
- document.querySelector("#home .hero-copy > p").textContent=siteContent.homeIntro||defaultContent.homeIntro;
+ try{const {data,error}=await db.from("site_content").select("data").eq("id","main").maybeSingle();if(error)throw error;if(data?.data){siteContent={...JSON.parse(JSON.stringify(defaultContent)),...data.data};for(const k of ["societies","activities","staff","courses"])if(!Array.isArray(siteContent[k]))siteContent[k]=JSON.parse(JSON.stringify(defaultContent[k]))}}catch(e){console.warn("Usando conteúdo padrão:",e.message)}
+ const home=document.querySelector("#home .hero-copy>p");if(home)home.textContent=siteContent.homeIntro||defaultContent.homeIntro;
  renderSocieties();renderLife();renderCourses();
 }
-function renderSocieties(){
- const root=document.getElementById("societyCards");
- root.innerHTML=siteContent.societies.map((s,i)=>`
- <article class="panel society-card">
-  <img class="crest" src="${esc(s.image)}" alt="Emblema ${esc(s.name)}" onerror="this.style.display='none'">
-  <div class="eyebrow">${esc(s.short)}</div>
-  <h3>${esc(s.name)}</h3><p class="gold">${esc(s.motto)}</p>
-  <p>${esc(s.description)}</p>
-  <div class="small">Líder: ${esc(s.leader||"A definir")}<br>Vice-líder: ${esc(s.vice||"A definir")}</div>
-  <div class="actions"><button onclick="showSociety(${i})">Conhecer sociedade</button></div>
- </article>`).join("");
-}
-function showSociety(i){
- const s=siteContent.societies[i];if(!s)return;
- document.getElementById("societyDetailContent").innerHTML=`
- <div class="eyebrow">${esc(s.short)} · Fraternity</div>
- <img class="crest" src="${esc(s.image)}" alt="Emblema ${esc(s.name)}" onerror="this.style.display='none'">
- <h1>${esc(s.name)}</h1><h3>${esc(s.motto)}</h3><p>${esc(s.description)}</p>
- <div class="panel"><div class="list-item"><strong>Líder</strong><p>${esc(s.leader||"A definir")}</p></div>
- <div class="list-item"><strong>Vice-líder</strong><p>${esc(s.vice||"A definir")}</p></div>
- <div class="list-item"><strong>Membros e observações</strong><p>${esc(s.members||"Informações a serem definidas pela administração.")}</p></div></div>`;
- go("societyDetail");
-}
-function renderLife(){
- document.getElementById("activitiesList").innerHTML=siteContent.activities.map(a=>`
- <article class="panel"><div class="eyebrow">Extracurricular</div><h3>${esc(a.name)}</h3><p><strong class="gold">Responsável:</strong> ${esc(a.leader||"A definir")}</p></article>`).join("");
- document.getElementById("staffList").innerHTML=siteContent.staff.map(s=>`
- <article class="panel"><div class="eyebrow">Faculty & staff</div><h3>${esc(s.name)}</h3><p>${esc(s.role)}</p></article>`).join("");
-}
-function renderCourses(){
- const root=document.getElementById("coursesList");
- root.innerHTML=siteContent.courses.map(c=>`
- <article class="panel"><h3>${esc(c.group)}</h3>${c.items.map(x=>`<span class="tag">${esc(x)}</span>`).join("")}</article>`).join("");
- const select=document.getElementById("charCourse");
- if(select)select.innerHTML='<option value="">Selecione seu curso</option>'+siteContent.courses.map(c=>`<optgroup label="${esc(c.group)}">${c.items.map(x=>`<option>${esc(x)}</option>`).join("")}</optgroup>`).join("");
-}
-function fillCharacterOptions(){
- const one=document.getElementById("charActivityOne"),two=document.getElementById("charActivityTwo"),soc=document.getElementById("charSociety");
- const opts='<option value="">Nenhuma selecionada</option>'+siteContent.activities.map(a=>`<option>${esc(a.name)}</option>`).join("");
- one.innerHTML=opts;two.innerHTML=opts;
- soc.innerHTML='<option value="">Nenhuma selecionada</option>'+siteContent.societies.map(s=>`<option value="${esc(s.name)}">${esc(s.name)}</option>`).join("");
-}
-function field(label,value,handler,placeholder=""){
- return `<label class="label">${label}</label><input value="${esc(value)}" placeholder="${esc(placeholder)}" data-edit="${handler}">`;
-}
-function textareaField(label,value,handler){
- return `<label class="label">${label}</label><textarea data-edit="${handler}">${esc(value)}</textarea>`;
-}
-function renderAdminEditor(){
- document.getElementById("adminEditor").classList.remove("hidden");
- document.getElementById("adminSocieties").innerHTML=siteContent.societies.map((s,i)=>`
- <div class="admin-item"><h3>${esc(s.name)}</h3>
- ${field("Nome da fraternidade",s.name,`societies.${i}.name`)}
- ${field("Líder",s.leader,`societies.${i}.leader`,"Nome completo")}
- ${field("Vice-líder",s.vice,`societies.${i}.vice`,"Nome completo")}
- ${field("Lema ou descrição curta",s.motto,`societies.${i}.motto`)}
- ${textareaField("Descrição",s.description,`societies.${i}.description`)}
- ${textareaField("Membros e observações",s.members,`societies.${i}.members`)}
- </div>`).join("");
- document.getElementById("adminActivities").innerHTML=siteContent.activities.map((a,i)=>`
- <div class="admin-item"><h3>${esc(a.name)}</h3>
- ${field("Nome da atividade",a.name,`activities.${i}.name`)}
- ${field("Capitão, treinador ou responsável",a.leader,`activities.${i}.leader`,"Nome e cargo")}
- </div>`).join("");
- document.getElementById("adminStaff").innerHTML=siteContent.staff.map((s,i)=>`
- <div class="admin-item"><h3>${esc(s.name)}</h3>
- ${field("Nome",s.name,`staff.${i}.name`)}
- ${field("Cargo ou disciplina",s.role,`staff.${i}.role`)}
- </div>`).join("");
- document.getElementById("editHomeIntro").value=siteContent.homeIntro||"";
- document.getElementById("editVendettaExtra").value=siteContent.vendettaExtra||"";
- document.getElementById("editNotice").value=siteContent.notice||"";
- document.querySelectorAll("#adminEditor [data-edit]").forEach(el=>{
-  el.addEventListener("input",()=>{
-   const parts=el.dataset.edit.split(".");
-   let target=siteContent;
-   for(let j=0;j<parts.length-1;j++)target=target[parts[j]];
-   target[parts[parts.length-1]]=el.value;
-  });
- });
-}
-async function openAdmin(){
- const root=document.getElementById("adminEditor");
- root.classList.add("hidden");
- if(!currentUser){message("adminMessage","Entre na sua conta para verificar o acesso administrativo.","error");return}
- await checkAdmin();
- if(!currentIsAdmin){message("adminMessage","Acesso restrito. Sua conta ainda não está autorizada como administradora.","error");return}
- message("adminMessage","Acesso administrativo confirmado.","success");
- renderAdminEditor();
-}
-async function saveSiteContent(){
- if(!currentUser){message("adminMessage","Entre na conta administradora antes de salvar.","error");return}
- await checkAdmin();
- if(!currentIsAdmin){message("adminMessage","Sua conta não tem permissão administrativa.","error");return}
- siteContent.homeIntro=document.getElementById("editHomeIntro").value;
- siteContent.vendettaExtra=document.getElementById("editVendettaExtra").value;
- siteContent.notice=document.getElementById("editNotice").value;
- const {error}=await db.from("site_content").upsert({
-  id:"main",data:siteContent,updated_at:new Date().toISOString()
- },{onConflict:"id"});
- if(error){message("adminMessage","Não foi possível salvar. Confira as permissões do Supabase: "+error.message,"error");return}
- message("adminMessage","Alterações salvas! O conteúdo público foi atualizado.","success");
- document.querySelector("#home .hero-copy > p").textContent=siteContent.homeIntro;
- renderSocieties();renderLife();renderCourses();renderAdminEditor();
-}
-async function checkAdmin(){
- currentIsAdmin=false;
- if(!currentUser)return false;
- const {data,error}=await db.from("profiles").select("role").eq("id",currentUser.id).maybeSingle();
- if(!error&&data&&data.role==="admin")currentIsAdmin=true;
- const shortcut=document.getElementById("adminShortcut");
- if(shortcut)shortcut.classList.toggle("hidden",!currentIsAdmin);
- return currentIsAdmin;
-}
-async function refreshAccount(){
- const {data:{session}}=await db.auth.getSession();
- currentUser=session?.user||null;
- const panel=document.getElementById("playerPanel");
- panel.classList.toggle("hidden",!currentUser);
- if(currentUser){
-  await checkAdmin();
-  document.getElementById("playerWelcome").textContent="Você está conectado como "+(currentUser.email||"jogador")+".";
-  document.getElementById("adminShortcut").classList.toggle("hidden",!currentIsAdmin);
- }
-}
-async function logout(){
- await db.auth.signOut();currentUser=null;currentIsAdmin=false;
- message("accountMessage","Você saiu da conta.","success");
- refreshAccount();
-}
-document.getElementById("loginForm").addEventListener("submit",async e=>{
- e.preventDefault();message("accountMessage","Entrando...");
- const {data,error}=await db.auth.signInWithPassword({
-  email:document.getElementById("loginEmail").value.trim(),
-  password:document.getElementById("loginPassword").value
- });
- if(error){message("accountMessage","Não foi possível entrar: "+error.message,"error");return}
- currentUser=data.user;await refreshAccount();
- message("accountMessage","Login realizado.","success");
-});
-document.getElementById("signupForm").addEventListener("submit",async e=>{
- e.preventDefault();message("accountMessage","Criando sua conta...");
- const username=document.getElementById("signupName").value.trim();
- const email=document.getElementById("signupEmail").value.trim();
- const password=document.getElementById("signupPassword").value;
- const {data,error}=await db.auth.signUp({email,password,options:{data:{username}}});
- if(error){message("accountMessage","Não foi possível criar a conta: "+error.message,"error");return}
- if(data.user&&data.session){
-  currentUser=data.user;
-  await db.from("profiles").upsert({id:data.user.id,username,role:"player"},{onConflict:"id"});
-  await refreshAccount();
- }
- message("accountMessage","Cadastro enviado. Se o Supabase pedir confirmação por e-mail, confirme antes de entrar. Se a conta não entrar automaticamente, faça login após a confirmação.","success");
-});
-db.auth.onAuthStateChange((_event,session)=>{
- currentUser=session?.user||null;
- setTimeout(()=>refreshAccount(),0);
-});
-async function loadMyCharacters(){
- const root=document.getElementById("myCharacters");
- if(!currentUser){root.innerHTML="<p>Entre na conta primeiro.</p>";return}
- root.innerHTML="<p>Carregando fichas...</p>";
- const {data,error}=await db.from("characters").select("id,character_name,course,status,admin_feedback,created_at").eq("user_id",currentUser.id).order("created_at",{ascending:false});
- if(error){root.innerHTML='<div class="status error">Não foi possível carregar as fichas: '+esc(error.message)+'</div>';return}
- if(!data.length){root.innerHTML="<p>Você ainda não enviou fichas.</p>";return}
- root.innerHTML="<h3>Minhas fichas</h3>"+data.map(c=>`<div class="list-item"><strong>${esc(c.character_name)}</strong><p>${esc(c.course||"Curso não informado")} · Status: ${esc(c.status||"pending")}</p>${c.admin_feedback?'<p>Retorno da administração: '+esc(c.admin_feedback)+'</p>':""}</div>`).join("");
-}
-document.getElementById("characterFormElement").addEventListener("submit",async e=>{
- e.preventDefault();
- if(!currentUser){message("characterMessage","Entre na sua conta antes de enviar a ficha.","error");go("account");return}
- const name=document.getElementById("charName").value.trim();
- const file=document.getElementById("charPhoto").files[0];
- message("characterMessage","Enviando sua ficha...");
- let photoUrl=null;
- if(file){
-  if(file.size>5*1024*1024){message("characterMessage","A imagem precisa ter no máximo 5 MB.","error");return}
-  if(!["image/jpeg","image/png","image/webp"].includes(file.type)){message("characterMessage","Use uma imagem JPG, PNG ou WEBP.","error");return}
-  const ext=file.name.split(".").pop().toLowerCase();
-  const path=currentUser.id+"/"+crypto.randomUUID()+"."+ext;
-  const {error:uploadError}=await db.storage.from("character-photos").upload(path,file,{contentType:file.type,upsert:false});
-  if(uploadError){message("characterMessage","Erro ao enviar foto. Confira se o bucket character-photos foi criado: "+uploadError.message,"error");return}
-  const {data:urlData}=db.storage.from("character-photos").getPublicUrl(path);
-  photoUrl=urlData.publicUrl;
- }
- const record={
-  user_id:currentUser.id,character_name:name,
-  faceclaim:document.getElementById("charFaceclaim").value.trim(),
-  photo_url:photoUrl,biography:document.getElementById("charBio").value.trim(),
-  course:document.getElementById("charCourse").value,
-  status:"pending",player_username:currentUser.user_metadata?.username||currentUser.email,
-  player_age:null,character_age:Number(document.getElementById("charAge").value),
-  personality_text:document.getElementById("charPersonality").value.trim(),
-  extracurricular_one:document.getElementById("charActivityOne").value,
-  extracurricular_two:document.getElementById("charActivityTwo").value,
-  fraternity_choice:document.getElementById("charSociety").value,
-  original_scene:document.getElementById("charScene").value.trim(),
-  accepts_character_death:document.getElementById("charDeath").checked,
-  updated_at:new Date().toISOString()
- };
- const {error}=await db.from("characters").insert(record);
- if(error){message("characterMessage","Não foi possível enviar. Confira as colunas e permissões da tabela characters: "+error.message,"error");return}
- message("characterMessage","Ficha enviada para análise da administração!","success");
- e.target.reset();
-});
-function renderAdminMessage(text,type){message("adminMessage",text,type)}
-// Gera campos para a lista de cursos na ficha.
+function renderSocieties(){const root=document.getElementById("societyCards");if(!root)return;root.innerHTML=siteContent.societies.map((s,i)=>`<article class="panel"><div class="eyebrow">${esc(s.short)}</div><h3>${esc(s.name)}</h3><p class="gold">${esc(s.motto)}</p><p>${esc(s.description)}</p><p class="small">Líder: ${esc(s.leader||"A definir")}<br>Vice-líder: ${esc(s.vice||"A definir")}</p><button onclick="showSociety(${i})">Conhecer sociedade</button></article>`).join("")}
+function showSociety(i){const s=siteContent.societies[i];if(!s)return;document.getElementById("societyDetailContent").innerHTML=`<div class="eyebrow">${esc(s.short)}</div><h1>${esc(s.name)}</h1><h3>${esc(s.motto)}</h3><p>${esc(s.description)}</p><div class="panel"><p><strong>Líder:</strong> ${esc(s.leader||"A definir")}</p><p><strong>Vice-líder:</strong> ${esc(s.vice||"A definir")}</p><p>${esc(s.members||"Informações a definir pela administração.")}</p></div>`;go("societyDetail")}
+function renderLife(){document.getElementById("activitiesList").innerHTML=siteContent.activities.map(a=>`<article class="panel"><div class="eyebrow">Extracurricular</div><h3>${esc(a.name)}</h3><p>Responsável: ${esc(a.leader||"A definir")}</p></article>`).join("");document.getElementById("staffList").innerHTML=siteContent.staff.map(s=>`<article class="panel"><div class="eyebrow">Faculty & staff</div><h3>${esc(s.name)}</h3><p>${esc(s.role)}</p></article>`).join("")}
+function renderCourses(){document.getElementById("coursesList").innerHTML=siteContent.courses.map(c=>`<article class="panel"><h3>${esc(c.group)}</h3>${c.items.map(x=>`<span class="tag">${esc(x)}</span>`).join("")}</article>`).join("");const select=document.getElementById("charCourse");if(select)select.innerHTML='<option value="">Selecione um curso</option>'+siteContent.courses.map(c=>`<optgroup label="${esc(c.group)}">${c.items.map(x=>`<option>${esc(x)}</option>`).join("")}</optgroup>`).join("")}
+function fillCharacterOptions(){const one=document.getElementById("charActivityOne"),two=document.getElementById("charActivityTwo"),soc=document.getElementById("charSociety");const opts='<option value="">Nenhuma selecionada</option>'+siteContent.activities.map(a=>`<option>${esc(a.name)}</option>`).join("");one.innerHTML=opts;two.innerHTML=opts;soc.innerHTML='<option value="">Nenhuma selecionada</option>'+siteContent.societies.map(s=>`<option value="${esc(s.name)}">${esc(s.name)}</option>`).join("")}
+async function checkAdmin(){currentIsAdmin=false;if(!currentUser)return false;const {data,error}=await db.from("profiles").select("role").eq("id",currentUser.id).maybeSingle();if(!error&&data?.role==="admin")currentIsAdmin=true;const shortcut=document.getElementById("adminShortcut");if(shortcut)shortcut.classList.toggle("hidden",!currentIsAdmin);return currentIsAdmin}
+async function refreshAccount(){const {data:{session}}=await db.auth.getSession();currentUser=session?.user||null;const panel=document.getElementById("playerPanel");panel.classList.toggle("hidden",!currentUser);if(currentUser){await checkAdmin();document.getElementById("playerWelcome").textContent="Você está conectado como "+(currentUser.email||"jogador")+".";document.getElementById("adminShortcut").classList.toggle("hidden",!currentIsAdmin)}}
+async function logout(){await db.auth.signOut();currentUser=null;currentIsAdmin=false;message("accountMessage","Você saiu da conta.","success");await refreshAccount()}
+document.getElementById("loginForm").addEventListener("submit",async e=>{e.preventDefault();message("accountMessage","Entrando...");const {data,error}=await db.auth.signInWithPassword({email:document.getElementById("loginEmail").value.trim(),password:document.getElementById("loginPassword").value});if(error){message("accountMessage","Não foi possível entrar: "+error.message,"error");return}currentUser=data.user;await refreshAccount();message("accountMessage","Login realizado.","success")});
+document.getElementById("signupForm").addEventListener("submit",async e=>{e.preventDefault();message("accountMessage","Criando sua conta...");const username=document.getElementById("signupName").value.trim(),email=document.getElementById("signupEmail").value.trim(),password=document.getElementById("signupPassword").value;if(password.length<8){message("accountMessage","Use uma senha de pelo menos 8 caracteres.","error");return}const {data,error}=await db.auth.signUp({email,password,options:{data:{username}}});if(error){message("accountMessage","Não foi possível criar a conta: "+error.message,"error");return}if(data.user&&data.session){currentUser=data.user;await db.from("profiles").upsert({id:data.user.id,username,role:"player"},{onConflict:"id"});await refreshAccount()}message("accountMessage","Cadastro enviado. Se for solicitada confirmação por e-mail, confirme antes de entrar.","success")});
+db.auth.onAuthStateChange((_event,session)=>{currentUser=session?.user||null;setTimeout(()=>refreshAccount(),0)});
+async function loadMyCharacters(){const root=document.getElementById("myCharacters");if(!currentUser){root.innerHTML="<p>Entre na conta primeiro.</p>";return}root.innerHTML="<p>Carregando fichas...</p>";const {data,error}=await db.from("characters").select("id,character_name,course,status,admin_feedback,created_at").eq("user_id",currentUser.id).order("created_at",{ascending:false});if(error){root.innerHTML='<div class="status error">'+esc(error.message)+'</div>';return}if(!data?.length){root.innerHTML="<p>Você ainda não enviou fichas.</p>";return}root.innerHTML="<h3>Minhas fichas</h3>"+data.map(c=>`<div class="admin-item"><strong>${esc(c.character_name)}</strong><p>${esc(c.course||"Curso não informado")} · Status: ${esc(c.status||"pending")}</p>${c.admin_feedback?'<p>Retorno: '+esc(c.admin_feedback)+'</p>':""}</div>`).join("")}
+document.getElementById("characterFormElement").addEventListener("submit",async e=>{e.preventDefault();if(!currentUser){message("characterMessage","Entre na sua conta antes de enviar a ficha.","error");go("account");return}const file=document.getElementById("charPhoto").files[0];message("characterMessage","Enviando ficha...");let photoUrl=null;if(file){if(file.size>5*1024*1024){message("characterMessage","A imagem precisa ter no máximo 5 MB.","error");return}if(!["image/jpeg","image/png","image/webp"].includes(file.type)){message("characterMessage","Use uma imagem JPG, PNG ou WEBP.","error");return}const ext=file.name.split(".").pop().toLowerCase(),path=currentUser.id+"/"+crypto.randomUUID()+"."+ext;const {error:uploadError}=await db.storage.from("character-photos").upload(path,file,{contentType:file.type,upsert:false});if(uploadError){message("characterMessage","Erro ao enviar foto: "+uploadError.message,"error");return}photoUrl=db.storage.from("character-photos").getPublicUrl(path).data.publicUrl}
+const record={user_id:currentUser.id,character_name:document.getElementById("charName").value.trim(),faceclaim:document.getElementById("charFaceclaim").value.trim(),photo_url:photoUrl,biography:document.getElementById("charBio").value.trim(),course:document.getElementById("charCourse").value,status:"pending",player_username:currentUser.user_metadata?.username||currentUser.email,player_age:null,character_age:Number(document.getElementById("charAge").value),personality_text:document.getElementById("charPersonality").value.trim(),extracurricular_one:document.getElementById("charActivityOne").value,extracurricular_two:document.getElementById("charActivityTwo").value,fraternity_choice:document.getElementById("charSociety").value,original_scene:document.getElementById("charScene").value.trim(),accepts_character_death:document.getElementById("charDeath").checked,updated_at:new Date().toISOString()};
+const {error}=await db.from("characters").insert(record);if(error){message("characterMessage","Não foi possível enviar: "+error.message,"error");return}message("characterMessage","Ficha enviada para análise da administração!","success");e.target.reset()});
+async function openAdmin(){document.getElementById("adminEditor").classList.add("hidden");if(!currentUser){message("adminMessage","Entre na conta administradora para continuar.","error");return}await checkAdmin();if(!currentIsAdmin){message("adminMessage","Acesso restrito. Sua conta não está autorizada como administradora.","error");return}document.getElementById("adminEditor").classList.remove("hidden");message("adminMessage","Acesso administrativo confirmado.","success");document.getElementById("editHomeIntro").value=siteContent.homeIntro||"";document.getElementById("editVendettaExtra").value=siteContent.vendettaExtra||"";document.getElementById("editNotice").value=siteContent.notice||"";await loadPlotSuggestions();await loadPendingCharacters()}
+async function saveSiteContent(){if(!currentUser||!await checkAdmin()){message("adminMessage","Acesso restrito.","error");return}siteContent.homeIntro=document.getElementById("editHomeIntro").value;siteContent.vendettaExtra=document.getElementById("editVendettaExtra").value;siteContent.notice=document.getElementById("editNotice").value;const {error}=await db.from("site_content").upsert({id:"main",data:siteContent,updated_at:new Date().toISOString()},{onConflict:"id"});if(error){message("adminMessage","Não foi possível salvar: "+error.message,"error");return}document.querySelector("#home .hero-copy>p").textContent=siteContent.homeIntro;message("adminMessage","Conteúdo salvo.","success")}
+async function generatePlotSuggestions(){if(!currentUser||!await checkAdmin()){message("plotMessage","Acesso restrito à administração.","error");return}const b=document.getElementById("generatePlotsButton");b.disabled=true;b.textContent="Gerando...";message("plotMessage","Solicitando novas tramas à IA...","info");try{const {error}=await db.functions.invoke("generate-plots",{body:{}});if(error)throw error;message("plotMessage","Solicitação concluída. Confira as sugestões abaixo.","success");await loadPlotSuggestions()}catch(e){message("plotMessage","Falha ao gerar: "+(e.message||"erro desconhecido")+". Verifique a função generate-plots no Supabase.","error")}finally{b.disabled=false;b.textContent="Gerar novas tramas"}}
+async function loadPlotSuggestions(){const root=document.getElementById("plotSuggestions");if(!root||!currentUser||!currentIsAdmin)return;root.innerHTML="<p>Carregando sugestões...</p>";const {data,error}=await db.from("plot_suggestions").select("id,character_one_id,character_two_id,plot_type,title,description,compatibility_score,status,admin_notes,created_at").order("created_at",{ascending:false}).limit(30);if(error){root.innerHTML='<div class="status error">'+esc(error.message)+'</div>';return}if(!data?.length){root.innerHTML="<p>Ainda não existem sugestões. Clique em Gerar novas tramas.</p>";return}const ids=[...new Set(data.flatMap(p=>[p.character_one_id,p.character_two_id]).filter(Boolean))];let names={};if(ids.length){const {data:cs,error:ce}=await db.from("characters").select("id,character_name").in("id",ids);if(!ce)(cs||[]).forEach(c=>names[c.id]=c.character_name||"Personagem")}const labels={pending:"Pendente",approved:"Aprovada",rejected:"Recusada",distributed:"Distribuída"};root.innerHTML=data.map(p=>`<article class="admin-item"><p><strong>Status:</strong> ${esc(labels[p.status]||p.status||"—")} · ${esc(p.plot_type||"Trama")}</p><p><strong>Personagens:</strong> ${esc(names[p.character_one_id]||"Personagem")} + ${esc(names[p.character_two_id]||"Personagem")}</p><label class="label" for="pt_${p.id}">Título</label><input id="pt_${p.id}" value="${esc(p.title||"")}"><label class="label" for="pd_${p.id}">Descrição</label><textarea id="pd_${p.id}">${esc(p.description||"")}</textarea><label class="label" for="pn_${p.id}">Notas administrativas</label><textarea id="pn_${p.id}">${esc(p.admin_notes||"")}</textarea><div class="admin-toolbar"><button class="primary" onclick="savePlotSuggestion('${p.id}','approved')">Salvar e aprovar</button><button onclick="savePlotSuggestion('${p.id}','pending')">Salvar pendente</button><button class="danger" onclick="savePlotSuggestion('${p.id}','rejected')">Recusar</button></div></article>`).join("")}
+async function savePlotSuggestion(id,status){if(!currentUser||!await checkAdmin()){message("plotMessage","Acesso restrito.","error");return}const title=document.getElementById("pt_"+id).value.trim(),description=document.getElementById("pd_"+id).value.trim(),admin_notes=document.getElementById("pn_"+id).value.trim()||null;if(!title||!description){message("plotMessage","Título e descrição são obrigatórios.","error");return}const {error}=await db.from("plot_suggestions").update({title,description,admin_notes,status,reviewed_by:currentUser.id,reviewed_at:new Date().toISOString()}).eq("id",id);if(error){message("plotMessage","Não foi possível salvar: "+error.message,"error");return}message("plotMessage",status==="approved"?"Sugestão aprovada. Ainda não foi distribuída automaticamente.":"Alterações salvas.","success");await loadPlotSuggestions()}
+async function loadPendingCharacters(){const root=document.getElementById("pendingCharacters");if(!root||!currentUser||!currentIsAdmin)return;root.innerHTML="<p>Carregando fichas...</p>";const {data,error}=await db.from("characters").select("id,character_name,course,biography,personality_text,status,player_username,created_at").eq("status","pending").order("created_at",{ascending:true}).limit(50);if(error){root.innerHTML='<div class="status error">'+esc(error.message)+'</div>';return}if(!data?.length){root.innerHTML="<p>Não há fichas pendentes.</p>";return}root.innerHTML=data.map(c=>`<article class="admin-item"><h3>${esc(c.character_name)}</h3><p>${esc(c.player_username||"Jogador")} · ${esc(c.course||"Curso não informado")}</p><p>${esc(c.biography||"")}</p><p><strong>Personalidade:</strong> ${esc(c.personality_text||"")}</p><label class="label" for="feedback_${c.id}">Retorno ao jogador</label><textarea id="feedback_${c.id}"></textarea><div class="admin-toolbar"><button class="primary" onclick="reviewCharacter('${c.id}','approved')">Aprovar ficha</button><button class="danger" onclick="reviewCharacter('${c.id}','rejected')">Recusar ficha</button></div></article>`).join("")}
+async function reviewCharacter(id,status){if(!currentUser||!await checkAdmin()){message("adminMessage","Acesso restrito.","error");return}const admin_feedback=document.getElementById("feedback_"+id).value.trim()||null;const {error}=await db.from("characters").update({status,admin_feedback,reviewed_by:currentUser.id,reviewed_at:new Date().toISOString(),updated_at:new Date().toISOString()}).eq("id",id);if(error){message("adminMessage","Não foi possível revisar: "+error.message,"error");return}message("adminMessage","Ficha atualizada.","success");await loadPendingCharacters()}
 document.getElementById("charCourse").innerHTML='<option value="">Carregando cursos...</option>';
-makeStars();
-loadSiteContent();
-refreshAccount();
+loadSiteContent();refreshAccount();
 </script>
 </body>
 </html>
