@@ -4,35 +4,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0a1830">
-  <meta name="description" content="University of Pennsylvania RPG — uma experiência universitária de prestígio, sociedades, ambição e segredos.">
+  <meta name="theme-color" content="#09172b">
+  <meta name="description" content="University of Pennsylvania RPG — uma experiência de interpretação universitária marcada por tradição, ambição e segredos.">
   <title>University of Pennsylvania | RPG</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --navy: #0a1830;
-      --navy-light: #122747;
-      --blue: #203f70;
-      --gold: #c9a45d;
-      --gold-light: #ead4a0;
-      --ivory: #f7f3e9;
-      --cream: #eee6d5;
-      --text: #292b31;
-      --muted: #aaaeb8;
-      --white: #ffffff;
-      --border: rgba(201, 164, 93, 0.35);
+      --navy: #09172b;
+      --navy-light: #102541;
+      --navy-soft: #183554;
+      --gold: #c6a568;
+      --gold-light: #e8d2a1;
+      --ivory: #f7f4ed;
+      --white: #fffdf9;
+      --text: #253248;
+      --muted: #727a87;
+      --line: rgba(198, 165, 104, .35);
       --serif: "Cormorant Garamond", Georgia, serif;
-      --sans: "Montserrat", Arial, sans-serif;
+      --sans: "DM Sans", Arial, sans-serif;
     }
 
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
 
     html {
@@ -44,12 +43,8 @@
       background: var(--ivory);
       color: var(--text);
       font-family: var(--sans);
+      line-height: 1.7;
       overflow-x: hidden;
-    }
-
-    body::selection {
-      background: var(--gold);
-      color: var(--navy);
     }
 
     a {
@@ -57,41 +52,78 @@
       text-decoration: none;
     }
 
-    button, a {
-      -webkit-tap-highlight-color: transparent;
-    }
-
     img {
       display: block;
       max-width: 100%;
     }
 
-    .topline {
-      height: 3px;
-      background: linear-gradient(
-        90deg,
-        var(--navy),
-        var(--gold),
-        var(--ivory),
-        var(--gold),
-        var(--navy)
-      );
+    button {
+      font: inherit;
+    }
+
+    .container {
+      width: min(1160px, 90%);
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--gold);
+      font-size: .69rem;
+      font-weight: 700;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    .section-heading {
+      max-width: 700px;
+      margin: 0 auto 44px;
+      text-align: center;
+    }
+
+    .section-heading .eyebrow {
+      justify-content: center;
+    }
+
+    .section-heading h2 {
+      margin-top: 12px;
+      color: var(--navy);
+      font: 600 clamp(2.1rem, 5vw, 3.5rem)/1.05 var(--serif);
+    }
+
+    .section-heading p {
+      max-width: 580px;
+      margin: 16px auto 0;
+      color: var(--muted);
+      font-size: .94rem;
     }
 
     /* NAVEGAÇÃO */
 
-    .navbar {
+    .topbar {
       position: sticky;
+      z-index: 100;
       top: 0;
-      z-index: 1000;
+      background: rgba(9, 23, 43, .97);
+      border-bottom: 1px solid rgba(198, 165, 104, .25);
+      backdrop-filter: blur(14px);
+    }
+
+    .nav {
+      min-height: 76px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 22px;
-      padding: 12px 5%;
-      background: rgba(10, 24, 48, 0.97);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(12px);
+      gap: 24px;
     }
 
     .brand {
@@ -102,8 +134,8 @@
     }
 
     .brand img {
-      width: 48px;
-      height: 48px;
+      width: 46px;
+      height: 46px;
       object-fit: contain;
       border-radius: 50%;
     }
@@ -111,108 +143,99 @@
     .brand-text {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      line-height: 1.15;
     }
 
     .brand-text strong {
       color: var(--gold-light);
-      font-family: var(--serif);
-      font-size: 19px;
-      font-weight: 600;
-      line-height: 1;
+      font: 600 1.25rem var(--serif);
+      letter-spacing: .04em;
     }
 
     .brand-text span {
-      color: #c5c9d1;
-      font-size: 8px;
-      letter-spacing: 2px;
+      margin-top: 4px;
+      color: #d4d9e1;
+      font-size: .57rem;
+      letter-spacing: .17em;
       text-transform: uppercase;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      justify-content: flex-end;
-      gap: 22px;
+      gap: 25px;
     }
 
     .nav-links a {
-      color: #e9e7e1;
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transition: color 0.25s ease;
+      color: #e4e8ef;
+      font-size: .77rem;
+      transition: color .25s ease;
     }
 
     .nav-links a:hover {
       color: var(--gold-light);
     }
 
-    .nav-links .nav-cta {
-      padding: 11px 15px;
-      color: var(--navy);
-      background: var(--gold-light);
-      border: 1px solid var(--gold-light);
-      transition: background 0.25s ease, color 0.25s ease;
-    }
-
-    .nav-links .nav-cta:hover {
-      color: var(--gold-light);
-      background: transparent;
+    .nav-cta {
+      padding: 10px 15px;
+      border: 1px solid var(--gold);
+      color: var(--gold-light) !important;
+      letter-spacing: .04em;
     }
 
     .menu-toggle {
       display: none;
-      color: var(--gold-light);
+      border: 1px solid rgba(198, 165, 104, .5);
       background: transparent;
-      border: 1px solid var(--border);
-      padding: 8px 12px;
-      font-size: 21px;
+      color: var(--gold-light);
+      width: 42px;
+      height: 42px;
+      border-radius: 4px;
       cursor: pointer;
+      font-size: 1.25rem;
     }
 
     /* CAPA PRINCIPAL */
 
     .hero {
       position: relative;
-      min-height: 650px;
+      min-height: 660px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      padding: 76px 6% 88px;
       overflow: hidden;
-      isolation: isolate;
-      color: var(--ivory);
+      color: var(--white);
       background:
-        radial-gradient(ellipse at 50% 40%, rgba(32, 63, 112, 0.55), transparent 55%),
-        linear-gradient(135deg, #071326 0%, #102344 52%, #08152b 100%);
-    }
-
-    .hero::before,
-    .hero::after {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      pointer-events: none;
+        radial-gradient(ellipse at 72% 45%, rgba(31, 67, 104, .55), transparent 48%),
+        linear-gradient(115deg, #071326 0%, #0b1d35 58%, #102744 100%);
     }
 
     .hero::before {
-      inset: 24px;
-      border: 1px solid rgba(201, 164, 93, 0.19);
+      position: absolute;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+      opacity: .14;
+      background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(to right, black, transparent);
     }
 
     .hero::after {
-      width: 420px;
-      height: 420px;
-      top: 50%;
-      left: 50%;
-      border: 1px solid rgba(201, 164, 93, 0.10);
+      position: absolute;
+      right: -140px;
+      bottom: -270px;
+      width: 650px;
+      height: 650px;
+      content: "";
+      border: 1px solid rgba(198, 165, 104, .12);
       border-radius: 50%;
-      transform: translate(-50%, -50%);
       box-shadow:
-        0 0 0 35px rgba(201, 164, 93, 0.025),
-        0 0 0 70px rgba(201, 164, 93, 0.02);
+        0 0 0 35px rgba(198, 165, 104, .025),
+        0 0 0 75px rgba(198, 165, 104, .025),
+        0 0 0 120px rgba(198, 165, 104, .02);
+      pointer-events: none;
     }
 
     #particles {
@@ -220,50 +243,35 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      z-index: -1;
       pointer-events: none;
+      opacity: .7;
     }
 
-    .hero-content {
+    .hero-inner {
+      position: relative;
+      z-index: 2;
       width: 100%;
-      max-width: 1100px;
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
+      grid-template-columns: 1.15fr .85fr;
       align-items: center;
-      gap: 50px;
+      gap: 40px;
+      padding-top: 60px;
+      padding-bottom: 70px;
     }
 
     .hero-copy {
-      animation: rise 1s ease both;
+      animation: rise .9s ease both;
     }
 
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 24px;
+    .hero-copy .eyebrow {
       color: var(--gold-light);
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-
-    .eyebrow::before {
-      content: "";
-      width: 34px;
-      height: 1px;
-      background: var(--gold);
     }
 
     .hero h1 {
-      max-width: 680px;
-      margin-bottom: 22px;
-      font-family: var(--serif);
-      font-size: clamp(43px, 6.2vw, 76px);
-      font-weight: 500;
-      line-height: 0.99;
-      letter-spacing: -1px;
+      max-width: 700px;
+      margin: 24px 0 20px;
+      font: 500 clamp(3.1rem, 7vw, 6.4rem)/.91 var(--serif);
+      letter-spacing: -.035em;
     }
 
     .hero h1 em {
@@ -272,541 +280,518 @@
     }
 
     .hero-description {
-      max-width: 480px;
-      margin-bottom: 30px;
-      color: #d0d5df;
-      font-size: 12px;
-      font-weight: 300;
-      line-height: 2;
+      max-width: 530px;
+      color: #c6cfdb;
+      font-size: .96rem;
+      line-height: 1.9;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      align-items: center;
-      gap: 13px;
+      gap: 12px;
+      margin-top: 30px;
     }
 
     .button {
       display: inline-flex;
-      justify-content: center;
       align-items: center;
-      min-height: 45px;
-      padding: 13px 20px;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 22px;
       border: 1px solid var(--gold);
-      font-family: var(--sans);
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 1.4px;
-      text-align: center;
-      text-transform: uppercase;
-      transition: all 0.25s ease;
-      cursor: pointer;
-    }
-
-    .button-primary {
+      background: var(--gold);
       color: var(--navy);
-      background: var(--gold-light);
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: background .25s ease, color .25s ease, transform .25s ease;
     }
 
-    .button-primary:hover {
-      color: var(--gold-light);
-      background: transparent;
+    .button:hover {
+      transform: translateY(-2px);
+      background: var(--gold-light);
     }
 
     .button-outline {
-      color: var(--gold-light);
       background: transparent;
+      color: var(--gold-light);
     }
 
     .button-outline:hover {
+      background: var(--gold);
       color: var(--navy);
-      background: var(--gold-light);
     }
 
     .hero-seal {
+      position: relative;
       display: flex;
-      align-items: center;
       justify-content: center;
-      animation: fadeIn 1.4s ease both;
+      align-items: center;
+      animation: appear 1.2s ease both;
+    }
+
+    .hero-seal::before {
+      position: absolute;
+      width: 85%;
+      aspect-ratio: 1;
+      content: "";
+      border: 1px solid rgba(198, 165, 104, .3);
+      border-radius: 50%;
+      box-shadow: 0 0 75px rgba(198, 165, 104, .08);
     }
 
     .hero-seal img {
-      width: min(100%, 410px);
-      max-height: 420px;
+      position: relative;
+      width: min(100%, 450px);
+      max-height: 470px;
       object-fit: contain;
-      filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.35));
-      animation: sealFloat 6s ease-in-out infinite;
+      filter: drop-shadow(0 22px 32px rgba(0, 0, 0, .25));
     }
 
-    .hero-bottom {
+    .hero-caption {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 17px;
-      padding: 17px 12px;
-      color: #d5d2ca;
-      background: rgba(4, 13, 27, 0.35);
-      border-top: 1px solid rgba(201, 164, 93, 0.18);
-      font-size: 9px;
-      letter-spacing: 2px;
+      bottom: -4px;
+      color: var(--gold-light);
+      font-size: .64rem;
+      letter-spacing: .24em;
       text-align: center;
       text-transform: uppercase;
     }
 
-    .hero-bottom span {
-      color: var(--gold);
+    /* FAIXA DE IDENTIDADE */
+
+    .motto-strip {
+      background: #0d2039;
+      border-top: 1px solid rgba(198, 165, 104, .4);
+      border-bottom: 1px solid rgba(198, 165, 104, .4);
     }
 
-    /* SEÇÕES GERAIS */
-
-    .section {
-      padding: 86px 6%;
+    .motto-inner {
+      min-height: 94px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(22px, 6vw, 80px);
+      padding: 20px 0;
     }
 
-    .section-inner {
-      width: 100%;
-      max-width: 1120px;
-      margin: 0 auto;
-    }
-
-    .section-heading {
-      max-width: 700px;
-      margin: 0 auto 42px;
+    .motto-item {
       text-align: center;
     }
 
-    .section-kicker {
+    .motto-item strong {
       display: block;
-      margin-bottom: 13px;
-      color: #9b7638;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 3px;
+      color: var(--gold-light);
+      font: 600 1.25rem var(--serif);
+      letter-spacing: .13em;
+    }
+
+    .motto-item span {
+      color: #c0c9d6;
+      font-size: .61rem;
+      letter-spacing: .16em;
       text-transform: uppercase;
     }
 
-    .section-heading h2 {
-      margin-bottom: 15px;
-      color: var(--navy);
-      font-family: var(--serif);
-      font-size: clamp(34px, 4.5vw, 49px);
-      font-weight: 500;
-      line-height: 1.1;
+    .motto-divider {
+      width: 1px;
+      height: 35px;
+      background: rgba(198, 165, 104, .45);
     }
 
-    .section-heading p {
-      color: #676a72;
-      font-size: 11px;
-      font-weight: 400;
-      line-height: 2;
-    }
-
-    .gold-divider {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 12px;
-      margin: 22px auto;
-    }
-
-    .gold-divider::before,
-    .gold-divider::after {
-      content: "";
-      width: 48px;
-      height: 1px;
-      background: var(--gold);
-    }
-
-    .gold-divider span {
-      color: #a37c3b;
-      font-size: 12px;
-    }
-
-    /* SOBRE */
+    /* SOBRE A UNIVERSIDADE */
 
     .about {
-      background: var(--ivory);
+      padding: 100px 0;
+      background: var(--white);
     }
 
     .about-grid {
       display: grid;
-      grid-template-columns: 0.85fr 1.15fr;
-      gap: 55px;
+      grid-template-columns: .85fr 1.15fr;
       align-items: center;
+      gap: 70px;
     }
 
-    .about-seal {
+    .about-image {
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 350px;
-      padding: 35px;
-      background: #eae2d2;
-      border: 1px solid #d8c9a9;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: var(--ivory);
     }
 
-    .about-seal::before {
-      content: "";
-      position: absolute;
-      inset: 12px;
-      border: 1px solid rgba(153, 113, 50, 0.35);
-    }
-
-    .about-seal img {
-      position: relative;
-      z-index: 1;
+    .about-image img {
       width: 100%;
-      max-width: 310px;
-      max-height: 320px;
+      max-height: 460px;
       object-fit: contain;
-      mix-blend-mode: multiply;
     }
 
-    .about-copy .section-kicker {
-      text-align: left;
+    .about-image::after {
+      position: absolute;
+      right: -9px;
+      bottom: -9px;
+      z-index: 0;
+      width: 70%;
+      height: 70%;
+      content: "";
+      border-right: 1px solid var(--gold);
+      border-bottom: 1px solid var(--gold);
+      pointer-events: none;
+    }
+
+    .about-copy .eyebrow {
+      margin-bottom: 14px;
     }
 
     .about-copy h2 {
       margin-bottom: 20px;
       color: var(--navy);
-      font-family: var(--serif);
-      font-size: clamp(33px, 4vw, 45px);
-      font-weight: 500;
-      line-height: 1.1;
+      font: 600 clamp(2.2rem, 4vw, 3.4rem)/1.03 var(--serif);
     }
 
     .about-copy p {
       margin-bottom: 15px;
-      color: #62656d;
-      font-size: 11px;
-      line-height: 2.05;
+      color: #626b78;
+      font-size: .93rem;
     }
 
-    .values {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    .value {
-      padding: 16px 10px;
-      border-top: 1px solid var(--gold);
-      background: rgba(255, 255, 255, 0.4);
-    }
-
-    .value strong {
-      display: block;
-      margin-bottom: 7px;
+    .about-note {
+      margin-top: 25px;
+      padding: 18px 20px;
+      border-left: 2px solid var(--gold);
+      background: var(--ivory);
       color: var(--navy);
-      font-family: var(--serif);
-      font-size: 21px;
-      font-weight: 600;
+      font: italic 1.15rem/1.5 var(--serif);
     }
 
-    .value span {
-      color: #77777a;
-      font-size: 8px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    /* SOCIEDADES */
+    /* ORGANIZAÇÕES */
 
     .societies {
-      position: relative;
-      overflow: hidden;
+      padding: 100px 0 110px;
       background:
-        radial-gradient(ellipse at 50% 0%, rgba(34, 61, 102, 0.5), transparent 55%),
-        var(--navy);
-    }
-
-    .societies .section-heading h2 {
-      color: var(--ivory);
-    }
-
-    .societies .section-heading p {
-      color: #c0c6d0;
-    }
-
-    .societies .section-kicker {
-      color: var(--gold-light);
+        radial-gradient(ellipse at 50% 0%, rgba(198, 165, 104, .08), transparent 55%),
+        var(--ivory);
     }
 
     .society-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 22px;
+      gap: 25px;
     }
 
     .society-card {
       position: relative;
       display: flex;
       flex-direction: column;
-      min-width: 0;
-      padding: 24px;
       overflow: hidden;
-      background: rgba(255, 255, 255, 0.035);
-      border: 1px solid rgba(201, 164, 93, 0.28);
-      transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+      background: var(--white);
+      border: 1px solid rgba(20, 37, 60, .1);
+      box-shadow: 0 8px 30px rgba(9, 23, 43, .035);
+      transition: transform .3s ease, box-shadow .3s ease;
     }
 
     .society-card:hover {
       transform: translateY(-5px);
-      border-color: var(--gold);
-      background: rgba(255, 255, 255, 0.065);
+      box-shadow: 0 16px 40px rgba(9, 23, 43, .09);
     }
 
-    .society-image {
+    .society-art {
+      min-height: 300px;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 230px;
-      margin-bottom: 22px;
-      padding: 15px;
-      background: rgba(255, 255, 255, 0.94);
-      border: 1px solid rgba(201, 164, 93, 0.3);
+      padding: 28px;
+      background: #fdfbf6;
+      border-bottom: 1px solid rgba(198, 165, 104, .22);
     }
 
-    .society-image img {
+    .society-art img {
       width: 100%;
-      height: 230px;
+      height: 300px;
       object-fit: contain;
-      transition: transform 0.4s ease;
+      transition: transform .4s ease;
     }
 
-    .society-card:hover .society-image img {
+    .society-card:hover .society-art img {
       transform: scale(1.035);
     }
 
-    .society-number {
-      margin-bottom: 9px;
-      color: var(--gold);
-      font-size: 9px;
-      letter-spacing: 2px;
+    .society-content {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 25px 27px 28px;
+    }
+
+    .society-type {
+      color: #9b7b42;
+      font-size: .63rem;
+      font-weight: 700;
+      letter-spacing: .17em;
       text-transform: uppercase;
     }
 
-    .society-card h3 {
-      margin-bottom: 12px;
-      color: var(--gold-light);
-      font-family: var(--serif);
-      font-size: 29px;
-      font-weight: 500;
+    .society-content h3 {
+      margin: 8px 0 10px;
+      color: var(--navy);
+      font: 600 clamp(1.65rem, 3vw, 2.15rem)/1.05 var(--serif);
     }
 
-    .society-card p {
-      flex-grow: 1;
-      margin-bottom: 20px;
-      color: #c5cad3;
-      font-size: 10px;
-      line-height: 1.9;
+    .society-content p {
+      flex: 1;
+      color: var(--muted);
+      font-size: .88rem;
     }
 
-    .society-tag {
+    .society-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       align-self: flex-start;
-      padding: 8px 10px;
-      color: #e7d5ac;
-      border: 1px solid rgba(201, 164, 93, 0.4);
-      font-size: 8px;
-      letter-spacing: 1px;
+      margin-top: 22px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--gold);
+      color: var(--navy);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
       text-transform: uppercase;
     }
 
-    .society-note {
-      margin-top: 28px;
-      color: #aeb7c5;
-      font-size: 9px;
-      line-height: 1.8;
-      text-align: center;
+    .society-link span {
+      color: #a9874d;
+      transition: transform .25s ease;
+    }
+
+    .society-link:hover span {
+      transform: translateX(4px);
     }
 
     /* VIDA UNIVERSITÁRIA */
 
     .campus-life {
-      background: #eae2d2;
+      position: relative;
+      overflow: hidden;
+      padding: 100px 0;
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .campus-life::before {
+      position: absolute;
+      top: -220px;
+      left: -170px;
+      width: 500px;
+      height: 500px;
+      content: "";
+      border: 1px solid rgba(198, 165, 104, .13);
+      border-radius: 50%;
+      box-shadow: 0 0 0 50px rgba(198, 165, 104, .025);
+    }
+
+    .campus-life .section-heading h2 {
+      color: var(--white);
+    }
+
+    .campus-life .section-heading p {
+      color: #bac5d3;
     }
 
     .life-grid {
+      position: relative;
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 18px;
     }
 
     .life-card {
-      position: relative;
-      min-height: 235px;
-      padding: 28px 23px;
-      background: rgba(255, 255, 255, 0.52);
-      border: 1px solid #d5c5a3;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      padding: 28px 25px;
+      border: 1px solid rgba(198, 165, 104, .3);
+      background: rgba(255, 255, 255, .035);
+      transition: background .25s ease, border-color .25s ease;
     }
 
     .life-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 28px rgba(25, 34, 48, 0.08);
+      background: rgba(255, 255, 255, .07);
+      border-color: var(--gold);
     }
 
-    .life-icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      margin-bottom: 21px;
-      color: #a47c38;
-      border: 1px solid #c7a96e;
-      font-family: var(--serif);
-      font-size: 23px;
+    .life-number {
+      color: var(--gold);
+      font: 500 2.3rem var(--serif);
     }
 
     .life-card h3 {
-      margin-bottom: 12px;
-      color: var(--navy);
-      font-family: var(--serif);
-      font-size: 25px;
-      font-weight: 600;
+      margin: 12px 0 10px;
+      color: var(--gold-light);
+      font: 600 1.55rem var(--serif);
     }
 
     .life-card p {
-      color: #686b71;
-      font-size: 10px;
-      line-height: 1.9;
+      color: #c3ccd7;
+      font-size: .86rem;
     }
 
     /* INGRESSO */
 
     .admissions {
+      padding: 100px 0;
+      background: var(--white);
+    }
+
+    .admissions-panel {
       position: relative;
-      padding: 82px 6%;
-      overflow: hidden;
-      color: var(--ivory);
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      align-items: center;
+      gap: 45px;
+      padding: clamp(28px, 5vw, 60px);
+      border: 1px solid var(--line);
       background:
-        radial-gradient(ellipse at 50% 0%, rgba(43, 73, 119, 0.5), transparent 65%),
-        #0b1b35;
-      text-align: center;
+        radial-gradient(ellipse at 100% 0%, rgba(198, 165, 104, .12), transparent 45%),
+        var(--ivory);
     }
 
-    .admissions::before,
-    .admissions::after {
-      content: "✦";
-      position: absolute;
-      color: rgba(201, 164, 93, 0.3);
-      font-size: 90px;
-      pointer-events: none;
+    .admissions-panel h2 {
+      margin: 15px 0;
+      color: var(--navy);
+      font: 600 clamp(2.2rem, 4vw, 3.4rem)/1.04 var(--serif);
     }
 
-    .admissions::before {
-      top: 15px;
-      left: 6%;
+    .admissions-panel p {
+      max-width: 560px;
+      color: #646d79;
+      font-size: .91rem;
     }
 
-    .admissions::after {
-      right: 6%;
-      bottom: 15px;
+    .admissions-steps {
+      display: grid;
+      gap: 14px;
     }
 
-    .admissions-inner {
-      position: relative;
-      z-index: 1;
-      max-width: 720px;
-      margin: 0 auto;
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 15px;
+      background: rgba(255, 255, 255, .78);
+      border: 1px solid rgba(198, 165, 104, .22);
     }
 
-    .admissions .section-kicker {
-      color: var(--gold-light);
+    .step-number {
+      flex: 0 0 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--gold);
+      color: #92723d;
+      font: 600 1rem var(--serif);
     }
 
-    .admissions h2 {
-      margin-bottom: 18px;
-      font-family: var(--serif);
-      font-size: clamp(36px, 5vw, 52px);
-      font-weight: 500;
+    .step strong {
+      display: block;
+      color: var(--navy);
+      font-size: .83rem;
     }
 
-    .admissions p {
-      max-width: 580px;
-      margin: 0 auto 27px;
-      color: #cbd1db;
-      font-size: 11px;
-      line-height: 2;
+    .step span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: .77rem;
+    }
+
+    .admissions-button {
+      margin-top: 24px;
     }
 
     /* RODAPÉ */
 
-    footer {
-      padding: 30px 6% 24px;
-      color: #c4c9d2;
-      background: #061123;
-      border-top: 1px solid var(--border);
+    .footer {
+      padding: 55px 0 25px;
+      background: #061120;
+      color: #c6cfdb;
     }
 
-    .footer-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      max-width: 1120px;
-      margin: 0 auto;
+    .footer-main {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 40px;
+      padding-bottom: 35px;
+      border-bottom: 1px solid rgba(198, 165, 104, .2);
     }
 
     .footer-brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 15px;
     }
 
     .footer-brand img {
-      width: 40px;
-      height: 40px;
+      width: 65px;
+      height: 65px;
       object-fit: contain;
     }
 
     .footer-brand strong {
       display: block;
-      margin-bottom: 4px;
       color: var(--gold-light);
-      font-family: var(--serif);
-      font-size: 18px;
-      font-weight: 500;
+      font: 600 1.5rem var(--serif);
     }
 
-    .footer-brand span,
-    .footer-copy {
-      color: #959dab;
-      font-size: 8px;
-      line-height: 1.8;
+    .footer-brand span {
+      display: block;
+      margin-top: 4px;
+      color: #9ba8b9;
+      font-size: .62rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
     }
 
-    .footer-links {
+    .footer-description {
+      max-width: 450px;
+      margin-top: 18px;
+      color: #aab5c4;
+      font-size: .83rem;
+    }
+
+    .footer-nav h3 {
+      margin-bottom: 14px;
+      color: var(--gold-light);
+      font: 600 1.25rem var(--serif);
+    }
+
+    .footer-nav-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .footer-nav-list a {
+      color: #c6cfdb;
+      font-size: .79rem;
+      transition: color .2s ease;
+    }
+
+    .footer-nav-list a:hover {
+      color: var(--gold-light);
+    }
+
+    .footer-bottom {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 17px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding-top: 22px;
+      color: #8794a5;
+      font-size: .7rem;
     }
 
-    .footer-links a {
-      color: #c4c9d2;
-      font-size: 9px;
-      transition: color 0.2s ease;
-    }
-
-    .footer-links a:hover {
-      color: var(--gold-light);
-    }
-
-    .footer-copy {
-      max-width: 1120px;
-      margin: 22px auto 0;
-      padding-top: 17px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      text-align: center;
+    .footer-bottom strong {
+      color: #c6cfdb;
+      font-weight: 500;
     }
 
     /* ANIMAÇÕES */
@@ -814,7 +799,7 @@
     @keyframes rise {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(24px);
       }
       to {
         opacity: 1;
@@ -822,20 +807,21 @@
       }
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes sealFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: scale(.96);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     .reveal {
       opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transform: translateY(22px);
+      transition: opacity .7s ease, transform .7s ease;
     }
 
     .reveal.visible {
@@ -846,59 +832,60 @@
     /* RESPONSIVIDADE */
 
     @media (max-width: 900px) {
-      .navbar {
-        padding: 12px 4%;
-      }
-
       .nav-links {
-        gap: 13px;
+        gap: 14px;
       }
 
       .nav-links a {
-        font-size: 9px;
-        letter-spacing: 0.5px;
+        font-size: .7rem;
       }
 
-      .hero-content {
-        gap: 25px;
-      }
-
-      .hero-seal img {
-        max-width: 330px;
+      .hero-inner {
+        grid-template-columns: 1fr .75fr;
+        gap: 20px;
       }
 
       .about-grid {
-        gap: 30px;
+        gap: 40px;
       }
 
-      .society-image,
-      .society-image img {
-        height: 200px;
-        min-height: 200px;
+      .society-art {
+        min-height: 260px;
+      }
+
+      .society-art img {
+        height: 255px;
+      }
+
+      .admissions-panel {
+        gap: 25px;
       }
     }
 
-    @media (max-width: 680px) {
+    @media (max-width: 700px) {
       html {
-        scroll-padding-top: 75px;
+        scroll-padding-top: 72px;
       }
 
-      .navbar {
-        padding: 10px 5%;
+      .container {
+        width: min(100% - 34px, 560px);
+      }
+
+      .nav {
+        min-height: 68px;
       }
 
       .brand img {
-        width: 42px;
-        height: 42px;
+        width: 39px;
+        height: 39px;
       }
 
       .brand-text strong {
-        font-size: 17px;
+        font-size: 1.08rem;
       }
 
       .brand-text span {
-        font-size: 7px;
-        letter-spacing: 1.3px;
+        font-size: .5rem;
       }
 
       .menu-toggle {
@@ -907,16 +894,16 @@
 
       .nav-links {
         position: absolute;
-        top: 100%;
+        top: 68px;
         left: 0;
         right: 0;
         display: none;
         flex-direction: column;
         align-items: stretch;
         gap: 0;
-        padding: 8px 5% 18px;
-        background: rgba(10, 24, 48, 0.99);
-        border-bottom: 1px solid var(--border);
+        padding: 8px 22px 20px;
+        background: #09172b;
+        border-bottom: 1px solid var(--line);
       }
 
       .nav-links.open {
@@ -924,184 +911,138 @@
       }
 
       .nav-links a {
-        padding: 14px 5px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        font-size: 10px;
+        padding: 13px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, .07);
+        font-size: .8rem;
       }
 
       .nav-links .nav-cta {
-        margin-top: 10px;
-        padding: 13px;
+        margin-top: 12px;
+        padding: 12px;
         text-align: center;
       }
 
       .hero {
         min-height: auto;
-        padding: 60px 8% 78px;
       }
 
-      .hero::before {
-        inset: 12px;
-      }
-
-      .hero::after {
-        width: 260px;
-        height: 260px;
-      }
-
-      .hero-content {
+      .hero-inner {
         grid-template-columns: 1fr;
-        gap: 30px;
-        text-align: center;
-      }
-
-      .hero-copy {
-        order: 1;
-      }
-
-      .hero-seal {
-        order: 0;
-      }
-
-      .hero-seal img {
-        width: 210px;
-        max-height: 220px;
-      }
-
-      .eyebrow {
-        justify-content: center;
-        margin-bottom: 18px;
-        font-size: 8px;
-        letter-spacing: 2px;
+        gap: 34px;
+        padding-top: 65px;
+        padding-bottom: 65px;
       }
 
       .hero h1 {
-        margin: 0 auto 18px;
-        font-size: clamp(41px, 11vw, 59px);
+        max-width: 520px;
+        margin-top: 20px;
+        font-size: clamp(3.35rem, 15vw, 5.1rem);
       }
 
       .hero-description {
-        margin: 0 auto 24px;
-        font-size: 11px;
+        font-size: .9rem;
       }
 
-      .hero-actions {
-        justify-content: center;
+      .hero-seal img {
+        width: min(76%, 300px);
+        max-height: 300px;
       }
 
-      .button {
-        min-height: 43px;
-        padding: 12px 14px;
-        font-size: 9px;
+      .hero-caption {
+        bottom: -12px;
+        font-size: .55rem;
       }
 
-      .hero-bottom {
-        gap: 8px;
-        padding: 13px 8px;
-        font-size: 7px;
-        letter-spacing: 1px;
+      .motto-inner {
+        gap: 15px;
       }
 
-      .section {
-        padding: 62px 6%;
+      .motto-item strong {
+        font-size: 1rem;
+        letter-spacing: .07em;
+      }
+
+      .motto-item span {
+        font-size: .5rem;
+        letter-spacing: .08em;
+      }
+
+      .motto-divider {
+        height: 29px;
+      }
+
+      .about,
+      .societies,
+      .campus-life,
+      .admissions {
+        padding: 72px 0;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+      }
+
+      .about-image {
+        width: min(100%, 390px);
+        margin: 0 auto;
+      }
+
+      .about-image img {
+        max-height: 340px;
+      }
+
+      .about-copy h2 {
+        font-size: 2.65rem;
       }
 
       .section-heading {
         margin-bottom: 32px;
       }
 
-      .section-heading h2 {
-        font-size: 36px;
-      }
-
-      .about-grid {
-        grid-template-columns: 1fr;
-        gap: 28px;
-      }
-
-      .about-seal {
-        min-height: 260px;
-        padding: 25px;
-      }
-
-      .about-seal img {
-        max-width: 240px;
-        max-height: 250px;
-      }
-
-      .about-copy h2 {
-        font-size: 37px;
-      }
-
-      .values {
-        gap: 8px;
-      }
-
-      .value {
-        padding: 13px 7px;
-      }
-
-      .value strong {
-        font-size: 18px;
-      }
-
-      .value span {
-        font-size: 7px;
-        letter-spacing: 0.4px;
-      }
-
       .society-grid {
         grid-template-columns: 1fr;
-        gap: 18px;
+        gap: 20px;
       }
 
-      .society-card {
-        padding: 18px;
+      .society-art {
+        min-height: 0;
+        padding: 20px;
       }
 
-      .society-image {
-        min-height: 250px;
+      .society-art img {
+        height: 270px;
       }
 
-      .society-image img {
-        height: 245px;
-      }
-
-      .society-card h3 {
-        font-size: 27px;
+      .society-content {
+        padding: 23px;
       }
 
       .life-grid {
         grid-template-columns: 1fr;
-        gap: 13px;
       }
 
       .life-card {
-        min-height: auto;
-        padding: 22px;
+        padding: 24px;
       }
 
-      .admissions {
-        padding: 65px 7%;
+      .admissions-panel {
+        grid-template-columns: 1fr;
+        padding: 27px 21px;
       }
 
-      .admissions::before,
-      .admissions::after {
-        font-size: 45px;
+      .admissions-panel h2 {
+        font-size: 2.65rem;
       }
 
-      .admissions h2 {
-        font-size: 38px;
+      .footer-main {
+        grid-template-columns: 1fr;
+        gap: 32px;
       }
 
-      .footer-inner {
-        flex-direction: column;
+      .footer-bottom {
         align-items: flex-start;
-      }
-
-      .footer-links {
-        justify-content: flex-start;
-        gap: 14px;
+        flex-direction: column;
       }
     }
 
@@ -1110,9 +1051,9 @@
       *::before,
       *::after {
         scroll-behavior: auto !important;
-        animation-duration: 0.01ms !important;
+        animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+        transition-duration: .01ms !important;
       }
 
       .reveal {
@@ -1124,366 +1065,401 @@
 </head>
 
 <body>
-  <div class="topline"></div>
 
-  <header class="navbar">
-    <a class="brand" href="#inicio" aria-label="Página inicial">
-      <img src="IMG-20261028-WA0075.jpg" alt="Brasão fictício da universidade">
-      <div class="brand-text">
-        <strong>University of Pennsylvania</strong>
-        <span>Official RPG Experience</span>
-      </div>
-    </a>
+  <!-- NAVEGAÇÃO -->
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#inicio" aria-label="Página inicial">
+        <img src="IMG-20261028-WA0062.jpg" alt="Brasão da universidade">
+        <span class="brand-text">
+          <strong>University of Pennsylvania</strong>
+          <span>Tradition · Ambition · Legacy</span>
+        </span>
+      </a>
 
-    <button
-      class="menu-toggle"
-      id="menuToggle"
-      aria-label="Abrir menu"
-      aria-expanded="false"
-      aria-controls="navLinks"
-    >☰</button>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">
+        ☰
+      </button>
 
-    <nav class="nav-links" id="navLinks">
-      <a href="#inicio">Início</a>
-      <a href="#universidade">Universidade</a>
-      <a href="#sociedades">Sociedades</a>
-      <a href="#vida-universitaria">Vida universitária</a>
-      <a class="nav-cta" href="#ingresso">Faça parte</a>
-    </nav>
+      <nav class="nav-links" id="navLinks" aria-label="Navegação principal">
+        <a href="#inicio">Início</a>
+        <a href="#universidade">Universidade</a>
+        <a href="#sociedades">Sociedades</a>
+        <a href="#vida-universitaria">Vida universitária</a>
+        <a href="#ingresso" class="nav-cta">Processo seletivo</a>
+      </nav>
+    </div>
   </header>
 
   <main>
+
+    <!-- CAPA PRINCIPAL -->
     <section class="hero" id="inicio">
       <canvas id="particles" aria-hidden="true"></canvas>
 
-      <div class="hero-content">
+      <div class="container hero-inner">
         <div class="hero-copy">
-          <div class="eyebrow">Philadelphia · Pennsylvania</div>
+          <span class="eyebrow">Philadelphia · Pennsylvania</span>
 
           <h1>
-            O futuro pertence<br>
-            àqueles que ousam<br>
-            <em>conquistá-lo.</em>
+            Where legacy<br>
+            meets <em>ambition.</em>
           </h1>
 
           <p class="hero-description">
-            Prestígio, tradição e ambição se encontram em uma universidade
-            onde cada escolha pode abrir portas — ou revelar segredos que
-            deveriam permanecer escondidos.
+            Por trás das fachadas históricas e dos salões impecáveis,
+            existe um universo de rivalidades, alianças e segredos.
+            Aqui, o futuro pertence a quem sabe jogar.
           </p>
 
           <div class="hero-actions">
-            <a class="button button-primary" href="#universidade">
-              Explore a universidade
-            </a>
-            <a class="button button-outline" href="#sociedades">
-              Conheça as sociedades
-            </a>
+            <a class="button" href="#universidade">Descobrir a universidade</a>
+            <a class="button button-outline" href="#sociedades">Conhecer as sociedades</a>
           </div>
         </div>
 
         <div class="hero-seal">
           <img
-            src="IMG-20261028-WA0075.jpg"
-            alt="Brasão dourado e azul-marinho da universidade"
+            src="IMG-20261028-WA0062.jpg"
+            alt="Brasão decorativo da University of Pennsylvania"
           >
+          <span class="hero-caption">Founded in 1740 · A legacy of distinction</span>
         </div>
-      </div>
-
-      <div class="hero-bottom">
-        <span>Excelência</span>
-        <span>✦</span>
-        <span>Tradição</span>
-        <span>✦</span>
-        <span>Legado</span>
       </div>
     </section>
 
-    <section class="section about" id="universidade">
-      <div class="section-inner about-grid">
-        <div class="about-seal reveal">
+    <!-- IDENTIDADE -->
+    <section class="motto-strip" aria-label="Valores da universidade">
+      <div class="container motto-inner">
+        <div class="motto-item">
+          <strong>VERITAS</strong>
+          <span>Verdade</span>
+        </div>
+
+        <div class="motto-divider"></div>
+
+        <div class="motto-item">
+          <strong>DISCIPLINA</strong>
+          <span>Disciplina</span>
+        </div>
+
+        <div class="motto-divider"></div>
+
+        <div class="motto-item">
+          <strong>HEREDITAS</strong>
+          <span>Legado</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE A UNIVERSIDADE -->
+    <section class="about" id="universidade">
+      <div class="container about-grid">
+        <div class="about-image reveal">
           <img
-            src="IMG-20261028-WA0075.jpg"
-            alt="Emblema da universidade"
+            src="IMG-20261028-WA0062.jpg"
+            alt="Emblema da universidade em azul-marinho e dourado"
             loading="lazy"
           >
         </div>
 
         <div class="about-copy reveal">
-          <span class="section-kicker">Uma instituição, inúmeras histórias</span>
+          <span class="eyebrow">Mais do que uma instituição</span>
 
-          <h2>Mais do que uma universidade. Um legado.</h2>
+          <h2>Uma história escrita por aqueles que ousam.</h2>
 
           <p>
-            Entre edifícios históricos, bibliotecas silenciosas e corredores
-            frequentados por algumas das mentes mais brilhantes de sua
-            geração, a vida universitária é uma combinação de oportunidades,
-            rivalidades e descobertas.
+            Prestígio não se conquista da noite para o dia. Ele é construído
+            através de escolhas, sacrifícios e relações que podem determinar
+            o rumo de uma vida inteira.
           </p>
 
           <p>
-            Aqui, o conhecimento tem valor, as conexões podem definir futuros
-            e a reputação é construída tanto pelas conquistas quanto pelas
-            escolhas feitas longe dos olhares alheios.
+            Em um ambiente onde tradição e ambição caminham lado a lado,
+            cada estudante carrega seus próprios objetivos. Alguns desejam
+            reconhecimento acadêmico. Outros procuram influência, conexões
+            ou a oportunidade de deixar seu nome para a posteridade.
           </p>
 
           <p>
-            Encontre seu lugar, construa sua história e descubra até onde
-            você está disposto a ir para conquistar aquilo que deseja.
+            Entre aulas, eventos, competições e sociedades exclusivas,
+            a experiência universitária vai muito além dos livros.
+            Nem todas as histórias são contadas em público.
           </p>
 
-          <div class="values">
-            <div class="value">
-              <strong>Veritas</strong>
-              <span>Verdade</span>
+          <div class="about-note">
+            “O legado não é aquilo que recebemos, mas aquilo que escolhemos
+            deixar para trás.”
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOCIEDADES -->
+    <section class="societies" id="sociedades">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Find your place</span>
+          <h2>Sociedades & Fraternidades</h2>
+          <p>
+            Quatro caminhos, diferentes tradições e incontáveis possibilidades.
+            Escolher uma sociedade significa encontrar pessoas que podem
+            transformar sua trajetória — para melhor ou para pior.
+          </p>
+        </div>
+
+        <div class="society-grid">
+
+          <!-- PHI SIGMA PI: WA0069 -->
+          <article class="society-card reveal">
+            <div class="society-art">
+              <img
+                src="IMG-20261028-WA0069.jpg"
+                alt="Brasão da fraternidade Phi Sigma Pi em roxo e dourado"
+                loading="lazy"
+              >
             </div>
 
-            <div class="value">
-              <strong>Disciplina</strong>
-              <span>Dedicação</span>
+            <div class="society-content">
+              <span class="society-type">Conhecimento · Comunidade mista</span>
+              <h3>Phi Sigma Pi</h3>
+              <p>
+                Uma comunidade para mentes curiosas, dedicadas e inquietas.
+                Aqui, inteligência, colaboração e busca pelo conhecimento
+                são parte essencial da identidade de seus integrantes.
+              </p>
+              <a class="society-link" href="#ingresso">
+                Conhecer a sociedade <span>→</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- KAPPA KAPPA GAMMA: WA0071 -->
+          <article class="society-card reveal">
+            <div class="society-art">
+              <img
+                src="IMG-20261028-WA0071.jpg"
+                alt="Brasão da fraternidade Kappa Kappa Gamma em rosa e dourado"
+                loading="lazy"
+              >
             </div>
 
-            <div class="value">
-              <strong>Hereditas</strong>
-              <span>Legado</span>
+            <div class="society-content">
+              <span class="society-type">Tradição · Fraternidade feminina</span>
+              <h3>Kappa Kappa Gamma</h3>
+              <p>
+                Elegância, união e tradição definem uma sociedade que valoriza
+                vínculos duradouros e presença marcante. Por trás da imagem
+                impecável, cada integrante possui suas próprias ambições.
+              </p>
+              <a class="society-link" href="#ingresso">
+                Conhecer a sociedade <span>→</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- ALPHA KAPPA PSI: WA0073 -->
+          <article class="society-card reveal">
+            <div class="society-art">
+              <img
+                src="IMG-20261028-WA0073.jpg"
+                alt="Brasão da fraternidade Alpha Kappa Psi em azul e dourado"
+                loading="lazy"
+              >
+            </div>
+
+            <div class="society-content">
+              <span class="society-type">Liderança · Fraternidade masculina</span>
+              <h3>Alpha Kappa Psi</h3>
+              <p>
+                Estratégia, influência e ambição se encontram em uma
+                comunidade orientada para liderança e crescimento.
+                Cada decisão pode abrir portas — ou criar novos rivais.
+              </p>
+              <a class="society-link" href="#ingresso">
+                Conhecer a sociedade <span>→</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- SIGMA CHI: WA0075 -->
+          <article class="society-card reveal">
+            <div class="society-art">
+              <img
+                src="IMG-20261028-WA0075.jpg"
+                alt="Brasão da fraternidade Sigma Chi em azul-claro e dourado"
+                loading="lazy"
+              >
+            </div>
+
+            <div class="society-content">
+              <span class="society-type">Conexões · Comunidade mista</span>
+              <h3>Sigma Chi</h3>
+              <p>
+                Sociabilidade, intensidade e espírito competitivo marcam
+                esta comunidade. Entre eventos e novas conexões, a vida
+                nunca permanece tranquila por muito tempo.
+              </p>
+              <a class="society-link" href="#ingresso">
+                Conhecer a sociedade <span>→</span>
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- VIDA UNIVERSITÁRIA -->
+    <section class="campus-life" id="vida-universitaria">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Beyond the classroom</span>
+          <h2>A vida acontece em todos os lugares.</h2>
+          <p>
+            A universidade é feita de experiências, relações e escolhas.
+            Cada espaço oferece uma oportunidade — e cada oportunidade
+            pode esconder uma história.
+          </p>
+        </div>
+
+        <div class="life-grid">
+          <article class="life-card reveal">
+            <span class="life-number">01</span>
+            <h3>Vida acadêmica</h3>
+            <p>
+              Cursos, professores, avaliações, projetos e a pressão constante
+              para manter uma reputação impecável.
+            </p>
+          </article>
+
+          <article class="life-card reveal">
+            <span class="life-number">02</span>
+            <h3>Eventos & encontros</h3>
+            <p>
+              Festas, bailes, celebrações e reuniões onde uma conversa
+              casual pode mudar o rumo de uma relação.
+            </p>
+          </article>
+
+          <article class="life-card reveal">
+            <span class="life-number">03</span>
+            <h3>Rivalidades & segredos</h3>
+            <p>
+              Disputas, interesses pessoais e verdades cuidadosamente
+              escondidas por aqueles que têm muito a perder.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- INGRESSO -->
+    <section class="admissions" id="ingresso">
+      <div class="container">
+        <div class="admissions-panel reveal">
+          <div>
+            <span class="eyebrow">Your story starts here</span>
+            <h2>Todo legado começa com uma escolha.</h2>
+            <p>
+              Prepare sua história, defina suas ambições e descubra
+              qual será o seu lugar neste universo. Sua trajetória
+              está apenas começando.
+            </p>
+
+            <!-- Atualizaremos este botão quando a página de inscrição estiver pronta. -->
+            <a class="button admissions-button" href="mailto:">
+              Preparar minha inscrição
+            </a>
+          </div>
+
+          <div class="admissions-steps">
+            <div class="step">
+              <span class="step-number">1</span>
+              <div>
+                <strong>Crie seu personagem</strong>
+                <span>Defina sua identidade, história e objetivos.</span>
+              </div>
+            </div>
+
+            <div class="step">
+              <span class="step-number">2</span>
+              <div>
+                <strong>Escolha seu caminho</strong>
+                <span>Descubra cursos, atividades e sociedades.</span>
+              </div>
+            </div>
+
+            <div class="step">
+              <span class="step-number">3</span>
+              <div>
+                <strong>Envie sua ficha</strong>
+                <span>Apresente sua proposta para avaliação.</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section societies" id="sociedades">
-      <div class="section-inner">
-        <div class="section-heading reveal">
-          <span class="section-kicker">Tradição e pertencimento</span>
-          <h2>As sociedades universitárias</h2>
-
-          <div class="gold-divider"><span>✦</span></div>
-
-          <p>
-            Quatro sociedades, diferentes identidades e inúmeras maneiras
-            de construir seu legado. Escolha com cuidado: cada grupo tem
-            seus próprios valores, círculos sociais e expectativas.
-          </p>
-        </div>
-
-        <div class="society-grid">
-          <article class="society-card reveal">
-            <div class="society-image">
-              <img
-                src="IMG-20261028-WA0071.jpg"
-                alt="Brasão da sociedade Kappa Kappa Gamma"
-                loading="lazy"
-              >
-            </div>
-
-            <span class="society-number">Sociedade 01</span>
-            <h3>Kappa Kappa Gamma</h3>
-
-            <p>
-              Elegância, tradição e influência. Uma sociedade feminina
-              marcada por vínculos duradouros, prestígio social e uma
-              identidade cuidadosamente preservada.
-            </p>
-
-            <span class="society-tag">Sociedade feminina</span>
-          </article>
-
-          <article class="society-card reveal">
-            <div class="society-image">
-              <img
-                src="IMG-20261028-WA0069.jpg"
-                alt="Brasão da sociedade Alpha Kappa Psi"
-                loading="lazy"
-              >
-            </div>
-
-            <span class="society-number">Sociedade 02</span>
-            <h3>Alpha Kappa Psi</h3>
-
-            <p>
-              Ambição, estratégia e liderança. Um espaço para quem busca
-              influência, crescimento profissional e conexões capazes
-              de transformar oportunidades em conquistas.
-            </p>
-
-            <span class="society-tag">Sociedade masculina</span>
-          </article>
-
-          <article class="society-card reveal">
-            <div class="society-image">
-              <img
-                src="IMG-20261028-WA0073.jpg"
-                alt="Brasão da sociedade Phi Sigma Pi"
-                loading="lazy"
-              >
-            </div>
-
-            <span class="society-number">Sociedade 03</span>
-            <h3>Phi Sigma Pi</h3>
-
-            <p>
-              Intelecto, curiosidade e excelência acadêmica. Uma comunidade
-              para mentes inquietas, apaixonadas pelo conhecimento e pela
-              busca constante de novas possibilidades.
-            </p>
-
-            <span class="society-tag">Sociedade mista</span>
-          </article>
-
-          <article class="society-card reveal">
-            <div class="society-image">
-              <img
-                src="IMG-20261028-WA0062.jpg"
-                alt="Brasão da sociedade Sigma Chi"
-                loading="lazy"
-              >
-            </div>
-
-            <span class="society-number">Sociedade 04</span>
-            <h3>Sigma Chi</h3>
-
-            <p>
-              Carisma, ousadia e vida social. Uma sociedade para quem
-              transforma encontros em experiências, valoriza a lealdade
-              e nunca deixa uma oportunidade passar despercebida.
-            </p>
-
-            <span class="society-tag">Sociedade mista</span>
-          </article>
-        </div>
-
-        <p class="society-note">
-          As sociedades, seus brasões e suas características nesta página
-          fazem parte da ambientação ficcional deste RPG.
-        </p>
-      </div>
-    </section>
-
-    <section class="section campus-life" id="vida-universitaria">
-      <div class="section-inner">
-        <div class="section-heading reveal">
-          <span class="section-kicker">Sua jornada começa aqui</span>
-          <h2>Descubra a vida no campus</h2>
-
-          <div class="gold-divider"><span>✦</span></div>
-
-          <p>
-            A universidade é feita de muito mais do que aulas. Descubra
-            oportunidades, construa amizades e encontre seu espaço em
-            uma comunidade repleta de possibilidades.
-          </p>
-        </div>
-
-        <div class="life-grid">
-          <article class="life-card reveal">
-            <div class="life-icon" aria-hidden="true">✧</div>
-            <h3>Excelência acadêmica</h3>
-            <p>
-              Escolha sua área de estudo, desenvolva suas habilidades e
-              enfrente os desafios de uma trajetória acadêmica exigente.
-            </p>
-          </article>
-
-          <article class="life-card reveal">
-            <div class="life-icon" aria-hidden="true">♜</div>
-            <h3>Esportes e atividades</h3>
-            <p>
-              Participe de equipes, descubra novas paixões e encontre
-              maneiras de representar sua universidade dentro e fora do campus.
-            </p>
-          </article>
-
-          <article class="life-card reveal">
-            <div class="life-icon" aria-hidden="true">✦</div>
-            <h3>Eventos e conexões</h3>
-            <p>
-              Festas, encontros, competições e acontecimentos que podem
-              transformar amizades, rivalidades e o rumo da sua história.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="admissions" id="ingresso">
-      <div class="admissions-inner reveal">
-        <span class="section-kicker">Seu próximo capítulo</span>
-
-        <h2>Seu lugar na história espera por você.</h2>
-
-        <p>
-          Prepare sua personagem, defina suas ambições e descubra o que
-          significa fazer parte deste universo. O primeiro passo é decidir
-          que tipo de legado você deseja construir.
-        </p>
-
-        <!--
-          Este botão ainda não envia uma ficha.
-          Quando a página de inscrição estiver pronta,
-          troque o destino pelo endereço correto.
-        -->
-        <a
-          class="button button-primary"
-          href="ingresso.html"
-          id="applicationButton"
-        >
-          Conheça o processo de ingresso
-        </a>
-      </div>
-    </section>
   </main>
 
-  <footer>
-    <div class="footer-inner">
-      <a class="footer-brand" href="#inicio">
-        <img
-          src="IMG-20261028-WA0075.jpg"
-          alt=""
-          loading="lazy"
-        >
-
+  <!-- RODAPÉ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-main">
         <div>
-          <strong>University of Pennsylvania</strong>
-          <span>RPG · Fictional university experience</span>
+          <a class="footer-brand" href="#inicio">
+            <img
+              src="IMG-20261028-WA0062.jpg"
+              alt=""
+              loading="lazy"
+            >
+            <span>
+              <strong>University of Pennsylvania</strong>
+              <span>Tradition · Ambition · Legacy</span>
+            </span>
+          </a>
+
+          <p class="footer-description">
+            Um universo de interpretação ficcional sobre a vida universitária,
+            suas relações, suas ambições e os segredos que moldam cada história.
+          </p>
         </div>
-      </a>
 
-      <nav class="footer-links" aria-label="Navegação do rodapé">
-        <a href="#inicio">Início</a>
-        <a href="#universidade">Universidade</a>
-        <a href="#sociedades">Sociedades</a>
-        <a href="#vida-universitaria">Campus</a>
-        <a href="#ingresso">Ingresso</a>
-      </nav>
+        <div class="footer-nav">
+          <h3>Explore</h3>
+          <div class="footer-nav-list">
+            <a href="#inicio">Página inicial</a>
+            <a href="#universidade">A universidade</a>
+            <a href="#sociedades">Sociedades</a>
+            <a href="#vida-universitaria">Vida universitária</a>
+            <a href="#ingresso">Processo seletivo</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span id="currentYear"></span> University of Pennsylvania RPG.</span>
+        <span><strong>Projeto ficcional independente.</strong> Sem vínculo oficial com a universidade.</span>
+      </div>
     </div>
-
-    <p class="footer-copy">
-      Projeto de RPG ficcional, criado para entretenimento e interpretação
-      de personagens. Não é um site oficial da University of Pennsylvania.
-    </p>
   </footer>
 
   <script>
-    /* MENU PARA CELULAR */
-
+    // MENU PARA CELULAR
     const menuToggle = document.getElementById("menuToggle");
     const navLinks = document.getElementById("navLinks");
 
-    menuToggle.addEventListener("click", () => {
+    menuToggle.addEventListener("click", function () {
       const isOpen = navLinks.classList.toggle("open");
-
       menuToggle.setAttribute("aria-expanded", String(isOpen));
-      menuToggle.setAttribute(
-        "aria-label",
-        isOpen ? "Fechar menu" : "Abrir menu"
-      );
-
+      menuToggle.setAttribute("aria-label", isOpen ? "Fechar menu" : "Abrir menu");
       menuToggle.textContent = isOpen ? "×" : "☰";
     });
 
-    document.querySelectorAll("#navLinks a").forEach((link) => {
-      link.addEventListener("click", () => {
+    document.querySelectorAll("#navLinks a").forEach(function (link) {
+      link.addEventListener("click", function () {
         navLinks.classList.remove("open");
         menuToggle.setAttribute("aria-expanded", "false");
         menuToggle.setAttribute("aria-label", "Abrir menu");
@@ -1491,115 +1467,134 @@
       });
     });
 
-    /* ANIMAÇÕES AO ROLAR A PÁGINA */
-
+    // ANIMAÇÕES AO ROLAR A PÁGINA
     const revealElements = document.querySelectorAll(".reveal");
 
     if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver(
-        (entries, currentObserver) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("visible");
-              currentObserver.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.12 }
-      );
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.12
+      });
 
-      revealElements.forEach((element) => observer.observe(element));
+      revealElements.forEach(function (element) {
+        observer.observe(element);
+      });
     } else {
-      revealElements.forEach((element) => {
+      revealElements.forEach(function (element) {
         element.classList.add("visible");
       });
     }
 
-    /* PEQUENOS PONTOS DOURADOS FLUTUANTES */
+    // ANO AUTOMÁTICO NO RODAPÉ
+    document.getElementById("currentYear").textContent =
+      new Date().getFullYear();
 
-    const canvas = document.getElementById("particles");
-    const ctx = canvas.getContext("2d");
+    // PEQUENOS PONTOS DOURADOS FLUTUANTES
+    (function () {
+      const canvas = document.getElementById("particles");
+      const context = canvas.getContext("2d");
 
-    let particles = [];
-    let animationFrame;
-    let canvasWidth = 0;
-    let canvasHeight = 0;
+      if (!context) return;
 
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
 
-    function resizeCanvas() {
-      const rect = canvas.getBoundingClientRect();
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      let width = 0;
+      let height = 0;
+      let particles = [];
+      let animationFrame = null;
 
-      canvasWidth = rect.width;
-      canvasHeight = rect.height;
+      function resizeCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        const ratio = Math.min(window.devicePixelRatio || 1, 2);
 
-      canvas.width = Math.round(canvasWidth * pixelRatio);
-      canvas.height = Math.round(canvasHeight * pixelRatio);
+        width = rect.width;
+        height = rect.height;
 
-      ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+        canvas.width = Math.round(width * ratio);
+        canvas.height = Math.round(height * ratio);
 
-      const particleCount = Math.min(
-        55,
-        Math.max(18, Math.floor(canvasWidth / 18))
-      );
+        context.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-      particles = Array.from({ length: particleCount }, () => ({
-        x: Math.random() * canvasWidth,
-        y: Math.random() * canvasHeight,
-        radius: Math.random() * 1.5 + 0.4,
-        speed: Math.random() * 0.25 + 0.08,
-        opacity: Math.random() * 0.45 + 0.12,
-        phase: Math.random() * Math.PI * 2
-      }));
-    }
-
-    function drawParticles(time = 0) {
-      ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-
-      particles.forEach((particle) => {
-        const shimmer =
-          0.65 + Math.sin(time * 0.001 + particle.phase) * 0.35;
-
-        ctx.beginPath();
-        ctx.arc(
-          particle.x,
-          particle.y,
-          particle.radius,
-          0,
-          Math.PI * 2
+        const count = Math.min(
+          55,
+          Math.max(18, Math.floor(width / 17))
         );
 
-        ctx.fillStyle =
-          `rgba(234, 212, 160, ${particle.opacity * shimmer})`;
+        particles = Array.from({ length: count }, function () {
+          return {
+            x: Math.random() * width,
+            y: Math.random() * height,
+            radius: Math.random() * 1.5 + .35,
+            speed: Math.random() * .22 + .06,
+            opacity: Math.random() * .55 + .15,
+            phase: Math.random() * Math.PI * 2
+          };
+        });
+      }
 
-        ctx.fill();
+      function drawParticles() {
+        context.clearRect(0, 0, width, height);
 
-        if (!reducedMotion) {
+        particles.forEach(function (particle) {
           particle.y -= particle.speed;
 
           if (particle.y < -5) {
-            particle.y = canvasHeight + 5;
-            particle.x = Math.random() * canvasWidth;
+            particle.y = height + 5;
+            particle.x = Math.random() * width;
           }
+
+          particle.phase += .015;
+
+          const shimmer = .65 + Math.sin(particle.phase) * .35;
+
+          context.beginPath();
+          context.arc(
+            particle.x,
+            particle.y,
+            particle.radius,
+            0,
+            Math.PI * 2
+          );
+
+          context.fillStyle =
+            "rgba(232, 210, 161, " +
+            (particle.opacity * shimmer) +
+            ")";
+
+          context.fill();
+        });
+
+        if (!reducedMotion) {
+          animationFrame = requestAnimationFrame(drawParticles);
         }
-      });
-
-      if (!reducedMotion) {
-        animationFrame = requestAnimationFrame(drawParticles);
       }
-    }
 
-    resizeCanvas();
-    drawParticles();
-
-    window.addEventListener("resize", () => {
-      cancelAnimationFrame(animationFrame);
       resizeCanvas();
-      drawParticles();
-    });
+
+      if (reducedMotion) {
+        drawParticles();
+      } else {
+        drawParticles();
+      }
+
+      window.addEventListener("resize", function () {
+        if (animationFrame) {
+          cancelAnimationFrame(animationFrame);
+        }
+
+        resizeCanvas();
+        drawParticles();
+      });
+    })();
   </script>
+
 </body>
 </html>
