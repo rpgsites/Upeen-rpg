@@ -1,1 +1,1026 @@
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#171116">
+<title>University of Pennsylvania | AdmUpeen2026</title>
+
+<style>
+:root {
+  --bg: #110e12;
+  --panel: #1b171d;
+  --panel2: #241d25;
+  --wine: #6f1d35;
+  --wine2: #9c3550;
+  --gold: #d5b879;
+  --cream: #f3eee5;
+  --muted: #b9aeb8;
+  --line: #40343f;
+  --green: #a6c48a;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--cream);
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.55;
+}
+
+button, input, textarea, select { font: inherit; }
+button { cursor: pointer; }
+.hidden { display: none !important; }
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #110e12ed;
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px clamp(16px, 4vw, 48px);
+  gap: 12px;
+}
+
+.brand { display: flex; align-items: center; gap: 12px; }
+
+.crest {
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--gold);
+  display: grid;
+  place-items: center;
+  color: var(--gold);
+  font-size: 22px;
+}
+
+.brand strong {
+  display: block;
+  letter-spacing: .12em;
+  font-size: 13px;
+}
+
+.brand span {
+  color: var(--muted);
+  font: 11px Arial, sans-serif;
+  letter-spacing: .18em;
+}
+
+.nav { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.btn, .nav button {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--cream);
+  padding: 9px 13px;
+  border-radius: 2px;
+}
+
+.btn.primary {
+  background: var(--wine);
+  border-color: var(--wine2);
+}
+
+.btn.gold {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+.hero {
+  min-height: 76vh;
+  display: grid;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background:
+    linear-gradient(90deg, #110e12f5 0%, #110e12d9 45%, #110e1266 100%),
+    url('assets/campus/campus-hero.jpg') center/cover;
+}
+
+.hero:after {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  border: 1px solid #d5b87945;
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 850px;
+  padding: clamp(30px, 8vw, 100px);
+}
+
+.eyebrow {
+  color: var(--gold);
+  font: 11px Arial, sans-serif;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-size: clamp(42px, 8vw, 92px);
+  line-height: .98;
+  font-weight: 400;
+  margin: 22px 0;
+}
+
+.hero h1 em { color: var(--gold); font-weight: 400; }
+
+.hero p {
+  max-width: 580px;
+  color: #ddd1d8;
+  font-size: 18px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+
+.section {
+  padding: 70px clamp(18px, 5vw, 72px);
+  max-width: 1400px;
+  margin: auto;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: end;
+  margin-bottom: 26px;
+}
+
+.section h2 {
+  font-weight: 400;
+  font-size: clamp(28px, 4vw, 44px);
+  margin: 8px 0;
+}
+
+.section-intro { color: var(--muted); max-width: 620px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.card img {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  background: linear-gradient(135deg, #30232c, #171116);
+}
+
+.card-body { padding: 20px; }
+
+.card h3 {
+  margin: 0 0 8px;
+  font-weight: 400;
+  font-size: 23px;
+}
+
+.card p { color: var(--muted); margin: 0 0 14px; }
+
+.tag {
+  display: inline-block;
+  border: 1px solid var(--line);
+  padding: 4px 8px;
+  color: var(--gold);
+  font: 10px Arial, sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin: 3px 4px 3px 0;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: clamp(20px, 4vw, 36px);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field.full { grid-column: 1 / -1; }
+
+.field label {
+  font: 11px Arial, sans-serif;
+  letter-spacing: .08em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.field input, .field textarea, .field select {
+  width: 100%;
+  background: #100d11;
+  border: 1px solid var(--line);
+  color: var(--cream);
+  padding: 12px;
+  border-radius: 2px;
+}
+
+.field textarea { min-height: 110px; resize: vertical; }
+.field small { color: var(--muted); }
+
+.note {
+  border-left: 2px solid var(--gold);
+  padding: 12px 15px;
+  color: var(--muted);
+  background: #d5b8790b;
+  margin: 16px 0;
+}
+
+.status {
+  padding: 10px 12px;
+  margin-top: 12px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.status.ok { border-color: #668454; color: #c6e5b2; }
+.status.error { border-color: #a34b5c; color: #ffb8c4; }
+
+.photo-preview {
+  width: 100%;
+  max-width: 180px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border: 1px solid var(--gold);
+  background: #100d11;
+}
+
+.dashboard-box {
+  background: linear-gradient(135deg, #261c27, #171116);
+  border: 1px solid var(--gold);
+  padding: 26px;
+  display: flex;
+  gap: 22px;
+  align-items: center;
+}
+
+.dashboard-box .big { font-size: 32px; color: var(--gold); }
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 28px clamp(18px, 5vw, 72px);
+  color: var(--muted);
+  font: 12px Arial, sans-serif;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.muted { color: var(--muted); }
+.divider { height: 1px; background: var(--line); margin: 28px 0; }
+.image-help { font: 12px Arial, sans-serif; color: var(--muted); margin-top: 10px; }
+
+@media(max-width:850px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .two-col { grid-template-columns: 1fr; }
+  .hero { min-height: 68vh; }
+  .nav { justify-content: flex-end; }
+  .nav button { padding: 7px 9px; font-size: 12px; }
+}
+
+@media(max-width:560px) {
+  .grid, .form-grid { grid-template-columns: 1fr; }
+  .field.full { grid-column: auto; }
+  .topbar { align-items: flex-start; }
+  .brand strong { font-size: 11px; }
+  .brand span { font-size: 9px; }
+  .nav { max-width: 150px; }
+  .hero p { font-size: 16px; }
+  .card img { height: 230px; }
+  .section { padding-top: 48px; padding-bottom: 48px; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="crest">U</div>
+    <div>
+      <strong>UNIVERSITY OF PENNSYLVANIA</strong>
+      <span>ADM UPEEN 2026 · ROLEPLAYING GAME</span>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <button onclick="scrollToId('societies')">Fraternidades</button>
+    <button onclick="scrollToId('uniforms')">Uniformes</button>
+    <button onclick="scrollToId('portal')">Área do jogador</button>
+  </nav>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Philadelphia · Pennsylvania · Est. 1740</div>
+    <h1>Where legacy<br>meets <em>secrecy.</em></h1>
+    <p>
+      Por trás das portas da universidade, reputações são construídas,
+      alianças são seladas e cada segredo tem um preço.
+      Seu próximo capítulo começa aqui.
+    </p>
+    <div class="hero-actions">
+      <button class="btn primary" onclick="scrollToId('portal')">Entrar no portal</button>
+      <button class="btn gold" onclick="scrollToId('societies')">Conhecer as fraternidades</button>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="societies">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">The Houses</div>
+      <h2>Fraternidades</h2>
+      <p class="section-intro">
+        Cada casa possui sua própria tradição, reputação e código de conduta.
+        Adicione as imagens oficiais às pastas indicadas.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <article class="card">
+      <img src="assets/fraternities/kappa-kappa-gamma.jpg" alt="Kappa Kappa Gamma">
+      <div class="card-body">
+        <span class="tag">Feminina</span>
+        <h3>Kappa Kappa Gamma</h3>
+        <p>Uma casa feminina de tradição, influência social e lealdades que atravessam gerações.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="assets/fraternities/alpha-kappa-psi.jpg" alt="Alpha Kappa Psi">
+      <div class="card-body">
+        <span class="tag">Masculina</span>
+        <h3>Alpha Kappa Psi</h3>
+        <p>Ambição, prestígio e conexões estratégicas definem a vida dentro da casa.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="assets/fraternities/phi-sigma-pi.jpg" alt="Phi Sigma Pi">
+      <div class="card-body">
+        <span class="tag">Mista · Acadêmica</span>
+        <h3>Phi Sigma Pi</h3>
+        <p>Uma comunidade voltada à excelência acadêmica, ao conhecimento e à curiosidade.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="assets/fraternities/sigma-chi.jpg" alt="Sigma Chi">
+      <div class="card-body">
+        <span class="tag">Mista · Social</span>
+        <h3>Sigma Chi</h3>
+        <p>Personalidades expansivas, vida social intensa e uma presença difícil de ignorar.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="assets/fraternities/house-placeholder.jpg" alt="Sede da fraternidade">
+      <div class="card-body">
+        <span class="tag">Galeria</span>
+        <h3>Tradições e espaços</h3>
+        <p>Use este espaço para fotos da sede, festas, cerimônias e eventos.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="assets/fraternities/crest-gallery.jpg" alt="Brasões das fraternidades">
+      <div class="card-body">
+        <span class="tag">Galeria</span>
+        <h3>Brasões e símbolos</h3>
+        <p>Uma área visual para exibir emblemas, cores e símbolos das casas.</p>
+      </div>
+    </article>
+  </div>
+  <p class="image-help">Imagens: assets/fraternities/. Mantenha os nomes dos arquivos ou altere os caminhos no HTML.</p>
+</section>
+
+<section class="section" id="uniforms">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">Dress code</div>
+      <h2>Uniformes & identidade</h2>
+      <p class="section-intro">
+        Galeria para uniformes esportivos, roupas de cerimônia,
+        peças de cada fraternidade e vestuário cotidiano.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <article class="card">
+      <img src="assets/uniforms/varsity-uniform.jpg" alt="Uniforme universitário">
+      <div class="card-body">
+        <span class="tag">Universidade</span>
+        <h3>Uniforme universitário</h3>
+        <p>Jaquetas varsity, peças oficiais e combinações que representam a universidade.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="assets/uniforms/cheerleading-uniform.jpg" alt="Uniforme de cheerleading">
+      <div class="card-body">
+        <span class="tag">Esporte</span>
+        <h3>Cheerleading</h3>
+        <p>Uniformes de torcida, apresentações, treinos e competições.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="assets/uniforms/football-uniform.jpg" alt="Uniforme de futebol americano">
+      <div class="card-body">
+        <span class="tag">Esporte</span>
+        <h3>Equipe esportiva</h3>
+        <p>Uniformes de jogo, treino e equipamentos esportivos.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="assets/uniforms/kappa-uniform.jpg" alt="Uniforme da Kappa Kappa Gamma">
+      <div class="card-body">
+        <span class="tag">Kappa Kappa Gamma</span>
+        <h3>Identidade da casa</h3>
+        <p>Adicione aqui o look ou uniforme adotado pela fraternidade.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="assets/uniforms/alpha-uniform.jpg" alt="Uniforme da Alpha Kappa Psi">
+      <div class="card-body">
+        <span class="tag">Alpha Kappa Psi</span>
+        <h3>Identidade da casa</h3>
+        <p>Adicione aqui as peças oficiais e referências visuais da fraternidade.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <img src="assets/uniforms/formal-uniform.jpg" alt="Traje de cerimônia">
+      <div class="card-body">
+        <span class="tag">Cerimônia</span>
+        <h3>Eventos formais</h3>
+        <p>Trajes para bailes, recepções, cerimônias e eventos exclusivos.</p>
+      </div>
+    </article>
+  </div>
+  <p class="image-help">Coloque as fotos correspondentes em assets/uniforms/.</p>
+</section>
+
+<section class="section" id="portal">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">Members only</div>
+      <h2>Portal do jogador</h2>
+      <p class="section-intro">
+        Crie uma conta ou entre para enviar os dados do jogador,
+        criar a ficha do personagem e preencher o formulário confidencial.
+      </p>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel">
+      <div class="eyebrow">01 · Authentication</div>
+      <h2>Entrar / cadastrar</h2>
+      <p class="muted">
+        Use um e-mail e uma senha para acessar sua área.
+        A confirmação por e-mail depende das configurações do Supabase.
+      </p>
+
+      <div class="form-grid">
+        <div class="field full">
+          <label for="auth-email">E-mail</label>
+          <input id="auth-email" type="email" autocomplete="email" placeholder="voce@email.com">
+        </div>
+        <div class="field full">
+          <label for="auth-password">Senha</label>
+          <input id="auth-password" type="password" autocomplete="current-password" minlength="6" placeholder="Mínimo de 6 caracteres">
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <button class="btn primary" onclick="signIn()">Entrar</button>
+        <button class="btn" onclick="signUp()">Criar conta</button>
+        <button class="btn" onclick="signOut()">Sair</button>
+      </div>
+      <div id="auth-status" class="status" aria-live="polite">
+        Configure o Supabase para ativar o login.
+      </div>
+
+      <div class="divider"></div>
+
+      <div id="player-form-area">
+        <div class="eyebrow">02 · Player profile</div>
+        <h2>Cadastro do jogador</h2>
+
+        <form id="player-form" class="form-grid">
+          <div class="field full">
+            <label for="player-username">Nome do jogador + últimos 4 dígitos</label>
+            <input id="player-username" required placeholder="Ex.: Jogador 1234">
+          </div>
+          <div class="field">
+            <label for="player-age">Idade do jogador</label>
+            <input id="player-age" type="number" min="18" required placeholder="18+">
+          </div>
+          <div class="field">
+            <label for="player-availability">Disponibilidade</label>
+            <input id="player-availability" required placeholder="Dias e horários">
+          </div>
+          <div class="field full">
+            <label for="player-scene">Cena de autoria (mínimo 15 linhas)</label>
+            <textarea id="player-scene" required placeholder="Escreva sua cena de teste aqui..."></textarea>
+            <small>Use quebras de linha para separar as linhas da cena.</small>
+          </div>
+          <div class="field full">
+            <button class="btn primary" type="submit">Salvar cadastro do jogador</button>
+          </div>
+        </form>
+        <div id="player-status" class="status" aria-live="polite">Entre na conta para salvar seu cadastro.</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="eyebrow">03 · Character dossier</div>
+      <h2>Criação de personagem</h2>
+
+      <form id="character-form" class="form-grid">
+        <div class="field full">
+          <label for="character-name">Nome completo do personagem</label>
+          <input id="character-name" required placeholder="Nome e sobrenome">
+        </div>
+        <div class="field">
+          <label for="character-age">Idade do personagem</label>
+          <input id="character-age" type="number" min="18" required placeholder="Idade">
+        </div>
+        <div class="field">
+          <label for="character-faceclaim">Shape / avatar</label>
+          <input id="character-faceclaim" required placeholder="Nome do faceclaim">
+        </div>
+        <div class="field full">
+          <label for="character-photo">Foto do personagem para a carteirinha</label>
+          <input id="character-photo" type="file" accept="image/png,image/jpeg,image/webp">
+          <img id="photo-preview" class="photo-preview hidden" alt="Prévia da foto">
+          <small>A foto será enviada ao Storage quando o Supabase estiver configurado.</small>
+        </div>
+        <div class="field">
+          <label for="character-course">Curso</label>
+          <input id="character-course" required placeholder="Curso universitário">
+        </div>
+        <div class="field">
+          <label for="character-society">Fraternidade</label>
+          <select id="character-society" required>
+            <option value="">Selecione</option>
+            <option>Kappa Kappa Gamma</option>
+            <option>Alpha Kappa Psi</option>
+            <option>Phi Sigma Pi</option>
+            <option>Sigma Chi</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="character-sport">Extracurricular esportiva</label>
+          <input id="character-sport" placeholder="Até uma atividade">
+        </div>
+        <div class="field">
+          <label for="character-academic">Extracurricular acadêmica</label>
+          <input id="character-academic" placeholder="Jornal, grêmio etc.">
+        </div>
+        <div class="field">
+          <label for="character-payment">Situação</label>
+          <select id="character-payment" required>
+            <option value="">Selecione</option>
+            <option value="Bolsista">Bolsista</option>
+            <option value="Pagante">Pagante</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="character-risk">Aceita risco narrativo?</label>
+          <select id="character-risk" required>
+            <option value="">Selecione</option>
+            <option value="true">Sim, estou ciente</option>
+            <option value="false">Não</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="character-personality">Personalidade (mínimo 5 linhas)</label>
+          <textarea id="character-personality" required placeholder="Descreva a personalidade..."></textarea>
+        </div>
+        <div class="field full">
+          <label for="character-history">História (mínimo 10 linhas)</label>
+          <textarea id="character-history" required placeholder="Conte a história do personagem..."></textarea>
+        </div>
+        <div class="field full">
+          <button class="btn primary" type="submit">Enviar ficha para análise</button>
+        </div>
+      </form>
+      <div id="character-status" class="status" aria-live="polite">Entre na conta para enviar a ficha.</div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:24px">
+    <div class="eyebrow">04 · Restricted file</div>
+    <h2>Formulário confidencial de segredos</h2>
+    <p class="muted">
+      Esta área é separada da ficha pública. O acesso aos segredos deve ser
+      limitado por políticas de segurança no banco de dados.
+    </p>
+
+    <form id="secret-form" class="form-grid">
+      <div class="field full">
+        <label for="secret-character">Nome do personagem</label>
+        <input id="secret-character" required placeholder="Nome exato da ficha">
+      </div>
+      <div class="field full">
+        <label for="character-secret">Segredo do personagem</label>
+        <textarea id="character-secret" required placeholder="Conte o segredo confidencial..."></textarea>
+      </div>
+      <div class="field full">
+        <label for="character-trauma">Trauma e fobia</label>
+        <textarea id="character-trauma" required placeholder="Descreva trauma e fobia..."></textarea>
+      </div>
+      <div class="field full">
+        <button class="btn gold" type="submit">Enviar para área confidencial</button>
+      </div>
+    </form>
+    <div id="secret-status" class="status" aria-live="polite">Entre na conta para enviar informações confidenciais.</div>
+  </div>
+
+  <div class="panel" style="margin-top:24px">
+    <div class="eyebrow">05 · Student ID</div>
+    <h2>Carteirinha universitária</h2>
+    <p class="muted">
+      Após a ficha ser aprovada e a foto enviada, a carteirinha poderá ser
+      exibida aqui. A emissão automática depende da integração com a aprovação.
+    </p>
+    <div class="dashboard-box">
+      <div class="crest">UP</div>
+      <div>
+        <div class="big">PENN</div>
+        <strong>STUDENT ID · ADM UPEEN 2026</strong>
+        <div class="muted">Aguardando cadastro e aprovação da ficha.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <span>UNIVERSITY OF PENNSYLVANIA · ADM UPEEN 2026</span>
+  <span>Ficção interativa · Portal do RPG</span>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/*
+  CONFIGURAÇÃO DO SUPABASE:
+  Substitua os dois valores abaixo pelos dados do seu projeto.
+  Use somente Project URL e anon/public key.
+  NUNCA coloque a service_role key no navegador.
+*/
+const SUPABASE_URL = "COLE_AQUI_SUA_SUPABASE_PROJECT_URL";
+const SUPABASE_ANON_KEY = "COLE_AQUI_SUA_SUPABASE_ANON_PUBLIC_KEY";
+const STORAGE_BUCKET = "character-photos";
+
+let supabaseClient = null;
+let currentUser = null;
+let selectedPhoto = null;
+
+function scrollToId(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+}
+
+function configured() {
+  return SUPABASE_URL.startsWith("https://")
+    && SUPABASE_ANON_KEY.length > 20
+    && !SUPABASE_URL.includes("COLE_AQUI")
+    && !SUPABASE_ANON_KEY.includes("COLE_AQUI");
+}
+
+function status(id, msg, type = "") {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.className = "status " + type;
+}
+
+function ready() {
+  if (!window.supabase) {
+    status("auth-status", "Não foi possível carregar o Supabase. Verifique a conexão.");
+    return;
+  }
+
+  if (!configured()) {
+    status("auth-status", "Falta configurar SUPABASE_URL e SUPABASE_ANON_KEY no início do script.");
+    return;
+  }
+
+  supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+  supabaseClient.auth.getSession().then(({ data }) => {
+    currentUser = data.session?.user || null;
+    refreshAuth();
+  });
+
+  supabaseClient.auth.onAuthStateChange((_event, session) => {
+    currentUser = session?.user || null;
+    refreshAuth();
+  });
+}
+
+function refreshAuth() {
+  if (currentUser) {
+    status("auth-status", "Conectado como " + currentUser.email, "ok");
+    status("player-status", "Conta conectada. Preencha e salve o cadastro.");
+    status("character-status", "Conta conectada. Preencha a ficha para enviar.");
+    status("secret-status", "Conta conectada. Preencha o formulário confidencial.");
+  } else {
+    status("auth-status", configured()
+      ? "Entre ou crie uma conta para continuar."
+      : "Configure o Supabase para ativar o login.");
+    status("player-status", "Entre na conta para salvar seu cadastro.");
+    status("character-status", "Entre na conta para enviar a ficha.");
+    status("secret-status", "Entre na conta para enviar informações confidenciais.");
+  }
+}
+
+async function signUp() {
+  if (!supabaseClient) {
+    return status("auth-status", "Configure o Supabase antes de criar conta.", "error");
+  }
+
+  const email = document.getElementById("auth-email").value.trim();
+  const password = document.getElementById("auth-password").value;
+
+  if (!email || password.length < 6) {
+    return status("auth-status", "Informe um e-mail válido e uma senha com pelo menos 6 caracteres.", "error");
+  }
+
+  const { error } = await supabaseClient.auth.signUp({ email, password });
+
+  if (error) {
+    status("auth-status", error.message, "error");
+  } else {
+    status("auth-status", "Cadastro iniciado. Confira seu e-mail se a confirmação estiver ativada.", "ok");
+  }
+}
+
+async function signIn() {
+  if (!supabaseClient) {
+    return status("auth-status", "Configure o Supabase antes de entrar.", "error");
+  }
+
+  const email = document.getElementById("auth-email").value.trim();
+  const password = document.getElementById("auth-password").value;
+
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    return status("auth-status", error.message, "error");
+  }
+
+  currentUser = data.user;
+  refreshAuth();
+}
+
+async function signOut() {
+  if (!supabaseClient) return;
+
+  const { error } = await supabaseClient.auth.signOut();
+
+  if (error) {
+    status("auth-status", error.message, "error");
+  } else {
+    currentUser = null;
+    refreshAuth();
+  }
+}
+
+function lines(text) {
+  return text.trim().split(/\n/).map(x => x.trim()).filter(Boolean).length;
+}
+
+/* Pré-visualização da foto escolhida pelo jogador. */
+document.getElementById("character-photo").addEventListener("change", e => {
+  selectedPhoto = e.target.files?.[0] || null;
+
+  const img = document.getElementById("photo-preview");
+
+  if (selectedPhoto) {
+    img.src = URL.createObjectURL(selectedPhoto);
+    img.classList.remove("hidden");
+  } else {
+    img.classList.add("hidden");
+  }
+});
+
+/*
+  O bucket precisa estar configurado corretamente no Supabase.
+  Este exemplo pressupõe bucket público para obter uma URL pública.
+  Se usar bucket privado, será necessário criar URLs assinadas.
+*/
+async function uploadPhoto() {
+  if (!selectedPhoto) return null;
+
+  if (!supabaseClient || !currentUser) {
+    throw new Error("Entre na conta antes de enviar a foto.");
+  }
+
+  const allowed = ["image/jpeg", "image/png", "image/webp"];
+
+  if (!allowed.includes(selectedPhoto.type)) {
+    throw new Error("Escolha uma foto JPG, PNG ou WEBP.");
+  }
+
+  if (selectedPhoto.size > 5 * 1024 * 1024) {
+    throw new Error("A foto deve ter no máximo 5 MB.");
+  }
+
+  const ext = selectedPhoto.name.split(".").pop().toLowerCase()
+    .replace(/[^a-z0-9]/g, "");
+
+  const path = currentUser.id + "/" + crypto.randomUUID() + "." + ext;
+
+  const { error } = await supabaseClient.storage
+    .from(STORAGE_BUCKET)
+    .upload(path, selectedPhoto, {
+      upsert: false,
+      contentType: selectedPhoto.type
+    });
+
+  if (error) throw error;
+
+  const { data } = supabaseClient.storage
+    .from(STORAGE_BUCKET)
+    .getPublicUrl(path);
+
+  return data.publicUrl;
+}
+
+/* Cadastro do jogador. */
+document.getElementById("player-form").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  if (!supabaseClient || !currentUser) {
+    return status("player-status", "Entre na conta primeiro.", "error");
+  }
+
+  const scene = document.getElementById("player-scene").value;
+
+  if (lines(scene) < 15) {
+    return status("player-status", "A cena precisa ter pelo menos 15 linhas separadas por quebras de linha.", "error");
+  }
+
+  const payload = {
+    id: currentUser.id,
+    username: document.getElementById("player-username").value.trim(),
+    player_age: Number(document.getElementById("player-age").value),
+    availability: document.getElementById("player-availability").value.trim(),
+    sample_scene: scene
+  };
+
+  const { error } = await supabaseClient
+    .from("profiles")
+    .upsert(payload, { onConflict: "id" });
+
+  if (error) {
+    status("player-status", "Não foi possível salvar: " + error.message, "error");
+  } else {
+    status("player-status", "Cadastro do jogador salvo.", "ok");
+  }
+});
+
+/* Ficha do personagem. */
+document.getElementById("character-form").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  if (!supabaseClient || !currentUser) {
+    return status("character-status", "Entre na conta primeiro.", "error");
+  }
+
+  const personality = document.getElementById("character-personality").value;
+  const history = document.getElementById("character-history").value;
+
+  if (lines(personality) < 5) {
+    return status("character-status", "A personalidade precisa ter pelo menos 5 linhas.", "error");
+  }
+
+  if (lines(history) < 10) {
+    return status("character-status", "A história precisa ter pelo menos 10 linhas.", "error");
+  }
+
+  try {
+    const photoUrl = await uploadPhoto();
+
+    const payload = {
+      user_id: currentUser.id,
+      character_name: document.getElementById("character-name").value.trim(),
+      faceclaim: document.getElementById("character-faceclaim").value.trim(),
+      photo_url: photoUrl,
+      biography: history,
+      course: document.getElementById("character-course").value.trim(),
+      status: "pending",
+      character_age: Number(document.getElementById("character-age").value),
+      society: document.getElementById("character-society").value,
+      sport_extracurricular: document.getElementById("character-sport").value.trim(),
+      academic_extracurricular: document.getElementById("character-academic").value.trim(),
+      payment_status: document.getElementById("character-payment").value,
+      personality,
+      history,
+      risk_acknowledged: document.getElementById("character-risk").value === "true"
+    };
+
+    const { error } = await supabaseClient
+      .from("characters")
+      .insert(payload);
+
+    if (error) throw error;
+
+    status("character-status", "Ficha enviada para análise da administração.", "ok");
+    e.target.reset();
+    selectedPhoto = null;
+    document.getElementById("photo-preview").classList.add("hidden");
+
+  } catch (err) {
+    status("character-status", "Não foi possível enviar a ficha: " + err.message, "error");
+  }
+});
+
+/* Formulário confidencial: tabela separada da ficha. */
+document.getElementById("secret-form").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  if (!supabaseClient || !currentUser) {
+    return status("secret-status", "Entre na conta primeiro.", "error");
+  }
+
+  const payload = {
+    user_id: currentUser.id,
+    character_name: document.getElementById("secret-character").value.trim(),
+    secret_text: document.getElementById("character-secret").value.trim(),
+    trauma_phobia: document.getElementById("character-trauma").value.trim()
+  };
+
+  const { error } = await supabaseClient
+    .from("character_secrets")
+    .insert(payload);
+
+  if (error) {
+    status("secret-status", "Não foi possível enviar: " + error.message, "error");
+  } else {
+    status("secret-status", "Formulário confidencial enviado.", "ok");
+    e.target.reset();
+  }
+});
+
+ready();
+</script>
+
+</body>
+</html>
+
