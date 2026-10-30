@@ -133,114 +133,44 @@ header,main,footer,.topline{position:relative;z-index:1}
 .journal-hero{padding:28px;border:1px solid #d9b97655;border-radius:9px;background:radial-gradient(ellipse at 80% 0%,#8f704322,transparent 55%),linear-gradient(135deg,#171d2b,#0c111d);margin-bottom:24px}
 .journal-card{padding:22px;border:1px solid #d9b97640;border-left:3px solid #b99a62;border-radius:7px;background:linear-gradient(145deg,#172236f5,#0e1522f7);margin-bottom:14px}
 .journal-card h3{margin-top:5px}.journal-meta{font-size:10px;letter-spacing:1px;color:#b9a77f;text-transform:uppercase}.journal-admin-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-/* BURN BOOK — livro independente de Vendetta */
-.burnbook-intro{max-width:760px;margin:0 auto 28px;text-align:center}
-.burnbook-intro .eyebrow{color:#c6a66d;letter-spacing:4px}
-.burnbook-cover{position:relative;max-width:980px;margin:26px auto 34px;padding:30px 24px;border:1px solid #b99a62;border-radius:8px;background:radial-gradient(ellipse at 50% 15%,#513a2b 0,#241b1b 48%,#100e12 100%);box-shadow:0 22px 48px #0009,inset 0 0 0 7px #d1b47b12,inset 0 0 0 9px #b99a6250;text-align:center;overflow:hidden}
-.burnbook-cover:before,.burnbook-cover:after{content:'✦';position:absolute;color:#d8bd86;font-size:24px;opacity:.75}.burnbook-cover:before{top:18px;left:22px}.burnbook-cover:after{right:22px;bottom:18px}
-.burnbook-cover-mark{width:66px;height:66px;margin:0 auto 12px;border:1px solid #d5b77d;border-radius:50%;display:grid;place-items:center;color:#e4c98f;font:30px Cinzel,serif;box-shadow:0 0 0 5px #d5b77d17}
-.burnbook-cover h2{font:500 clamp(32px,6vw,54px)/1.1 Cinzel,serif;letter-spacing:5px;color:#ead8b3;text-shadow:0 3px 8px #000;margin:10px 0}
-.burnbook-cover p{font:10px 'DM Sans',sans-serif;letter-spacing:4px;text-transform:uppercase;color:#c3ad89}
-.burnbook-book{position:relative;max-width:1100px;margin:0 auto;padding:18px;border-radius:10px;background:linear-gradient(90deg,#201714,#4b3527 3%,#241a18 5%,#17131a 50%,#3d2a20 52%,#171219 55%,#100e14);box-shadow:0 25px 55px #0009;border:1px solid #94784e}
-.burnbook-book:before{content:'';position:absolute;top:16px;bottom:16px;left:50%;width:18px;transform:translateX(-50%);background:linear-gradient(90deg,#08070a99,#d6b77b25,#08070a99);z-index:2;pointer-events:none}
-.burnbook-pages{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;position:relative}
-.burnbook-page{position:relative;min-height:360px;padding:24px 22px 48px;color:#33271e;background:repeating-linear-gradient(0deg,#00000006 0,#00000006 1px,transparent 1px,transparent 28px),linear-gradient(135deg,#f1e5c9,#dfcfad 70%,#d3c09c);border:1px solid #bba77f;box-shadow:inset 0 0 24px #7b5b3422,0 7px 16px #0005;overflow:hidden;animation:burnPageIn .7s ease both}
-.burnbook-page:nth-child(even){animation-delay:.12s}
-.burnbook-page:after{content:'';position:absolute;inset:8px;border:1px solid #8d714b45;pointer-events:none}
-@keyframes burnPageIn{from{opacity:0;transform:rotateY(-12deg) translateY(10px)}to{opacity:1;transform:rotateY(0) translateY(0)}}
-.burnbook-page-top{display:flex;justify-content:space-between;gap:8px;align-items:center;color:#765a3a;font:9px 'DM Sans',sans-serif;letter-spacing:2px;text-transform:uppercase;border-bottom:1px solid #9d805744;padding-bottom:10px;margin-bottom:14px}
-.burnbook-page h3{font:500 22px/1.25 Cinzel,serif;color:#38271d;margin:0 0 12px}
-.burnbook-character{font:italic 12px Georgia,serif;color:#755a3f;margin-bottom:12px}
-.burnbook-photo{width:100%;height:180px;object-fit:cover;display:block;margin:0 0 15px;border:5px solid #f4ead4;box-shadow:0 4px 12px #4d382b44;filter:sepia(.12)}
-.burnbook-section{margin:13px 0;position:relative;z-index:1}.burnbook-section strong{display:block;font:700 9px 'DM Sans',sans-serif;letter-spacing:2px;text-transform:uppercase;color:#856542;margin-bottom:4px}.burnbook-section p{white-space:pre-wrap;color:#3c3027;font:13px/1.75 Georgia,serif;margin:0;overflow-wrap:anywhere}
-.burnbook-page-number{position:absolute;bottom:15px;left:0;right:0;text-align:center;color:#947b58;font:11px Georgia,serif;z-index:1}
+/* BURN BOOK — scrapbook artesanal, uma página por personagem */
+.burnbook-intro{max-width:760px;margin:0 auto 24px;text-align:center}
+.burnbook-intro .eyebrow{color:#d9b976;letter-spacing:4px}
+.burnbook-cover{display:none}
+.burnbook-book{position:relative;max-width:920px;margin:18px auto 34px;padding:14px;border:1px solid #9c7650;border-radius:13px;background:linear-gradient(90deg,#211714,#503a2c 3%,#201714 5%,#171219 50%,#503a2c 53%,#1b1515 56%,#100e14);box-shadow:0 24px 55px #000a}
+.burnbook-book:before{content:'';position:absolute;top:14px;bottom:14px;left:50%;width:15px;transform:translateX(-50%);background:linear-gradient(90deg,#0008,#d9b97622,#0008);z-index:2;pointer-events:none}
+.burnbook-pages{display:grid;grid-template-columns:1fr;gap:22px;position:relative}
+.burnbook-page{--paper:#e9dcc0;position:relative;isolation:isolate;width:100%;aspect-ratio:2/3;min-height:0;overflow:hidden;padding:3.2% 3.4%;color:#211b1b;background-color:var(--paper);background-image:radial-gradient(#8e755022 .7px,transparent .9px),repeating-linear-gradient(0deg,#8a6b4310 0,#8a6b4310 1px,transparent 1px,transparent 27px),linear-gradient(135deg,#f4e8ce,#e4d2ad);background-size:8px 8px,100% 100%,100% 100%;border:1px solid #b89c70;box-shadow:inset 0 0 30px #6f4c2a22,0 7px 18px #0005;display:grid;grid-template-columns:1.04fr 1.15fr .92fr;grid-template-rows:8% 7% 34% 19% 20% 7%;gap:1.25%;animation:burnPageIn .45s ease both}
+.burnbook-page:before{content:'';position:absolute;inset:1.5%;border:1px solid #8d714b40;pointer-events:none;z-index:-1}
+.burnbook-page:after{content:'✦  ★   ♡       ✦';position:absolute;right:2%;top:13%;font:clamp(12px,2vw,25px) Georgia,serif;color:#171313;transform:rotate(13deg);pointer-events:none;opacity:.8}
+@keyframes burnPageIn{from{opacity:0;transform:translateY(8px) rotate(-.5deg)}to{opacity:1;transform:none}}
+.burnbook-page-top{grid-column:1/-1;grid-row:1;display:flex;justify-content:space-between;align-items:center;gap:8px;color:#7d6548;font:clamp(7px,.9vw,10px) 'DM Sans',sans-serif;letter-spacing:2px;text-transform:uppercase;border-bottom:1px solid #9d805766;padding:0 1% 1%}
+.burnbook-page-heading{grid-column:1/-1;grid-row:2;align-self:center;text-align:center;position:relative;z-index:1}
+.burnbook-page-heading h3{font:900 clamp(19px,4.6vw,54px)/.9 'DM Sans',sans-serif;letter-spacing:1px;text-transform:uppercase;color:#bd326b;text-shadow:2px 2px 0 #21151b,-1px -1px 0 #21151b,3px 4px 0 #f3a0bc;margin:0;transform:rotate(-1deg);overflow-wrap:anywhere}
+.burnbook-page-heading .burnbook-headline{font:800 clamp(8px,1.35vw,15px)/1.2 'DM Sans',sans-serif;letter-spacing:1.5px;text-transform:uppercase;color:#211b1b;margin-top:1.2%;}
+.burnbook-scrap{position:relative;z-index:1;overflow:hidden;padding:5% 6%;font:clamp(8px,1.2vw,13px)/1.35 'Comic Sans MS','Trebuchet MS',cursive;color:#211b1b;overflow-wrap:anywhere}
+.burnbook-scrap strong{display:block;font:900 clamp(8px,1.1vw,12px)/1.2 'DM Sans',sans-serif;letter-spacing:1.2px;text-transform:uppercase;color:#a32c5c;margin-bottom:3%}
+.burnbook-scrap p{margin:0;white-space:pre-wrap;color:#29201b;font:inherit;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:7;overflow:hidden}
+.burnbook-scrap-left{grid-column:1;grid-row:3/5;background:#f0e6d2;border:1px solid #c4b394;box-shadow:2px 4px 7px #49311f30;transform:rotate(-1.4deg)}
+.burnbook-scrap-right{grid-column:3;grid-row:3/5;background:#f3a1c3;border:1px solid #cf7899;box-shadow:2px 4px 7px #49311f30;transform:rotate(2deg);padding:7% 6%}
+.burnbook-scrap-right:before{content:'SE NÃO TEM FOFOCA, ELA INVENTA.';display:block;font:italic 900 clamp(9px,1.25vw,14px)/1.15 Georgia,serif;text-align:center;margin:0 0 9%;color:#29151e}
+.burnbook-photo-wrap{grid-column:2;grid-row:3/5;position:relative;align-self:stretch;padding:4% 4% 12%;background:#f8f0df;border:1px solid #c6b89c;box-shadow:2px 5px 10px #49311f44;transform:rotate(.8deg);overflow:hidden}
+.burnbook-photo-wrap:before,.burnbook-photo-wrap:after{content:'';position:absolute;width:30%;height:8%;top:-1%;background:#d4c7a7b8;opacity:.8;z-index:2;transform:rotate(-4deg)}.burnbook-photo-wrap:before{left:5%}.burnbook-photo-wrap:after{right:5%;transform:rotate(5deg)}
+.burnbook-photo{width:100%;height:100%;object-fit:contain;object-position:center;display:block;margin:0;background:#d9cbb0;border:0;box-shadow:none;filter:none}
+.burnbook-photo-caption{position:absolute;bottom:2%;left:3%;right:3%;background:#211b1b;color:#f7e9d3;text-align:center;padding:2% 3%;font:italic clamp(8px,1vw,11px) Georgia,serif;transform:rotate(-1deg)}
+.burnbook-sticker{position:absolute;z-index:3;pointer-events:none;font:900 clamp(10px,1.6vw,19px) 'Comic Sans MS',cursive;color:#ad285f;text-shadow:1px 1px #f5b3ce;transform:rotate(-9deg)}
+.burnbook-sticker.star{left:1%;top:11%}.burnbook-sticker.lips{right:1%;top:37%;font-size:clamp(15px,2vw,24px)}
+.burnbook-lower-left{grid-column:1/3;grid-row:5;background:#ead8b8;border:1px solid #c5ae86;box-shadow:2px 4px 8px #49311f30;transform:rotate(-.6deg)}
+.burnbook-lower-right{grid-column:3;grid-row:5;background:#211b1d;color:#f4e5cb;border:2px solid #39282a;box-shadow:2px 4px 8px #49311f30;transform:rotate(.7deg)}
+.burnbook-lower-right strong{color:#f29abd}.burnbook-lower-right p{color:#f4e5cb}
+.burnbook-warning{grid-column:1/-1;grid-row:6;align-self:center;background:#211b1d;color:#f19abb;text-align:center;padding:1.5% 3%;font:900 clamp(7px,1.05vw,12px) 'DM Sans',sans-serif;letter-spacing:1px;text-transform:uppercase;border-bottom:3px solid #a92d60}
+.burnbook-page-number{position:absolute;bottom:1.3%;left:0;right:0;text-align:center;color:#927a57;font:clamp(8px,1vw,11px) Georgia,serif;z-index:2;pointer-events:none}
+.burnbook-tap{position:absolute;bottom:.1%;left:0;right:0;text-align:center;color:#a32c5c;font:900 clamp(7px,.9vw,10px) 'DM Sans',sans-serif;letter-spacing:1.2px;text-transform:uppercase}
 .burnbook-empty{max-width:760px;margin:20px auto;padding:35px;text-align:center;color:#d9c9a8;border:1px dashed #b99a6266;background:#1b1719;border-radius:8px}
 .burnbook-modal{display:none;position:fixed;inset:0;z-index:90;background:#05060bdc;backdrop-filter:blur(7px);padding:20px;align-items:center;justify-content:center}.burnbook-modal.open{display:flex;animation:appear .2s ease}.burnbook-modal-inner{position:relative;width:min(900px,100%);max-height:92vh;overflow:auto;background:linear-gradient(135deg,#f1e5c9,#dfcfad);color:#33271e;border:9px solid #3b2920;box-shadow:0 25px 70px #000b;padding:30px}.burnbook-modal-inner h2{color:#38271d}.burnbook-modal-inner p{color:#3c3027}.burnbook-close{position:sticky;float:right;top:0;border:1px solid #8e7149;background:#2a1d19;color:#f0dfbc;border-radius:50%;width:36px;height:36px;font-size:22px;z-index:2}
 .burnbook-admin-list{display:grid;gap:10px}.burnbook-admin-row{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:14px;background:#0d1522;border:1px solid #d9b97630;border-radius:7px}.burnbook-admin-row h4{margin:0}.burnbook-admin-row p{margin:3px 0;font-size:11px}
-@media(max-width:650px){.burnbook-book{padding:10px}.burnbook-book:before{display:none}.burnbook-pages{grid-template-columns:1fr;gap:12px}.burnbook-page{min-height:300px;padding:20px 18px 44px}.burnbook-photo{height:220px}.burnbook-cover{padding:28px 16px}.burnbook-modal{padding:8px}.burnbook-modal-inner{padding:20px 15px;border-width:6px}}
+@media(max-width:650px){.burnbook-book{padding:7px;margin:12px auto 25px}.burnbook-book:before{display:none}.burnbook-pages{grid-template-columns:1fr;gap:14px}.burnbook-page{width:100%;aspect-ratio:2/3;min-height:0;padding:3.1% 3.2%;grid-template-columns:1.02fr 1.12fr .9fr;grid-template-rows:8% 7% 34% 19% 20% 7%;gap:1.1%}.burnbook-page-heading h3{font-size:clamp(17px,5vw,32px)}.burnbook-page-heading .burnbook-headline{font-size:clamp(7px,1.7vw,10px)}.burnbook-scrap{font-size:clamp(7px,1.65vw,10px);line-height:1.3;padding:5%}.burnbook-scrap strong{font-size:clamp(7px,1.5vw,9px);letter-spacing:.7px}.burnbook-scrap p{-webkit-line-clamp:6}.burnbook-scrap-right:before{font-size:clamp(7px,1.55vw,10px)}.burnbook-photo-caption{font-size:clamp(7px,1.4vw,9px)}.burnbook-warning{font-size:clamp(6px,1.35vw,8px);letter-spacing:.5px}.burnbook-page-number{bottom:1.4%;font-size:8px}.burnbook-tap{font-size:6px;letter-spacing:.7px}.burnbook-modal{padding:8px}.burnbook-modal-inner{padding:20px 15px;border-width:6px}}
 @media(prefers-reduced-motion:reduce){.burnbook-page{animation:none}}
-
-
-/* BurnBook scrapbook redesign: single full page, original photo proportions */
-.burnbook-book{max-width:900px;padding:16px;background:linear-gradient(90deg,#211714,#50372a 2%,#211714 4%,#17131a 50%,#50372a 52%,#17131a 55%,#100e14);}
-.burnbook-book:before{display:none}
-.burnbook-pages{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;}
-.burnbook-page{min-height:0;padding:clamp(20px,4vw,42px);overflow:visible;background-color:#eadfc8;background-image:radial-gradient(#8b6e4b12 .8px,transparent .8px),repeating-linear-gradient(0deg,#00000005 0,#00000005 1px,transparent 1px,transparent 31px),linear-gradient(135deg,#f5ebd5,#e6d7b9 72%,#d9c7a5);background-size:7px 7px,auto,auto;border:1px solid #bba77f;box-shadow:inset 0 0 28px #7b5b3422,0 8px 18px #0005;}
-.burnbook-page:after{inset:12px;border:1px solid #8d714b45;}
-.burnbook-page-top{font-size:10px;letter-spacing:2.5px;padding-bottom:12px;margin-bottom:18px;}
-.burnbook-scrap-title{position:relative;z-index:1;margin:0 0 5px!important;text-align:center;font:900 clamp(34px,8vw,68px)/.98 'DM Sans',sans-serif!important;letter-spacing:3px!important;color:#a51e55!important;text-transform:uppercase;text-shadow:2px 2px 0 #e9a0b9,-2px 0 #33271e;overflow-wrap:anywhere;}
-.burnbook-scrap-subtitle{text-align:center;text-transform:uppercase;letter-spacing:2px;font:700 clamp(12px,2.5vw,17px)/1.4 'DM Sans',sans-serif;color:#292321;margin:8px 0 22px;}
-.burnbook-character{font:italic 14px Georgia,serif;color:#755a3f;margin:0 0 14px;text-align:center;}
-.burnbook-photo-wrap{position:relative;z-index:1;width:min(100%,650px);margin:20px auto 22px;padding:12px 12px 18px;background:#f7efdF;border:1px solid #d5c6a9;box-shadow:0 6px 16px #4d382b44;transform:rotate(-.5deg);}
-.burnbook-photo-wrap:before,.burnbook-photo-wrap:after{content:'';position:absolute;top:-9px;width:90px;height:23px;background:#d8c7a5b8;border-left:1px solid #c4b18c;border-right:1px solid #c4b18c;transform:rotate(-5deg);}
-.burnbook-photo-wrap:before{left:18px}.burnbook-photo-wrap:after{right:18px;transform:rotate(5deg)}
-.burnbook-photo{width:100%;height:auto!important;max-height: min(72vh,760px);object-fit:contain!important;object-position:center;display:block;margin:0 auto;border:0;box-shadow:none;filter:none;background:#d8cbb4;}
-.burnbook-scrap-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;position:relative;z-index:1;margin-top:18px;}
-.burnbook-section{margin:0;padding:14px 15px;background:#f3e8d2d9;border:1px solid #cbb995;box-shadow:2px 3px 7px #4d382b20;}
-.burnbook-section strong{font-size:10px;color:#a51e55;letter-spacing:2px;margin-bottom:8px;}
-.burnbook-section p{font:14px/1.7 Georgia,serif;color:#342a24;}
-.burnbook-section-wide{grid-column:1/-1;background:#211c20;color:#f1dfc5;border-color:#211c20;transform:rotate(-.3deg);}
-.burnbook-section-wide strong,.burnbook-section-wide p{color:#f1dfc5;}
-.burnbook-page-number{position:relative;bottom:auto;margin-top:22px;padding-top:12px;border-top:1px solid #9d805744;color:#947b58;}
-.burnbook-page[role=button]{cursor:pointer;}
-.burnbook-page[role=button]:hover{transform:translateY(-2px);}
-.burnbook-modal-inner{width:min(900px,100%);padding:clamp(18px,4vw,36px);}
-.burnbook-modal-inner .burnbook-photo-wrap{width:min(100%,720px)}
-@media(max-width:650px){.burnbook-book{padding:8px}.burnbook-pages{grid-template-columns:1fr;gap:14px}.burnbook-page{padding:20px 15px 28px}.burnbook-scrap-grid{grid-template-columns:1fr}.burnbook-section-wide{grid-column:auto}.burnbook-photo{max-height:none!important;width:100%;height:auto!important;object-fit:contain!important}.burnbook-photo-wrap{padding:8px 8px 13px;margin:16px auto}.burnbook-page-top{font-size:8px;letter-spacing:1.6px}.burnbook-modal{padding:8px}}
-
-
-/* BurnBook: composição de página única em grade, sem rolagem interna */
-.burnbook-intro{margin:0 auto 8px;padding:0 10px}.burnbook-intro h2{margin:2px 0;font-size:clamp(25px,5vw,38px)}.burnbook-intro .lead{display:none}
-.burnbook-cover{display:none}
-.burnbook-public-message{margin:5px auto!important}
-.burnbook-book{max-width:860px;margin:8px auto 16px;padding:9px;border-radius:7px}
-.burnbook-pages{display:block}
-.burnbook-page.burnbook-collage{height:clamp(510px,calc(100svh - 235px),700px);min-height:0;max-height:700px;padding:clamp(12px,2.5vw,24px);overflow:hidden;display:flex;flex-direction:column;gap:5px;cursor:pointer}
-.burnbook-collage .burnbook-page-top{flex:0 0 auto;margin:0 0 4px;padding-bottom:7px;font-size:9px}
-.burnbook-collage .burnbook-scrap-title{flex:0 0 auto;font-size:clamp(27px,6vw,50px)!important;line-height:.95!important;margin:2px 0!important}
-.burnbook-collage .burnbook-scrap-subtitle{flex:0 0 auto;margin:2px 0 8px;font-size:clamp(10px,2vw,14px)}
-.burnbook-collage-grid{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:1.05fr .9fr .9fr;gap:9px;align-content:stretch}
-.burnbook-collage .burnbook-photo-wrap{grid-column:1;grid-row:1/3;width:100%;height:100%;min-height:0;margin:0;padding:7px 7px 12px;display:flex;align-items:center;justify-content:center;transform:rotate(-.5deg);overflow:hidden}
-.burnbook-collage .burnbook-photo{width:100%;height:100%!important;max-height:100%!important;object-fit:contain!important;background:#d9cbb2}
-.burnbook-collage .burnbook-no-photo{font:700 12px 'DM Sans',sans-serif;letter-spacing:2px;color:#8d7149}
-.burnbook-collage .burnbook-section{min-width:0;min-height:0;padding:9px 10px;margin:0;overflow:hidden;display:flex;flex-direction:column;box-shadow:2px 3px 6px #4d382b22}
-.burnbook-collage .burnbook-section strong{font-size:9px;letter-spacing:1.4px;margin-bottom:5px;flex:0 0 auto}
-.burnbook-collage .burnbook-section p{font:clamp(10px,1.9vw,13px)/1.42 Georgia,serif;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden;white-space:pre-wrap;overflow-wrap:anywhere}
-.burnbook-collage .burnbook-exposure{grid-column:2;grid-row:1;background:#f4e8d1}
-.burnbook-collage .burnbook-accusations{grid-column:2;grid-row:2;background:#f7edda}
-.burnbook-collage .burnbook-comments{grid-column:1;grid-row:3;background:#e8d7b9}
-.burnbook-collage .burnbook-taryn{grid-column:2;grid-row:3;background:#211c20;color:#f1dfc5;transform:rotate(.25deg)}
-.burnbook-collage .burnbook-taryn strong,.burnbook-collage .burnbook-taryn p{color:#f1dfc5}
-.burnbook-collage .burnbook-page-number{flex:0 0 auto;margin-top:5px;padding-top:6px;font-size:10px}
-.burnbook-open-hint{margin-left:8px;color:#a51e55;font:700 8px 'DM Sans',sans-serif;letter-spacing:1px;text-transform:uppercase}
-@media(max-width:650px){
- .burnbook-intro{margin-bottom:4px}.burnbook-intro h2{font-size:25px}.burnbook-book{margin:5px auto 10px;padding:6px}.burnbook-page.burnbook-collage{height:clamp(500px,calc(100svh - 205px),690px);padding:12px 10px 9px;gap:4px}
- .burnbook-collage .burnbook-page-top{font-size:7px;letter-spacing:1.4px;margin-bottom:2px}
- .burnbook-collage .burnbook-scrap-title{font-size:clamp(27px,8vw,39px)!important;letter-spacing:1.5px!important}
- .burnbook-collage .burnbook-scrap-subtitle{font-size:9px;letter-spacing:1.2px;margin-bottom:5px}
- .burnbook-collage-grid{grid-template-columns:1fr 1fr;grid-template-rows:1.08fr .88fr .88fr;gap:6px}
- .burnbook-collage .burnbook-photo-wrap{padding:5px 5px 9px}
- .burnbook-collage .burnbook-section{padding:7px 7px}
- .burnbook-collage .burnbook-section strong{font-size:8px;letter-spacing:1px;margin-bottom:4px}
- .burnbook-collage .burnbook-section p{font-size:10px;line-height:1.35;-webkit-line-clamp:5}
- .burnbook-collage .burnbook-page-number{font-size:9px;margin-top:3px;padding-top:5px}
- .burnbook-open-hint{display:block;margin:3px 0 0;font-size:7px}
-}
-@media(max-height:700px) and (max-width:650px){.burnbook-page.burnbook-collage{height:calc(100svh - 185px)}.burnbook-collage .burnbook-section p{-webkit-line-clamp:4}}
-
-
-/* BurnBook — scrapbook editorial inspirado na página de referência */
-.bb-real-page{aspect-ratio: .72; height:auto!important; max-height:none!important; min-height:0!important; overflow:hidden!important; padding:clamp(14px,2.2vw,25px)!important; display:flex; flex-direction:column; gap:clamp(7px,1vw,12px); color:#251d1a; background-color:#e9dcc4!important; background-image:radial-gradient(#6f523018 .8px,transparent .8px),repeating-linear-gradient(0deg,#00000006 0,#00000006 1px,transparent 1px,transparent 26px),linear-gradient(135deg,#f2e6d0,#e2d1b3 75%,#d5c09b)!important; border:1px solid #b59a70!important; box-shadow:inset 0 0 25px #70533330,0 8px 18px #0006!important; cursor:pointer}
-.bb-top{display:flex;justify-content:space-between;border-bottom:1px solid #9b8055;padding:0 2px 8px;color:#806747;font:9px 'DM Sans',sans-serif;letter-spacing:2px}
-.bb-heading{text-align:center;flex:0 0 auto}.bb-heading h3{font:900 clamp(31px,6vw,66px)/.94 'DM Sans',sans-serif!important;letter-spacing:2px!important;color:#a51e55!important;text-transform:uppercase;margin:2px 0 8px!important;text-shadow:2px 2px 0 #e6a0b6,-2px 0 #2a2020;overflow-wrap:anywhere}.bb-heading div{font:700 clamp(10px,1.8vw,16px)/1.35 'DM Sans',sans-serif;letter-spacing:1.5px;text-transform:uppercase;color:#2b2421}
-.bb-main{flex:1 1 52%;min-height:0;display:grid;grid-template-columns:1fr 1.28fr .78fr;gap:clamp(7px,1vw,13px);align-items:stretch}
-.bb-paper{background:#f3e8d2;border:1px solid #c9b58f;box-shadow:2px 4px 8px #49352225;padding:clamp(8px,1.2vw,14px);min-width:0;overflow:hidden}.bb-paper b,.bb-dark b{display:block;color:#a51e55;font:800 10px 'DM Sans',sans-serif;letter-spacing:1.5px;margin-bottom:6px}.bb-paper p,.bb-dark p{font:clamp(10px,1.15vw,14px)/1.42 Georgia,serif;margin:0;white-space:pre-wrap;overflow-wrap:anywhere}.bb-paper hr{border:0;border-top:1px dashed #b69a70;margin:10px 0}
-.bb-center{min-width:0;display:flex;flex-direction:column;justify-content:center;align-items:stretch;position:relative}.bb-photo{height:100%;min-height:0;max-height:100%;padding:8px 8px 13px;background:#f8f0df;border:1px solid #d3c4a7;box-shadow:0 5px 12px #49352235;transform:rotate(-.7deg);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}.bb-photo:before{content:'';position:absolute;top:-1px;left:12%;width:30%;height:17px;background:#d7c6a4bb;transform:rotate(-4deg);z-index:2}.bb-photo img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;max-height:100%;background:#d7cbb6}.bb-no-photo{font:700 11px 'DM Sans',sans-serif;letter-spacing:2px;color:#8c714c}.bb-caption{background:#211c20;color:#f3e4ce;text-align:center;padding:7px 5px;font:italic 11px Georgia,serif;transform:rotate(-.7deg);margin-top:5px}
-.bb-right{display:flex;flex-direction:column;justify-content:space-around;min-width:0;padding:2px}.bb-sticky{background:#e9a3bd;color:#2a1c21;padding:12px 8px;transform:rotate(3deg);box-shadow:2px 4px 7px #49352235;font:italic 700 12px Georgia,serif;text-align:center}.bb-arrow{font:italic 11px/1.35 Georgia,serif;color:#a51e55;overflow-wrap:anywhere}.bb-doodle{text-align:center;font-size:25px;color:#171316;letter-spacing:5px}
-.bb-bottom{flex:0 0 23%;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}.bb-comments{transform:rotate(-.4deg)}.bb-dark{background:#211c20;color:#f2e3cc;padding:clamp(8px,1.2vw,14px);box-shadow:2px 4px 8px #49352235;transform:rotate(.3deg);overflow:hidden}.bb-dark b,.bb-dark p{color:#f2e3cc}.bb-warning{background:#211c20;color:#e85a91;text-align:center;padding:7px 10px;font:800 clamp(9px,1.3vw,13px) 'DM Sans',sans-serif;letter-spacing:1.1px;transform:rotate(-.4deg)}
-.bb-footer{flex:0 0 auto;text-align:center;border-top:1px solid #9b805555;padding-top:7px;color:#927957;font:11px Georgia,serif}.bb-footer span{display:block;color:#a51e55;font:800 8px 'DM Sans',sans-serif;letter-spacing:1.2px;margin-top:4px}
-@media(max-width:650px){.bb-real-page{aspect-ratio:.70;padding:11px!important;gap:6px}.bb-top{font-size:7px;letter-spacing:1.2px}.bb-heading h3{font-size:clamp(27px,8vw,42px)!important;letter-spacing:1px!important}.bb-heading div{font-size:9px;letter-spacing:1px}.bb-main{grid-template-columns:.9fr 1.15fr .7fr;gap:5px}.bb-paper{padding:6px}.bb-paper b,.bb-dark b{font-size:7px;letter-spacing:.7px;margin-bottom:4px}.bb-paper p,.bb-dark p{font-size:9px;line-height:1.28}.bb-paper hr{margin:6px 0}.bb-photo{padding:5px 5px 9px}.bb-caption{font-size:8px;padding:5px 3px}.bb-sticky{font-size:9px;padding:8px 5px}.bb-arrow{font-size:8px;line-height:1.2}.bb-doodle{font-size:17px}.bb-bottom{flex-basis:22%;gap:6px}.bb-dark{padding:7px}.bb-warning{font-size:8px;padding:6px 5px;letter-spacing:.5px}.bb-footer{font-size:9px}.bb-footer span{font-size:7px}}
-@media(max-width:380px){.bb-main{grid-template-columns:.85fr 1.1fr .65fr}.bb-paper p,.bb-dark p{font-size:8px}.bb-arrow{font-size:7px}.bb-sticky{font-size:8px}}
 
 </style>
 </head>
@@ -398,31 +328,24 @@ async function moderateGossip(id,status){if(!isAdmin||!currentUser)return;const 
 /* BURN BOOK: conteúdo e gerenciamento independente do Jornal de Ivy Hall. */
 function burnbookSection(label,value){return value?'<div class="burnbook-section"><strong>'+esc(label)+'</strong><p>'+esc(value)+'</p></div>':''}
 function burnbookPageHtml(page,index){
- const photo=page.image_url?'<div class="bb-photo"><img src="'+esc(page.image_url)+'" alt="Fotografia de '+esc(page.character_name)+'" loading="lazy"></div>':'<div class="bb-photo bb-no-photo">✦ FOTO ARQUIVADA ✦</div>';
- const gossip=page.gossip||'Nenhuma exposição registrada.';
- const accusations=page.accusations||'Nenhuma acusação registrada.';
- const comments=page.comments||'Os corredores ainda estão em silêncio.';
- const taryn=page.taryn_notes||'Ainda não há observações de Taryn.';
- const short=(v,n)=>{v=String(v||'');return v.length>n?v.slice(0,n).trimEnd()+'…':v};
- return '<article class="burnbook-page burnbook-collage bb-real-page" role="button" tabindex="0" aria-label="Abrir página '+(index+1)+'" onclick="openBurnbookPage('+Number(page.id)+')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();openBurnbookPage('+Number(page.id)+')}">'+
- '<div class="bb-top"><span>✦ BURNBOOK · IVY HALL</span><span>ARQUIVO '+String(index+1).padStart(2,'0')+'</span></div>'+
- '<div class="bb-heading"><h3>'+esc(page.character_name||'Sem nome')+'</h3><div>'+esc(page.title||'ARQUIVO NÃO OFICIAL')+'</div></div>'+
- '<div class="bb-main"><aside class="bb-paper bb-left"><b>✶ O QUE DIZEM</b><p>'+esc(short(gossip,190))+'</p><hr><b>✶ ACUSAÇÕES</b><p>'+esc(short(accusations,155))+'</p></aside>'+
- '<div class="bb-center">'+photo+'<div class="bb-caption">“ '+esc(short(page.title||page.character_name,70))+' ”</div></div>'+
- '<aside class="bb-right"><div class="bb-sticky">Se tem segredo, alguém já está falando.</div><p class="bb-arrow">↙ '+esc(short(accusations,95))+'</p><p class="bb-arrow">↙ '+esc(short(comments,95))+'</p><div class="bb-doodle">✦ ✧ ★</div></aside></div>'+
- '<div class="bb-bottom"><section class="bb-paper bb-comments"><b>✶ COMENTÁRIOS DOS CORREDORES</b><p>'+esc(short(comments,170))+'</p></section><section class="bb-dark"><b>TARYN ANOTOU</b><p>'+esc(short(taryn,190))+'</p></section></div>'+
- '<div class="bb-warning">CUIDADO: NEM TUDO QUE CIRCULA PELOS CORREDORES É MENTIRA.</div>'+
- '<div class="bb-footer">✦ PÁGINA '+String(index+1).padStart(2,'0')+' · IVY HALL ✦ <span>TOQUE PARA ABRIR O ARQUIVO COMPLETO</span></div></article>'
+ const clean=(v)=>String(v||'').trim();
+ const photo=page.image_url?'<img class="burnbook-photo" src="'+esc(page.image_url)+'" alt="Fotografia de '+esc(page.character_name)+'" loading="lazy">':'<div class="burnbook-photo" aria-label="Fotografia não cadastrada"></div>';
+ const excerpt=(v,max=330)=>{const t=clean(v);return t.length>max?t.slice(0,max).trim()+'…':t};
+ return '<article class="burnbook-page" role="button" tabindex="0" aria-label="Abrir página '+(index+1)+'" onclick="openBurnbookPage('+Number(page.id)+')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();openBurnbookPage('+Number(page.id)+')}">'+
+ '<div class="burnbook-page-top"><span>✦ BurnBook · Ivy Hall</span><span>Arquivo '+String(index+1).padStart(2,'0')+'</span></div>'+
+ '<div class="burnbook-page-heading"><h3>'+esc(page.character_name||'Nome não identificado')+'</h3><div class="burnbook-headline">'+esc(page.title)+'</div></div>'+
+ '<div class="burnbook-scrap burnbook-scrap-left"><strong>✶ O que dizem</strong><p>'+esc(excerpt(page.gossip,420)||'Os corredores ainda estão em silêncio. Por enquanto.')+'</p><br><strong>✶ Acusações clássicas</strong><p>'+esc(excerpt(page.accusations,230)||'Nenhuma acusação registrada — ainda.')+'</p></div>'+
+ '<div class="burnbook-photo-wrap">'+photo+'<div class="burnbook-photo-caption">vibe: sei de tudo e você não sabe de nada</div></div>'+
+ '<div class="burnbook-scrap burnbook-scrap-right"><strong>✶ Acusações</strong><p>'+esc(excerpt(page.accusations,360)||'Há sempre alguém disposto a contar o que viu.')+'</p><br><strong>✶ Comentários</strong><p>'+esc(excerpt(page.comments,250)||'Ninguém quis deixar um comentário. Suspeito.')+'</p></div>'+
+ '<div class="burnbook-scrap burnbook-lower-left"><strong>✶ Comentários dos corredores</strong><p>'+esc(excerpt(page.comments,560)||'“Todo mundo tem uma versão. A verdade é outra história.”')+'</p></div>'+
+ '<div class="burnbook-scrap burnbook-lower-right"><strong>Taryn anotou</strong><p>'+esc(excerpt(page.taryn_notes,480)||'Toda reputação tem uma rachadura. Basta saber onde olhar.')+'</p></div>'+
+ '<div class="burnbook-warning">Cuidado: qualquer coisa que você disser pode virar manchete.</div>'+
+ '<div class="burnbook-page-number">✦ Página '+String(index+1).padStart(2,'0')+' · Ivy Hall ✦</div><div class="burnbook-tap">Toque para abrir o arquivo completo</div>'+
+ '<span class="burnbook-sticker star">★</span><span class="burnbook-sticker lips">♥</span></article>'
 }
 let burnbookCache=[];
 async function loadBurnbook(){const box=$('burnbookPages'),note=$('burnbookPublicMessage');if(!box)return;if(!currentUser){box.innerHTML='<div class="burnbook-empty">Entre na sua conta para consultar este arquivo.</div>';note.textContent='O BurnBook é reservado aos jogadores conectados.';return}box.innerHTML='<div class="burnbook-empty">Abrindo o livro...</div>';const {data,error}=await db.from('burnbook_pages').select('id,character_name,title,gossip,accusations,comments,taryn_notes,image_url,created_at').eq('status','published').order('created_at',{ascending:false});if(error){box.innerHTML='<div class="burnbook-empty">Não foi possível abrir o BurnBook. Confira se executou o SQL de instalação no Supabase.</div>';note.textContent='Erro ao carregar o arquivo: '+error.message;return}burnbookCache=data||[];note.textContent=burnbookCache.length?'Arquivo atualizado · '+burnbookCache.length+' página(s) publicada(s).':'O livro ainda não recebeu nenhuma página.';box.innerHTML=burnbookCache.length?burnbookCache.map((p,i)=>burnbookPageHtml(p,i)).join(''):'<div class="burnbook-empty">As páginas ainda estão em branco. Talvez seja melhor assim. Por enquanto.</div>'}
-function openBurnbookPage(id){
- const p=burnbookCache.find(x=>Number(x.id)===Number(id));if(!p)return;
- const photo=p.image_url?'<div class="burnbook-photo-wrap"><img class="burnbook-photo" src="'+esc(p.image_url)+'" alt="Fotografia de '+esc(p.character_name)+'"></div>':'';
- const sections=[['Exposição',p.gossip,'wide'],['Acusações',p.accusations,''],['Comentários',p.comments,''],['Taryn anotou',p.taryn_notes,'wide']].filter(x=>x[1]).map(x=>'<div class="burnbook-section '+(x[2]==='wide'?'burnbook-section-wide':'')+'"><strong>'+esc(x[0])+'</strong><p>'+esc(x[1])+'</p></div>').join('');
- $('burnbookModalContent').innerHTML='<div class="burnbook-page-top"><span>BurnBook · Ivy Hall</span><span>Arquivo confidencial</span></div><h2 class="burnbook-scrap-title">'+esc(p.character_name||'Sem nome')+'</h2><div class="burnbook-scrap-subtitle">'+esc(p.title)+'</div>'+photo+'<div class="burnbook-character">Filed under: '+esc(p.character_name||'Nome não identificado')+'</div><div class="burnbook-scrap-grid">'+sections+'</div>';
- $('burnbookModal').classList.add('open');$('burnbookModal').setAttribute('aria-hidden','false');document.body.style.overflow='hidden'
-}
+function openBurnbookPage(id){const p=burnbookCache.find(x=>Number(x.id)===Number(id));if(!p)return;const photo=p.image_url?'<img class="burnbook-photo" src="'+esc(p.image_url)+'" alt="Fotografia de '+esc(p.character_name)+'">':'';$('burnbookModalContent').innerHTML='<div class="burnbook-page-top"><span>BurnBook · Ivy Hall</span><span>Arquivo confidencial</span></div>'+photo+'<div class="burnbook-character">Filed under: '+esc(p.character_name||'Nome não identificado')+'</div><h2>'+esc(p.title)+'</h2>'+burnbookSection('Exposição',p.gossip)+burnbookSection('Acusações',p.accusations)+burnbookSection('Comentários',p.comments)+burnbookSection('Taryn anotou',p.taryn_notes);$('burnbookModal').classList.add('open');$('burnbookModal').setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
 function closeBurnbookModal(){const m=$('burnbookModal');if(!m)return;m.classList.remove('open');m.setAttribute('aria-hidden','true');document.body.style.overflow=''}
 function clearBurnbookPhoto(){ $('burnbookPhoto').value='';$('burnbookImageUrl').value='';$('burnbookPhotoPreview').removeAttribute('src');$('burnbookPhotoPreviewWrap').classList.add('hidden') }
 function resetBurnbookForm(){if(!$('burnbookForm'))return;$('burnbookForm').reset();$('burnbookId').value='';$('burnbookImageUrl').value='';$('burnbookPhotoPreview').removeAttribute('src');$('burnbookPhotoPreviewWrap').classList.add('hidden');msg('burnbookAdminMessage','Cadastre uma nova página ou escolha uma existente para editar.');}
