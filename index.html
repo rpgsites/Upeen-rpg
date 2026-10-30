@@ -160,6 +160,34 @@ header,main,footer,.topline{position:relative;z-index:1}
 @media(max-width:650px){.burnbook-book{padding:10px}.burnbook-book:before{display:none}.burnbook-pages{grid-template-columns:1fr;gap:12px}.burnbook-page{min-height:300px;padding:20px 18px 44px}.burnbook-photo{height:220px}.burnbook-cover{padding:28px 16px}.burnbook-modal{padding:8px}.burnbook-modal-inner{padding:20px 15px;border-width:6px}}
 @media(prefers-reduced-motion:reduce){.burnbook-page{animation:none}}
 
+
+/* BurnBook scrapbook redesign: single full page, original photo proportions */
+.burnbook-book{max-width:900px;padding:16px;background:linear-gradient(90deg,#211714,#50372a 2%,#211714 4%,#17131a 50%,#50372a 52%,#17131a 55%,#100e14);}
+.burnbook-book:before{display:none}
+.burnbook-pages{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;}
+.burnbook-page{min-height:0;padding:clamp(20px,4vw,42px);overflow:visible;background-color:#eadfc8;background-image:radial-gradient(#8b6e4b12 .8px,transparent .8px),repeating-linear-gradient(0deg,#00000005 0,#00000005 1px,transparent 1px,transparent 31px),linear-gradient(135deg,#f5ebd5,#e6d7b9 72%,#d9c7a5);background-size:7px 7px,auto,auto;border:1px solid #bba77f;box-shadow:inset 0 0 28px #7b5b3422,0 8px 18px #0005;}
+.burnbook-page:after{inset:12px;border:1px solid #8d714b45;}
+.burnbook-page-top{font-size:10px;letter-spacing:2.5px;padding-bottom:12px;margin-bottom:18px;}
+.burnbook-scrap-title{position:relative;z-index:1;margin:0 0 5px!important;text-align:center;font:900 clamp(34px,8vw,68px)/.98 'DM Sans',sans-serif!important;letter-spacing:3px!important;color:#a51e55!important;text-transform:uppercase;text-shadow:2px 2px 0 #e9a0b9,-2px 0 #33271e;overflow-wrap:anywhere;}
+.burnbook-scrap-subtitle{text-align:center;text-transform:uppercase;letter-spacing:2px;font:700 clamp(12px,2.5vw,17px)/1.4 'DM Sans',sans-serif;color:#292321;margin:8px 0 22px;}
+.burnbook-character{font:italic 14px Georgia,serif;color:#755a3f;margin:0 0 14px;text-align:center;}
+.burnbook-photo-wrap{position:relative;z-index:1;width:min(100%,650px);margin:20px auto 22px;padding:12px 12px 18px;background:#f7efdF;border:1px solid #d5c6a9;box-shadow:0 6px 16px #4d382b44;transform:rotate(-.5deg);}
+.burnbook-photo-wrap:before,.burnbook-photo-wrap:after{content:'';position:absolute;top:-9px;width:90px;height:23px;background:#d8c7a5b8;border-left:1px solid #c4b18c;border-right:1px solid #c4b18c;transform:rotate(-5deg);}
+.burnbook-photo-wrap:before{left:18px}.burnbook-photo-wrap:after{right:18px;transform:rotate(5deg)}
+.burnbook-photo{width:100%;height:auto!important;max-height: min(72vh,760px);object-fit:contain!important;object-position:center;display:block;margin:0 auto;border:0;box-shadow:none;filter:none;background:#d8cbb4;}
+.burnbook-scrap-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;position:relative;z-index:1;margin-top:18px;}
+.burnbook-section{margin:0;padding:14px 15px;background:#f3e8d2d9;border:1px solid #cbb995;box-shadow:2px 3px 7px #4d382b20;}
+.burnbook-section strong{font-size:10px;color:#a51e55;letter-spacing:2px;margin-bottom:8px;}
+.burnbook-section p{font:14px/1.7 Georgia,serif;color:#342a24;}
+.burnbook-section-wide{grid-column:1/-1;background:#211c20;color:#f1dfc5;border-color:#211c20;transform:rotate(-.3deg);}
+.burnbook-section-wide strong,.burnbook-section-wide p{color:#f1dfc5;}
+.burnbook-page-number{position:relative;bottom:auto;margin-top:22px;padding-top:12px;border-top:1px solid #9d805744;color:#947b58;}
+.burnbook-page[role=button]{cursor:pointer;}
+.burnbook-page[role=button]:hover{transform:translateY(-2px);}
+.burnbook-modal-inner{width:min(900px,100%);padding:clamp(18px,4vw,36px);}
+.burnbook-modal-inner .burnbook-photo-wrap{width:min(100%,720px)}
+@media(max-width:650px){.burnbook-book{padding:8px}.burnbook-pages{grid-template-columns:1fr;gap:14px}.burnbook-page{padding:20px 15px 28px}.burnbook-scrap-grid{grid-template-columns:1fr}.burnbook-section-wide{grid-column:auto}.burnbook-photo{max-height:none!important;width:100%;height:auto!important;object-fit:contain!important}.burnbook-photo-wrap{padding:8px 8px 13px;margin:16px auto}.burnbook-page-top{font-size:8px;letter-spacing:1.6px}.burnbook-modal{padding:8px}}
+
 </style>
 </head>
 <body><canvas id="skyEffects" aria-hidden="true"></canvas><div class="topline"></div>
@@ -315,10 +343,21 @@ async function moderateGossip(id,status){if(!isAdmin||!currentUser)return;const 
 
 /* BURN BOOK: conteúdo e gerenciamento independente do Jornal de Ivy Hall. */
 function burnbookSection(label,value){return value?'<div class="burnbook-section"><strong>'+esc(label)+'</strong><p>'+esc(value)+'</p></div>':''}
-function burnbookPageHtml(page,index){const photo=page.image_url?'<img class="burnbook-photo" src="'+esc(page.image_url)+'" alt="Fotografia de '+esc(page.character_name)+'" loading="lazy">':'';return '<article class="burnbook-page" role="button" tabindex="0" aria-label="Abrir página '+(index+1)+'" onclick="openBurnbookPage('+Number(page.id)+')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();openBurnbookPage('+Number(page.id)+')}"><div class="burnbook-page-top"><span>BurnBook · Ivy Hall</span><span>Arquivo '+String(index+1).padStart(2,'0')+'</span></div>'+photo+'<div class="burnbook-character">Filed under: '+esc(page.character_name||'Nome não identificado')+'</div><h3>'+esc(page.title)+'</h3>'+burnbookSection('Exposição',page.gossip)+burnbookSection('Acusações',page.accusations)+burnbookSection('Comentários',page.comments)+burnbookSection('Taryn anotou',page.taryn_notes)+'<div class="burnbook-page-number">— '+(index+1)+' —</div></article>'}
+function burnbookPageHtml(page,index){
+ const photo=page.image_url?'<div class="burnbook-photo-wrap"><img class="burnbook-photo" src="'+esc(page.image_url)+'" alt="Fotografia de '+esc(page.character_name)+'" loading="lazy"></div>':'';
+ const sections=[['Exposição',page.gossip,'wide'],['Acusações',page.accusations,''],['Comentários',page.comments,''],['Taryn anotou',page.taryn_notes,'wide']].filter(x=>x[1]);
+ const content=sections.map(x=>'<div class="burnbook-section '+(x[2]==='wide'?'burnbook-section-wide':'')+'"><strong>'+esc(x[0])+'</strong><p>'+esc(x[1])+'</p></div>').join('');
+ return '<article class="burnbook-page" role="button" tabindex="0" aria-label="Abrir página '+(index+1)+'" onclick="openBurnbookPage('+Number(page.id)+')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();openBurnbookPage('+Number(page.id)+')}"><div class="burnbook-page-top"><span>BurnBook · Ivy Hall</span><span>Arquivo '+String(index+1).padStart(2,'0')+'</span></div><h3 class="burnbook-scrap-title">'+esc(page.character_name||'Sem nome')+'</h3><div class="burnbook-scrap-subtitle">'+esc(page.title)+'</div>'+photo+'<div class="burnbook-character">Filed under: '+esc(page.character_name||'Nome não identificado')+'</div><div class="burnbook-scrap-grid">'+content+'</div><div class="burnbook-page-number">✦ Página '+String(index+1).padStart(2,'0')+' · Ivy Hall ✦</div></article>'
+}
 let burnbookCache=[];
 async function loadBurnbook(){const box=$('burnbookPages'),note=$('burnbookPublicMessage');if(!box)return;if(!currentUser){box.innerHTML='<div class="burnbook-empty">Entre na sua conta para consultar este arquivo.</div>';note.textContent='O BurnBook é reservado aos jogadores conectados.';return}box.innerHTML='<div class="burnbook-empty">Abrindo o livro...</div>';const {data,error}=await db.from('burnbook_pages').select('id,character_name,title,gossip,accusations,comments,taryn_notes,image_url,created_at').eq('status','published').order('created_at',{ascending:false});if(error){box.innerHTML='<div class="burnbook-empty">Não foi possível abrir o BurnBook. Confira se executou o SQL de instalação no Supabase.</div>';note.textContent='Erro ao carregar o arquivo: '+error.message;return}burnbookCache=data||[];note.textContent=burnbookCache.length?'Arquivo atualizado · '+burnbookCache.length+' página(s) publicada(s).':'O livro ainda não recebeu nenhuma página.';box.innerHTML=burnbookCache.length?burnbookCache.map((p,i)=>burnbookPageHtml(p,i)).join(''):'<div class="burnbook-empty">As páginas ainda estão em branco. Talvez seja melhor assim. Por enquanto.</div>'}
-function openBurnbookPage(id){const p=burnbookCache.find(x=>Number(x.id)===Number(id));if(!p)return;const photo=p.image_url?'<img class="burnbook-photo" src="'+esc(p.image_url)+'" alt="Fotografia de '+esc(p.character_name)+'">':'';$('burnbookModalContent').innerHTML='<div class="burnbook-page-top"><span>BurnBook · Ivy Hall</span><span>Arquivo confidencial</span></div>'+photo+'<div class="burnbook-character">Filed under: '+esc(p.character_name||'Nome não identificado')+'</div><h2>'+esc(p.title)+'</h2>'+burnbookSection('Exposição',p.gossip)+burnbookSection('Acusações',p.accusations)+burnbookSection('Comentários',p.comments)+burnbookSection('Taryn anotou',p.taryn_notes);$('burnbookModal').classList.add('open');$('burnbookModal').setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
+function openBurnbookPage(id){
+ const p=burnbookCache.find(x=>Number(x.id)===Number(id));if(!p)return;
+ const photo=p.image_url?'<div class="burnbook-photo-wrap"><img class="burnbook-photo" src="'+esc(p.image_url)+'" alt="Fotografia de '+esc(p.character_name)+'"></div>':'';
+ const sections=[['Exposição',p.gossip,'wide'],['Acusações',p.accusations,''],['Comentários',p.comments,''],['Taryn anotou',p.taryn_notes,'wide']].filter(x=>x[1]).map(x=>'<div class="burnbook-section '+(x[2]==='wide'?'burnbook-section-wide':'')+'"><strong>'+esc(x[0])+'</strong><p>'+esc(x[1])+'</p></div>').join('');
+ $('burnbookModalContent').innerHTML='<div class="burnbook-page-top"><span>BurnBook · Ivy Hall</span><span>Arquivo confidencial</span></div><h2 class="burnbook-scrap-title">'+esc(p.character_name||'Sem nome')+'</h2><div class="burnbook-scrap-subtitle">'+esc(p.title)+'</div>'+photo+'<div class="burnbook-character">Filed under: '+esc(p.character_name||'Nome não identificado')+'</div><div class="burnbook-scrap-grid">'+sections+'</div>';
+ $('burnbookModal').classList.add('open');$('burnbookModal').setAttribute('aria-hidden','false');document.body.style.overflow='hidden'
+}
 function closeBurnbookModal(){const m=$('burnbookModal');if(!m)return;m.classList.remove('open');m.setAttribute('aria-hidden','true');document.body.style.overflow=''}
 function clearBurnbookPhoto(){ $('burnbookPhoto').value='';$('burnbookImageUrl').value='';$('burnbookPhotoPreview').removeAttribute('src');$('burnbookPhotoPreviewWrap').classList.add('hidden') }
 function resetBurnbookForm(){if(!$('burnbookForm'))return;$('burnbookForm').reset();$('burnbookId').value='';$('burnbookImageUrl').value='';$('burnbookPhotoPreview').removeAttribute('src');$('burnbookPhotoPreviewWrap').classList.add('hidden');msg('burnbookAdminMessage','Cadastre uma nova página ou escolha uma existente para editar.');}
