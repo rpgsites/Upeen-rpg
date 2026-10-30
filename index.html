@@ -206,6 +206,26 @@ header,main,footer,.topline{position:relative;z-index:1}
 
 @media(prefers-reduced-motion:reduce){.burnbook-page{animation:none}}
 
+
+/* Ajustes finais para leitura no celular e fotografia sem barras vazias */
+@media(max-width:650px){
+  .burnbook-page{grid-template-rows:7% 8% 29% 15% 24% 7%;}
+  .burnbook-scrap{font-family:Georgia,'Times New Roman',serif;font-size:clamp(10px,2.15vw,13px);line-height:1.32;padding:5% 5.5%;}
+  .burnbook-scrap strong{font-family:'Trebuchet MS',Arial,sans-serif;font-size:clamp(9px,1.9vw,11px);letter-spacing:.65px;line-height:1.15}
+  .burnbook-scrap p{-webkit-line-clamp:5;line-height:1.32}
+  .burnbook-photo-wrap{display:flex;align-items:center;justify-content:center;padding:2% 2% 11%;}
+  .burnbook-photo{display:block;width:100%;height:auto;max-height:100%;object-fit:contain;object-position:center;background:transparent;flex:0 1 auto}
+  .burnbook-photo-caption{font-size:clamp(8px,1.7vw,10px);padding:2% 2.5%}
+  .burnbook-page-heading h3{font-size:clamp(20px,5.6vw,36px)}
+  .burnbook-page-heading .burnbook-headline{font-size:clamp(8px,2vw,11px);letter-spacing:.8px}
+  .burnbook-warning{font-size:clamp(7px,1.7vw,9px);letter-spacing:.45px}
+  .burnbook-page-top{font-size:8px;letter-spacing:1.5px}
+}
+@media(min-width:651px){
+  .burnbook-scrap{font-family:Georgia,'Times New Roman',serif;font-size:clamp(12px,1.25vw,15px);line-height:1.35}
+  .burnbook-photo{height:auto;max-height:100%;width:100%;object-fit:contain}
+}
+
 </style>
 </head>
 <body><canvas id="skyEffects" aria-hidden="true"></canvas><div class="topline"></div>
