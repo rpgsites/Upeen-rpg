@@ -188,6 +188,46 @@ header,main,footer,.topline{position:relative;z-index:1}
 .burnbook-modal-inner .burnbook-photo-wrap{width:min(100%,720px)}
 @media(max-width:650px){.burnbook-book{padding:8px}.burnbook-pages{grid-template-columns:1fr;gap:14px}.burnbook-page{padding:20px 15px 28px}.burnbook-scrap-grid{grid-template-columns:1fr}.burnbook-section-wide{grid-column:auto}.burnbook-photo{max-height:none!important;width:100%;height:auto!important;object-fit:contain!important}.burnbook-photo-wrap{padding:8px 8px 13px;margin:16px auto}.burnbook-page-top{font-size:8px;letter-spacing:1.6px}.burnbook-modal{padding:8px}}
 
+
+/* BurnBook: composição de página única em grade, sem rolagem interna */
+.burnbook-intro{margin:0 auto 8px;padding:0 10px}.burnbook-intro h2{margin:2px 0;font-size:clamp(25px,5vw,38px)}.burnbook-intro .lead{display:none}
+.burnbook-cover{display:none}
+.burnbook-public-message{margin:5px auto!important}
+.burnbook-book{max-width:860px;margin:8px auto 16px;padding:9px;border-radius:7px}
+.burnbook-pages{display:block}
+.burnbook-page.burnbook-collage{height:clamp(510px,calc(100svh - 235px),700px);min-height:0;max-height:700px;padding:clamp(12px,2.5vw,24px);overflow:hidden;display:flex;flex-direction:column;gap:5px;cursor:pointer}
+.burnbook-collage .burnbook-page-top{flex:0 0 auto;margin:0 0 4px;padding-bottom:7px;font-size:9px}
+.burnbook-collage .burnbook-scrap-title{flex:0 0 auto;font-size:clamp(27px,6vw,50px)!important;line-height:.95!important;margin:2px 0!important}
+.burnbook-collage .burnbook-scrap-subtitle{flex:0 0 auto;margin:2px 0 8px;font-size:clamp(10px,2vw,14px)}
+.burnbook-collage-grid{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:1.05fr .9fr .9fr;gap:9px;align-content:stretch}
+.burnbook-collage .burnbook-photo-wrap{grid-column:1;grid-row:1/3;width:100%;height:100%;min-height:0;margin:0;padding:7px 7px 12px;display:flex;align-items:center;justify-content:center;transform:rotate(-.5deg);overflow:hidden}
+.burnbook-collage .burnbook-photo{width:100%;height:100%!important;max-height:100%!important;object-fit:contain!important;background:#d9cbb2}
+.burnbook-collage .burnbook-no-photo{font:700 12px 'DM Sans',sans-serif;letter-spacing:2px;color:#8d7149}
+.burnbook-collage .burnbook-section{min-width:0;min-height:0;padding:9px 10px;margin:0;overflow:hidden;display:flex;flex-direction:column;box-shadow:2px 3px 6px #4d382b22}
+.burnbook-collage .burnbook-section strong{font-size:9px;letter-spacing:1.4px;margin-bottom:5px;flex:0 0 auto}
+.burnbook-collage .burnbook-section p{font:clamp(10px,1.9vw,13px)/1.42 Georgia,serif;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden;white-space:pre-wrap;overflow-wrap:anywhere}
+.burnbook-collage .burnbook-exposure{grid-column:2;grid-row:1;background:#f4e8d1}
+.burnbook-collage .burnbook-accusations{grid-column:2;grid-row:2;background:#f7edda}
+.burnbook-collage .burnbook-comments{grid-column:1;grid-row:3;background:#e8d7b9}
+.burnbook-collage .burnbook-taryn{grid-column:2;grid-row:3;background:#211c20;color:#f1dfc5;transform:rotate(.25deg)}
+.burnbook-collage .burnbook-taryn strong,.burnbook-collage .burnbook-taryn p{color:#f1dfc5}
+.burnbook-collage .burnbook-page-number{flex:0 0 auto;margin-top:5px;padding-top:6px;font-size:10px}
+.burnbook-open-hint{margin-left:8px;color:#a51e55;font:700 8px 'DM Sans',sans-serif;letter-spacing:1px;text-transform:uppercase}
+@media(max-width:650px){
+ .burnbook-intro{margin-bottom:4px}.burnbook-intro h2{font-size:25px}.burnbook-book{margin:5px auto 10px;padding:6px}.burnbook-page.burnbook-collage{height:clamp(500px,calc(100svh - 205px),690px);padding:12px 10px 9px;gap:4px}
+ .burnbook-collage .burnbook-page-top{font-size:7px;letter-spacing:1.4px;margin-bottom:2px}
+ .burnbook-collage .burnbook-scrap-title{font-size:clamp(27px,8vw,39px)!important;letter-spacing:1.5px!important}
+ .burnbook-collage .burnbook-scrap-subtitle{font-size:9px;letter-spacing:1.2px;margin-bottom:5px}
+ .burnbook-collage-grid{grid-template-columns:1fr 1fr;grid-template-rows:1.08fr .88fr .88fr;gap:6px}
+ .burnbook-collage .burnbook-photo-wrap{padding:5px 5px 9px}
+ .burnbook-collage .burnbook-section{padding:7px 7px}
+ .burnbook-collage .burnbook-section strong{font-size:8px;letter-spacing:1px;margin-bottom:4px}
+ .burnbook-collage .burnbook-section p{font-size:10px;line-height:1.35;-webkit-line-clamp:5}
+ .burnbook-collage .burnbook-page-number{font-size:9px;margin-top:3px;padding-top:5px}
+ .burnbook-open-hint{display:block;margin:3px 0 0;font-size:7px}
+}
+@media(max-height:700px) and (max-width:650px){.burnbook-page.burnbook-collage{height:calc(100svh - 185px)}.burnbook-collage .burnbook-section p{-webkit-line-clamp:4}}
+
 </style>
 </head>
 <body><canvas id="skyEffects" aria-hidden="true"></canvas><div class="topline"></div>
@@ -344,10 +384,10 @@ async function moderateGossip(id,status){if(!isAdmin||!currentUser)return;const 
 /* BURN BOOK: conteúdo e gerenciamento independente do Jornal de Ivy Hall. */
 function burnbookSection(label,value){return value?'<div class="burnbook-section"><strong>'+esc(label)+'</strong><p>'+esc(value)+'</p></div>':''}
 function burnbookPageHtml(page,index){
- const photo=page.image_url?'<div class="burnbook-photo-wrap"><img class="burnbook-photo" src="'+esc(page.image_url)+'" alt="Fotografia de '+esc(page.character_name)+'" loading="lazy"></div>':'';
- const sections=[['Exposição',page.gossip,'wide'],['Acusações',page.accusations,''],['Comentários',page.comments,''],['Taryn anotou',page.taryn_notes,'wide']].filter(x=>x[1]);
- const content=sections.map(x=>'<div class="burnbook-section '+(x[2]==='wide'?'burnbook-section-wide':'')+'"><strong>'+esc(x[0])+'</strong><p>'+esc(x[1])+'</p></div>').join('');
- return '<article class="burnbook-page" role="button" tabindex="0" aria-label="Abrir página '+(index+1)+'" onclick="openBurnbookPage('+Number(page.id)+')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();openBurnbookPage('+Number(page.id)+')}"><div class="burnbook-page-top"><span>BurnBook · Ivy Hall</span><span>Arquivo '+String(index+1).padStart(2,'0')+'</span></div><h3 class="burnbook-scrap-title">'+esc(page.character_name||'Sem nome')+'</h3><div class="burnbook-scrap-subtitle">'+esc(page.title)+'</div>'+photo+'<div class="burnbook-character">Filed under: '+esc(page.character_name||'Nome não identificado')+'</div><div class="burnbook-scrap-grid">'+content+'</div><div class="burnbook-page-number">✦ Página '+String(index+1).padStart(2,'0')+' · Ivy Hall ✦</div></article>'
+ const photo=page.image_url?'<div class="burnbook-photo-wrap"><img class="burnbook-photo" src="'+esc(page.image_url)+'" alt="Fotografia de '+esc(page.character_name)+'" loading="lazy"></div>':'<div class="burnbook-photo-wrap burnbook-no-photo">✦ FOTO ARQUIVADA ✦</div>';
+ const sections=[['Exposição',page.gossip,'burnbook-exposure'],['Acusações',page.accusations,'burnbook-accusations'],['Comentários',page.comments,'burnbook-comments'],['Taryn anotou',page.taryn_notes,'burnbook-taryn']].filter(x=>x[1]);
+ const content=sections.map(x=>'<div class="burnbook-section '+x[2]+'"><strong>'+esc(x[0])+'</strong><p>'+esc(x[1])+'</p></div>').join('');
+ return '<article class="burnbook-page burnbook-collage" role="button" tabindex="0" aria-label="Abrir página '+(index+1)+'" onclick="openBurnbookPage('+Number(page.id)+')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();openBurnbookPage('+Number(page.id)+')}"><div class="burnbook-page-top"><span>BurnBook · Ivy Hall</span><span>Arquivo '+String(index+1).padStart(2,'0')+'</span></div><h3 class="burnbook-scrap-title">'+esc(page.character_name||'Sem nome')+'</h3><div class="burnbook-scrap-subtitle">'+esc(page.title)+'</div><div class="burnbook-collage-grid">'+photo+content+'</div><div class="burnbook-page-number">✦ Página '+String(index+1).padStart(2,'0')+' · Ivy Hall ✦ <span class="burnbook-open-hint">Toque para abrir o arquivo completo</span></div></article>'
 }
 let burnbookCache=[];
 async function loadBurnbook(){const box=$('burnbookPages'),note=$('burnbookPublicMessage');if(!box)return;if(!currentUser){box.innerHTML='<div class="burnbook-empty">Entre na sua conta para consultar este arquivo.</div>';note.textContent='O BurnBook é reservado aos jogadores conectados.';return}box.innerHTML='<div class="burnbook-empty">Abrindo o livro...</div>';const {data,error}=await db.from('burnbook_pages').select('id,character_name,title,gossip,accusations,comments,taryn_notes,image_url,created_at').eq('status','published').order('created_at',{ascending:false});if(error){box.innerHTML='<div class="burnbook-empty">Não foi possível abrir o BurnBook. Confira se executou o SQL de instalação no Supabase.</div>';note.textContent='Erro ao carregar o arquivo: '+error.message;return}burnbookCache=data||[];note.textContent=burnbookCache.length?'Arquivo atualizado · '+burnbookCache.length+' página(s) publicada(s).':'O livro ainda não recebeu nenhuma página.';box.innerHTML=burnbookCache.length?burnbookCache.map((p,i)=>burnbookPageHtml(p,i)).join(''):'<div class="burnbook-empty">As páginas ainda estão em branco. Talvez seja melhor assim. Por enquanto.</div>'}
